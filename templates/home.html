@@ -1,0 +1,57 @@
+
+
+
+<!--<h1>home</h1>
+
+{% if (session['status'] == 'active') %}
+  Usuario Logeado: <b>{{session['user']}}</b>
+  <br>
+  Hora de Acceso: <b>{{session['time']}}</b>
+  <br>
+  Rol: <b>{{session['rol']}}</b>
+  <br>
+  <a href="/logout">Cerrar Sesión</a>
+{% else %}  
+  <a href="/login">Ingresar</a>
+{% endif %}-->
+
+<h1>home</h1>
+
+{% if (session['status'] == 'active') %}
+  Usuario Logeado: <b>{{session['user']}}</b>
+  <br>
+  Hora de Acceso: <b>{{session['time']}}</b>
+  <br>
+  Rol: <b>{{session['rol']}}</b>
+  <br>
+  <a href="/logout">Cerrar Sesión</a>
+{% else %}  
+  <a href="/login">Ingresar</a>
+{% endif %}
+
+
+<!--
+if password == get_password_by_id(user):
+        if rol == 1:
+            if user[0] == '1' or user[0]=='2':
+               return redirect('/inicio')
+            else:
+                return redirect('/inicio')
+        elif rol == 2:
+            rolUsuario = "jefe" 
+        elif rol == 3:
+            return redirect('/verificar')
+        elif rol == 4:
+            return redirect('/verificar')
+        else: 
+            return redirect('/registro')
+    else:
+        locals={
+            'message': 'El usuario y/o no existen',
+        }
+        print(session)
+        return render_template(
+            'acceso/login_sgop.html',
+            locals=locals
+            ), 500
+-->

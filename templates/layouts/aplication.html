@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{locals['title']}}</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/demo.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/assets/plugins/sweetalert2.min.css" type="text/css">
+    
+   
+  </head>
+  <body onload="myFunction()">
+    {% block css %}
+    <link rel="stylesheet" href="assets/css/modal.css" type="text/css">
+    {% endblock %}  
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    
+    <header class="header-section">
+        
+        <div class="container">
+            <div class="inner-header">
+                <div class="row">                 
+                    <div class="col-lg-10 col-md-10">                      
+                        <div class="logo">
+                            <a href="./index.html">                               
+                                <h3>
+                                    <img id="logo-wide" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                                    <b>SISTEMA DE GESTIÓN DE OBJETOS PERDIDOS</b>
+                                </h3>
+                                <img id="logo-narrow" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-right col-md-2">
+                        <ul class="nav-right">
+                            
+                            <button type="button" class="btn btn-secondary" id="registrar_1">
+                                Logout
+                            </button>
+
+                       </ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    </header>
+
+    <div class="nav-item">
+        <div class="container">
+           
+            <header class="header-section">
+    
+                <div class="nav-item">
+                    <div class="container">
+                        
+                        <nav class="nav-menu mobile-menu">
+                            <ul>
+                                {% if (session['status'] == 'active') %}
+                                {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
+                                <li id="1"><a href="/inicio">OBJETOS</a></li>
+                                {% else %}
+                                {% if (session['rol'] == 2) %} <!--JEFE-->
+                                <li><a href="/inicio">OBJETOS</a></li>
+                                <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="./verificar_objeto.html">SOLICITUDES USUARIO</a></li>
+                                <li><a href="./verificar_objeto.html">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 3) %} <!---->
+                                <li id="3"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="./verificar_objeto.html">SOLICITUDES USUARIO</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 4) %}
+                                <li id="4"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                
+                                {% else %}
+                                <li id="5"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/registro">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% else %}
+                                <a href="/logout">Ingresar</a>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                        <div id="mobile-menu-wrap"></div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </div>
+    <div class="container text-center">
+             
+        
+        <br>
+        <br>
+        
+        <div class="modal" id="myModal1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                
+                   
+                  
+                  <div class="modal-body">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"onclick="miCerrar();">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <br>
+                    <p>¿Está seguro de que deseas</p>
+                    <p> cerrar sesión?</p>
+                    <br>
+                    <a href="/logout"><button type="button" class="btn btn-primary" >OK</button></a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  </div>
+              
+       
+              
+              
+            </div>
+          </div>
+        </div>
+        <script>
+            var cierra=document.getElementById("registrar_1");
+            var ventanita=document.getElementById("myModal1");
+            cierra.addEventListener("click", function(){
+                            ventanita.style.display = 'block';
+                            });
+        </script>
+        
+      </div>
+
+    <section class="product-shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+                    <form action="/objeto/filtrar" method="post">
+                    
+                    <div class="filter-widget">
+                       
+                        <h4 class="fw-title">Categoría</h4>
+                        <div class="fw-brand-check">
+                            <select name="categoria">
+                                <option value="ACADÉMICO">Académico</option>
+                                <option value="DOCUMENTO">Documento</option>
+                                <option value="PERSONAL">Personal</option>
+                                <option value="TECNOLÓGICO">Tecnológico</option>
+                            </select>
+                        </div>
+                       
+                    </div>
+                    <div class="filter-widget">
+                    <h4 class="fw-title">Lugar</h4>
+                    <span>
+                        <select name="lugar">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="CH">CH</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="H">H</option>
+                            <option value="LL">LL</option>
+                            <option value="M">M</option>
+                            <option value="N">N</option>
+                            <option value="O">O</option>
+                            <option value="PARQUE CENTRAL">PARQUE CENTRAL</option>
+                            <option value="Q">Q</option>
+                            <option value="R">R</option>
+                            <option value="S">S</option>
+                            <option value="TA">TA</option>
+                            <option value="TB">TB</option>
+                            <option value="V">V</option>
+                            <option value="W">W</option>
+                            <option value="ZUM">ZUM</option>
+                        </select>
+                    </span>
+                    </div>
+                        <h4 class="fw-title">Fecha</h4>
+
+                       
+                        <li><span><input type="date" name="trip-inicio"></li></span></li>
+                        <br>
+                      
+                        <li><span><input type="date" name="trip-fin"></li></span></li>
+                        <br><br><br>
+                        <button type="submit">BUSCAR</button>
+               
+
+                </form>
+                 
+                </div>
+                <div class="col-lg-9 order-1 order-lg-2">
+                    <div class="product-show-option">
+                        <div class="row">
+                            <div class="col-lg-7 col-md-7">
+                             
+                                    <form action="#" method="post" class="input-group">
+                                        <input type="text" name="nam_objeto"  placeholder="¿Qué estás buscando?">
+                                        <button type="submit"></button>
+                                    </form>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-list" id="lista">
+                        {% if (session['status'] == 'active') %}
+                        {% if (session['rol'] == 1) %} 
+                        <div class="row" id="items" name="1">
+                                        
+                                        
+                        </div>
+                        {% else %}
+                        {% if (session['rol'] == 2 or session['rol'] == 3 or session['rol'] == 4 ) %} 
+                        <div class="row" id="items2"></div>
+                                        
+                                        
+                        </div>
+                        <style>
+                            #miModal
+                            {
+                                display: none;
+                            }
+                        </style>
+                        <div id="miModal" class="modal" >
+                            <div class="flex" id="flex">
+                                <div class="contenido-modal">
+                                    <div class="modal-body" >
+                                        <span class="close" id="close">&times;</span>
+                                        <br>
+                                               <h5>Código Objeto</h5>
+                                               
+                                                <p id="uno"></p>
+                                                <hr>
+                                                <h5>Marca</h5>
+                                                <p id="dos"></p>
+                                                <hr>
+                                                <h5>Estado</h5>
+                                                <p id="tres"></p>
+                                                <hr>
+                                                <h5>Fecha de Devolución</h5>
+                                              
+                                                <p id="cuatro"></p>
+                                                <hr>
+                                                <h5>Caracteristicas Especiales</h5>
+                                               
+                                                <p id="cinco"></p>
+                                                <hr>
+                                                <h5>Número de Anaquel</h5>
+                                               
+                                                <p id="seis"></p>
+                                                <hr>
+                                                <h5>Código de usuario que entrego</h5>
+                                              
+                                                <p id="siete"></p>
+                                            
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% else %}
+                        {% if (session['rol'] == 5) %} 
+                        <div class="row" id="items2"></div>
+                                        
+                                        
+                        </div>
+                        
+                        {% else %}
+                       
+                        <div class="row" id="items2"></div>
+                                        
+                                        
+                        </div>
+                        
+                       
+                        {% endif %}
+                        {% endif %}
+                        {% endif %}
+                        {% else %}
+                        <a href="/logout">Ingresar</a>
+                        {% endif %}
+                                    <!--<div class="row" id="items">
+                                        
+                                        
+                                    </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+       <!-- <div class="container-prueba">
+            <div class="section-prueba">
+                <button onclick="myFunction()">Copy Text</button>
+                <table class="table"> 
+                    <thead>
+                        <tr>
+                            <th>Objeto</th>
+                            <th>Categoria</th>
+
+                        </tr>
+                    </thead>
+                    <!--<tbody id="prueba-cuerpo">
+
+
+                    </tbody>
+
+                </table>
+
+
+
+            </div>
+
+
+
+
+        </div>-->
+
+
+        <!--<button onclick="myFunction()">Copy Text</button>-->
+
+        
+      
+
+       
+
+
+
+
+    
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-widget">
+                            <h5>Oficina de Objetos Perdidos</h5>
+                        </div>
+                        <ul>
+                            <li>Ubicación: Edificio V, Oficina 303</li>
+                            <li>Teléfono: 4376767 anexo 31495</li>
+                            <li>Email: zvillena@ulima.edu.pe</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Información</h5>
+                        <ul>
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#">Servicios</a></li>
+                            <li><a href="#">Horarios</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>Mi cuenta</h5>
+                        <ul>
+                            <li><a href="#">Registrados</a></li>
+                            <li><a href="#">Solicitudes</a></li>
+                            <li><a href="#">Términos de uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Centro de ayuda</h5>
+                        <p>Preguntas frecuentes</p>
+                        <p>Contacto</p>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                            
+    </footer>
+
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery-ui.min.js"></script>
+    <script src="/assets/js/jquery.countdown.min.js"></script>
+    <script src="/assets/js/jquery.nice-select.min.js"></script>
+    <script src="/assets/js/jquery.zoom.min.js"></script>
+    <script src="/assets/js/jquery.dd.min.js"></script>
+    <script src="/assets/js/jquery.slicknav.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script>
+        console.log("se conecto aaaa");
+    
+        function myFunction()
+    {
+        console.log("Dentro de la funcion");
+        const xhttp = new XMLHttpRequest();
+        xhttp.open('GET','/objeto/list',true)
+        xhttp.send();
+        xhttp.onreadystatechange=function()
+        {
+            if(this.readyState==4&&this.status==200)
+            {
+                //console.log(this.responseText);
+    
+                let datos=JSON.parse(this.responseText)
+               
+               
+                //let res=document.querySelector('#prueba-cuerpo')
+               
+                //console.log(datos)
+                /*
+                for (let item of datos)
+                {
+                    
+                    res.innerHTML+= `
+                    <tr>
+                        <td>${item.nom_objeto}</td>	
+                        <td>${item.categoria}</td>	
+                    </tr>`
+    
+                    
+                }*/
+                /*for (let item of datos)
+                {
+                    
+                   
+                    res.innerHTML+= `
+                    <div class="col-lg-4 col-sm-6">
+                            <div class="product-item">
+                                <div class="pi-pic" style="height: 3em;">
+                                    <img src="/static/assets/img/products/descarga (3).png" alt="">
+                                    <div class="icon">
+                                        <br>
+                                    </div>
+                                    <ul>
+                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                        <li class="quick-view"><a class="obj2" id="obj23">+ Solicitar</a></li> <!--agregado-->
+                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="pi-text">
+                                    <div class="catagory-name">${item.categoria}</div>
+                                    <a href="#">
+                                        <h5>${item.nom_objeto}</h5>
+                                        <p>Pabellon ${item.lugar}</p>
+                                        <p>${item.fecha_hallado}</p>
+                                        
+                                    </a>
+                                    <div class="product-price">
+                                        
+                            
+                                        <h6> </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   
+                
+                    `
+    
+                    
+                }*/
+
+                
+                var variable= document.getElementById("lista");
+               
+                var ventana=document.getElementById('miModal');
+                var a= variable.childNodes[1].id;
+
+
+                
+                
+                if(a=="items")
+                {
+                    
+                    for (let item of datos)
+                    {
+                        
+                       
+                        let miNodo = document.createElement('div');
+                        
+                        miNodo.className='col-lg-4 col-sm-6';
+                        miNodo.classList.add('card');
+                        
+                        
+                    
+                        let miNodoCardBody = document.createElement('div');
+                        miNodoCardBody.classList.add('card-body');
+                        
+                        let miNodoTitle = document.createElement('h5');
+                        
+                        miNodoTitle.classList.add('card-title');
+                       
+                        miNodoTitle.textContent = item.nom_objeto;
+                        
+                    
+                        let miNodoCategoria= document.createElement('p');
+                        miNodoCategoria.classList.add('card-text');
+                        miNodoCategoria.textContent = item.categoria;
+
+                        let miNodolugar= document.createElement('p');
+                        miNodolugar.classList.add('card-text');
+                        miNodolugar.textContent = "Pabellón "+item.lugar;
+                        
+                        let miNodofecha= document.createElement('p');
+                        miNodofecha.classList.add('card-text');
+                        miNodofecha.textContent = item.fecha_hallado;
+
+                        let miNodoBoton = document.createElement('button');
+                        miNodoBoton.classList.add('btn', 'btn-success');
+                        miNodoBoton.textContent = 'SOLICITAR';
+                        
+                        //miNodoBoton.addEventListener('click',modal);
+                        // Insertamos
+                    
+                        miNodoCardBody.appendChild(miNodoTitle);
+                        miNodoCardBody.appendChild(miNodoCategoria);
+                        miNodoCardBody.appendChild(miNodolugar);
+                        miNodoCardBody.appendChild(miNodofecha);
+                        miNodoCardBody.appendChild(miNodoBoton);
+                        miNodo.appendChild(miNodoCardBody);
+
+                        document.getElementById("items").appendChild(miNodo);
+                       
+                        
+                    
+        
+                        
+                    }
+                }
+                
+
+                else
+                {
+                    
+                    if(a=="items2")
+                    {
+                        
+                            for (let item of datos)
+                            {
+                                
+                                let miNodo = document.createElement('div');
+                              
+                                miNodo.className='col-lg-4 col-sm-6';
+                                miNodo.classList.add('card');
+                                
+                            
+                                let miNodoCardBody = document.createElement('div');
+                                miNodoCardBody.classList.add('card-body');
+                                
+                                let miNodoTitle = document.createElement('h5');
+                                miNodoTitle.classList.add('card-title');
+                                miNodoTitle.textContent = item.nom_objeto;
+                                
+                            
+                                let miNodoCategoria= document.createElement('p');
+                                miNodoCategoria.classList.add('card-text');
+                                miNodoCategoria.textContent = item.categoria;
+
+                                let miNodolugar= document.createElement('p');
+                                miNodolugar.classList.add('card-text');
+                                miNodolugar.textContent = "Pabellón"+item.lugar;
+
+                                let miNodofecha= document.createElement('p');
+                                miNodofecha.classList.add('card-text');
+                                miNodofecha.textContent = item.fecha_hallado;
+                            
+                                let miNodoBoton = document.createElement('button');
+                                miNodoBoton.classList.add('btn', 'btn-primary');
+                                miNodoBoton.textContent = '+ VER MAS';
+                                
+                                //miNodoBoton.addEventListener('click',modal);
+
+
+                                miNodoBoton.addEventListener("click",function() {
+                                    var a=item.cod_objeto;
+                                    var b=item.marca;
+                                    var c=item.estado;
+                                    var d=item.fecha_dev;
+                                    var e=item.caract_esp;
+                                    var f=item.nro_anaquel;
+                                    var g=item.cod_usu_entrega;
+                                    document.getElementById("uno").innerHTML=`<p>`+a+`</p>`;
+                                    document.getElementById("dos").innerHTML=`<p>`+b+`</p>`;
+                                    document.getElementById("tres").innerHTML=`<p>`+c+`</p>`;
+                                    document.getElementById("cuatro").innerHTML=`<p>`+d+`</p>`;
+                                    document.getElementById("cinco").innerHTML=`<p>`+e+`</p>`;
+                                    document.getElementById("seis").innerHTML=`<p>`+f+`</p>`;
+                                    document.getElementById("siete").innerHTML=`<p>`+g+`</p>`;
+                                    ventana.style.display="block";
+                                 
+                                });
+                                // Insertamos
+                            
+                                miNodoCardBody.appendChild(miNodoTitle);
+                                miNodoCardBody.appendChild(miNodoCategoria);
+                                miNodoCardBody.appendChild(miNodolugar);
+                                miNodoCardBody.appendChild(miNodofecha);
+                                miNodoCardBody.appendChild(miNodoBoton);
+                                miNodo.appendChild(miNodoCardBody);
+                                
+                                
+                                document.getElementById("items2").appendChild(miNodo);
+                                
+                                
+                            }
+                            //var ventana=document.getElementById('miModal');
+                            var cerrar=document.getElementById('close');
+                            
+                            function modal()
+                            {
+                                
+                                ventana.style.display="block";
+                            }
+                            
+                            cerrar.addEventListener('click', function(){
+                            ventana.style.display = 'none';
+                            });
+ 
+                    }
+                }
+                
+               
+               
+                
+                
+             
+                
+               
+                
+            }
+
+            
+        }
+    }
+    
+    
+    
+    </script>
+    <script src="/assets/js/modales-jq.js"></script>
+    <script src="/assets/plugins/sweetalert2.all.min.js"></script>
+    <script src="/assets/plugins/sweetalert2.all.min.js"></script>
+
+</body>
+
+</html>

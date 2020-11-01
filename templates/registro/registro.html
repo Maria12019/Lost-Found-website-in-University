@@ -1,0 +1,123 @@
+
+{% extends 'layouts/aplication.html' %}
+{% block content %}
+  <div class="nav-item">
+    <div class="container">
+       
+        <nav class="nav-menu mobile-menu">
+            <ul>
+                <li><a href="./inicio.html">Inicio</a></li>
+                <li><a href="./shop.html">Registro</a></li>
+                <li><a href="#">Solicitudes usuario</a></li>
+                <li><a href="./blog.html">Solicitudes departamento</a></li>
+                <li><a href="./contact.html">donación</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Aceptadas</a></li>
+                        <li><a href="#">Rechazadas</a></li>
+                        <li><a href="#">Objetos disponibles</a></li>
+                    </ul>
+                </li>     
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+    </div>
+  </div>
+  <!-- Breadcrumb Section Begin -->
+  <div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href="#"><i class="fa fa-home"></i> Home</a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="checkout-section spad">
+<div class="container">
+    <form action="#" class="checkout-form">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <h4>Solicitud de donación</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label for="fir">Nombre del departamento: <span>*</span></label>
+                        <select id="lbLocales" size="1">
+                            <option value = "E"></option>
+                            {% for categoria in locals['categorias'] %}
+                            <option value = "{{categoria['id']}}">{{categoria['nombre']}} </option>
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+                    
+                    <div class="col-lg-12">
+                        <br>
+                        
+                            <label for="last" id="Piso" maxlength="2" >Piso: <span>*</span></label>
+                        <input type="int" id="Piso">
+                        
+                    </div>
+                    <div class="col-lg-12">
+                        
+                        <label for="cun-name">Cantidad de objeto:<span>*</span></label>
+                        <input type="int" id="Cantidad">
+                    </div>
+                    <div class="col-lg-12">
+                        <label for="cun">Descripción: <span>*</span></label>
+                        <textarea class="form-control" id="inputDescripcion" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
+                    <br>
+                    <div class="col-lg-6 offset-lg-5">
+                        <button onclick= "abrir_1();" type="submit" class="site-btn login-btn">
+                            Enviar solicitud
+                        </button>
+                    </div>
+
+                    <div id="miModal" class="modal">
+                        <div class="flex" id="flex">
+                            <div class="contenido-modal">
+                                
+        
+                                <div class="modal-body" align="center">
+                                  
+                                    <span class="close" id="close">&times;</span>
+                                    <br>
+                                    <br>
+                                    <h4 >Su solicitud </h4>
+                                    <h4 id="" >se envió </h4>
+                                    <h4>con éxito.</h4>
+                                    <br>
+                                    <br>
+                                  
+                                <button type="button" class="btn btn-primary" onclick="myfunction3()">Aceptar</button>
+                                </div>
+  
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</section>
+<!-- End -->
+{% endblock %}
+
+{% block css %}
+<!-- igual con el css, si hay una hoja de estilos que aplicaa una sola vista, iria acá -->
+<link rel="stylesheet" href="/assets/css/modal.css" type="text/css">
+{% endblock %}
+
+{% block js %}
+<script src="/assets/js/evento.js"></script>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'layouts/aplicacion.html' %}
+{% block content %}
+
+    <header class="header-section">
+        
+        <div class="nav-item">
+            <div class="container">
+                
+                <nav class="nav-menu mobile-menu">
+                    <ul>
+                        <li><a href="./inicio.html">OBJETOS</a></li>
+                        <li><a href="./inicio.html">REGISTRO OBJETOS</a></li>
+                        <li><a href="./verificar_objeto.html">SOLICITUDES USUARIO</a></li>
+                    </ul>
+                </nav>
+                <div id="mobile-menu-wrap"></div>
+            </div>
+        </div>
+    </header>
+  
+    <section class="product-shop spad page-details">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-6">
+                         
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="product-details">
+                                <div class="pd-title">
+                                    <h3>Cargador Huawei</h3>  
+                                </div>
+                                
+                                <div class="pd-desc">
+                                    <ul class="pd-tags">
+                                        <li><span>NUM_SOLICITUD</span>: 100</li>
+                                        <li><span>COD_OBJETO</span>: 1206</li>
+                                        <li><span>FECHA_ENVIO</span>: 15/07/2020</li>
+                                        <li><span>COD_USUARIO</span>: 20157834</li>
+                                        <li><span>LUGAR</span>: CH</li>
+                                        <li><span>DESCRIPCION</span>: Cargador Huawei color blanco</li>
+                                        <li><span>CARACTERISTICAS ESPECIALES</span>: Cargador Huawei color blanco</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="quantity">
+                                <a href="#" class="primary-btn pd-cart" id="rechazar" style="background-color:rgb(109, 105, 105);" onclick="myfunction2()">RECHAZAR</a>
+                                <a href="#" class="primary-btn pd-cart" id="abrir" onclick="abrir_1()">ACEPTAR</a>
+                            </div>
+                        </div>   
+                </div>
+            </div>
+
+            <div id="miModal" class="modal">
+                <div class="flex" id="flex">
+                    <div class="contenido-modal">
+                        <div class="modal-body" align="center">
+                            <span class="close" id="close">&times;</span>
+                            <br>
+                            <br>
+                            <h4 >¿Está seguro de que</h4>
+                            <h4 id="cambio" >desea aceptar la</h4>
+                            <h4>solicitud de objeto?</h4>
+                            <br>
+                            <br>
+                            <button type="button" id="rechazar" class="btn btn-secondary" onclick="myfunction()";>Rechazar </button>
+                            <button type="button" class="btn btn-primary" onclick="myfunction3()">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="miModal2" class="modal">
+                <div class="flex" id="flex">
+                    <div class="contenido-modal">
+                        <div class="modal-body" align="center">
+                            <span class="close" id="close2">&times;</span>
+                            <br>
+                            <br>
+                            <h4>Se ha enviado </h4>
+                            <h4>la respuesta</h4>
+                            <h4>al usuario</h4>
+                            <br>
+                            <br>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+
+            <div id="miModal4" class="modal">
+                <div class="flex" id="flex">
+                    <div class="contenido-modal">
+                        <div class="modal-body" align="center">  
+                            <span class="close" id="close4" onclick="cerrar_final()";>&times;</span>
+                            <br>
+                            <h4>Solicitud aceptada</h4>
+                            <br>
+                            <img src="{{ url_for('static', filename='assets/img/affection.jpeg')}}"alt="Ulima"  width="150px" height="150px"align="center"/></div>
+                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.zoom.min.js"></script>
+    <script src="js/jquery.dd.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script src="./js/evento_modal.js"></script>
+
+
+{% endblock %}
+
+{% block css %}
+<!-- igual con el css, si hay una hoja de estilos que aplicaa una sola vista, iria acá -->
+<link rel="stylesheet" href="/assets/css/modal.css" type="text/css">
+{% endblock %}
+
+{% block js %}
+<script src="/assets/js/evento_modal.js"></script>
+{% endblock %}

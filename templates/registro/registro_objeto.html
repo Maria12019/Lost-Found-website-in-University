@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Inicio</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+    <!-- Page Preloder -->
+ 
+    {% block css %}
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/modal.css" type="text/css">
+    {% endblock %}
+  
+    <header class="header-section">
+        
+        <div class="container">
+            <div class="inner-header">
+                <div class="row">                 
+                    <div class="col-lg-10 col-md-10">                      
+                        <div class="logo">
+                            <a href="./index.html">                               
+                                <h3>
+                                    <img id="logo-wide" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                                    <b>SISTEMA DE GESTIÓN DE OBJETOS PERDIDOS</b>
+                                </h3>
+                                <img id="logo-narrow" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-right col-md-2">
+                        <ul class="nav-right">
+                            
+                            <button type="button" class="btn btn-secondary" id="registrar_1" data-toggle="modal" data-target="#myModal">
+                                Logout
+                            </button>
+
+                       </ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    </header>
+
+    <div class="nav-item">
+        <div class="container">
+           
+            <header class="header-section">
+    
+                <div class="nav-item">
+                    <div class="container">
+                        
+                        <nav class="nav-menu mobile-menu">
+                            <ul>
+                                {% if (session['status'] == 'active') %}
+                                {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
+                                <li id="1"><a href="/inicio">OBJETOS</a></li>
+                                {% else %}
+                                {% if (session['rol'] == 2) %} <!--JEFE-->
+                                <li><a href="/inicio">OBJETOS</a></li>
+                                <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="./verificar_objeto.html">SOLICITUDES USUARIO</a></li>
+                                <li><a href="./verificar_objeto.html">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 3) %} <!---->
+                                <li id="3"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="./registro.html">REGISTRO OBJETOS</a></li>
+                                <li><a href="./verificar_objeto.html">SOLICITUDES USUARIO</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 4) %}
+                                <li id="4"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="./registro.html">REGISTRO OBJETOS</a></li>
+                                
+                                {% else %}
+                                <li id="5"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/registro">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% else %}
+                                <a href="/logout">Ingresar</a>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                        <div id="mobile-menu-wrap"></div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </div>
+    <div class="container text-center">
+             
+        
+        <br>
+        <br>
+        <div class="modal" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                
+                   
+                  
+                  <div class="modal-body">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <br>
+                    <p>¿Está seguro de que deseas</p>
+                    <p> cerrar sesión?</p>
+                    <br>
+                    <a href="/logout"><button type="button" class="btn btn-primary" >OK</button></a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  </div>
+              
+       
+              
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    <section class="product-shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                        </div>
+                        <form action="/objeto/agregar" method="post">
+                            <div class="col-lg-6">
+                                <div class="product-details">
+                                    <div class="pd-desc">
+                                    <ul class="pd-tags">
+                                        <li><span>CÓDIGO OBJETO:</span></li>
+                                        <li><span><input type="text" name="cod_objeto"></span></li>
+                                        <br>
+                                        <li><span>NOMBRE:</span></li>
+                                        <li><span><input type="text" name="nom_objeto"></span></li>
+                                        <br>
+                                        <li><span>CATEGORÍA:</span></li>
+                                        <li><span>
+                                            <select name="categoria">
+                                                <option value="ACADÉMICO">Académico</option>
+                                                <option value="DOCUMENTO">Documento</option>
+                                                <option value="PERSONAL">Personal</option>
+                                                <option value="TECNOLÓGICO">Tecnológico</option>
+                                            </select>
+                                        </span></li>
+                                        <br>
+                                        <li><span>MARCA:</span></li>
+                                        <li><span><input type="text" name="marca"></span></li>
+                                        <br>
+                                        <li><span>FECHA HALLADO:</span></li>
+                                        <li><span><input type="date" name="fecha_hallado"></li></span></li>
+                                        <br>
+                                        <li><span>FECHA DEVOLUCION:</span></li>
+                                        <li><span><input type="date" name="fecha_dev"></li></span></li>
+                                        <br>
+                                        <li><span>LUGAR:</span></li>
+                                        <li><span>
+                                            <select name="lugar">
+                                                <option value="A">A</option>
+                                                <option value="B">B</option>
+                                                <option value="C">C</option>
+                                                <option value="CH">CH</option>
+                                                <option value="D">D</option>
+                                                <option value="E">E</option>
+                                                <option value="F">F</option>
+                                                <option value="G">G</option>
+                                                <option value="H">H</option>
+                                                <option value="LL">LL</option>
+                                                <option value="M">M</option>
+                                                <option value="N">N</option>
+                                                <option value="O">O</option>
+                                                <option value="PARQUE CENTRAL">PARQUE CENTRAL</option>
+                                                <option value="Q">Q</option>
+                                                <option value="R">R</option>
+                                                <option value="S">S</option>
+                                                <option value="TA">TA</option>
+                                                <option value="TB">TB</option>
+                                                <option value="V">V</option>
+                                                <option value="W">W</option>
+                                                <option value="ZUM">ZUM</option>
+                                            </select>
+                                        </span></li>
+                                        <br>
+                                        <li><span>ESTADO:</span></li>
+                                        <li><span>
+                                            <select name="estado">
+                                                <option value="ALMACENADO">Almacenado</option>
+                                                <option value="ENTREGADO">Entregado</option>
+                                                <option value="DONADO">Donado</option>
+                                            </select>
+                                        </span></li>
+                                        <br>
+                                        <li><span>NUMERO ANAQUEL:</span></li>
+                                        <li><span>
+                                            <select name="nro_anaquel">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                        </span></li>
+                                        <br>
+                                        <li><span>CARACTERISTICAS ESPECIALES:</span></li>
+                                        <li><span><textarea name="caract_esp"></textarea></span></li>
+                                        <br>
+                                        <li><span>COD USUARIO ENTREGA:</span></li>
+                                        <!--<input type="submit" value="Ingresar">-->
+                                        <li><span><input type="text" name="cod_usu_entrega"></span></li>
+                                    </ul>
+                                </div>
+                                <br>
+                                <div class="quantity">
+                                    <a href="#" class="primary-btn pd-cart" id="abrir" onclick="abrir_1()">REGISTRAR</a>
+                                </div>
+                            </div>
+                        
+                                        
+                            <div id="miModal" class="modal">
+                                <div class="flex" id="flex">
+                                    <div class="contenido-modal">
+                                        <div class="modal-body" align="center">
+                                            <span class="close" id="close">&times;</span>
+                                            <br>
+                                            <br>
+                                            <h4>¿Está seguro de que</h4>
+                                            <h4>desea registrar</h4>
+                                            <h4>el objeto?</h4>
+                                            <br>
+                                            <br>
+                                            <button type="button" id="rechazar" class="btn btn-secondary" onclick="myfunction()";>Rechazar </button>
+                                            <button type="submit" id="prueba_1"class="btn btn-primary" onclick="myfunction3()">Aceptar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="miModal4" class="modal">
+                                <div class="flex" id="flex">
+                                    <div class="contenido-modal">
+                                        <div class="modal-body" align="center">  
+                                            <span class="close" id="close4" onclick="cerrar_final()";>&times;</span>
+                                            <br>
+                                            <h4>Registro exitoso</h4>
+                                            <br>
+                                            <img src="./img/affection.png"width="150px" height="150px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </form>
+                       
+                    </div>
+                </div>
+            </div>
+
+           
+    <!-- Product Shop Section End -->
+
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-widget">
+                            <h5>Oficina de Objetos Perdidos</h5>
+                        </div>
+                        <ul>
+                            <li>Ubicación: Edificio V, Oficina 303</li>
+                            <li>Teléfono: 4376767 anexo 31495</li>
+                            <li>Email: zvillena@ulima.edu.pe</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Información</h5>
+                        <ul>
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#">Servicios</a></li>
+                            <li><a href="#">Horarios</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>Mi cuenta</h5>
+                        <ul>
+                            <li><a href="#">Registrados</a></li>
+                            <li><a href="#">Solicitudes</a></li>
+                            <li><a href="#">Términos de uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Centro de ayuda</h5>
+                        <p>Preguntas frecuentes</p>
+                        <p>Contacto</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                           
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+ 
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/agregar_prueba.js"></script>
+    <script src="assets/js/registro_modal.js"></script>
+    <script>
+       /* var guardar = document.getElementById("prueba_1");
+        guardar.addEventListener("click",agregar);
+        function agregar()
+        {
+            event.preventDefault();
+            restService="/Profesional/" + idUsuario + "/Ocupaciones/agregar";
+            console.log(base_url + restService);
+            //var id = idUsuario;
+            var entidad = document.getElementById("select1").value;
+            var nombreOcupa = document.getElementById("nombre_id").value;
+            var descripOcupa = document.getElementById("descripcion_id").value;
+            var fecIni = document.getElementById("fecha_inicio_input").value;
+            var fecFin = document.getElementById("fecha_fin_input").value;
+            var data = {
+                nombreEntidad: entidad,
+                nombre: nombreOcupa,
+                descripcion: descripOcupa,
+                año_inicio: fecIni,
+                año_fin: fecFin,
+                usuario_id : idUsuario
+            };
+            var jsonString = JSON.stringify(data);
+            console.log(jsonString);
+            xhr.open('POST',base_url + restService,true);
+            xhr.setRequestHeader('Content-Type','application/json');
+            xhr.send(jsonString);
+        }*/
+
+
+
+
+
+    </script>
+</body>
+
+</html>

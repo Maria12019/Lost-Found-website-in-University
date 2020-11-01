@@ -1,0 +1,13 @@
+{% extends 'layouts/aplicacion.html' %}
+{% block content %}
+<h1>encontrados</h1>
+<!-- por ahora nos renderiza esta vista simple, pero ahora vamos a indicar que se mezcle con el layout que ya viene con su cabecera y footer-->
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block js %}
+<script src="./assets/js/perdidos.js"></script>
+<!-- lo normal es que cada vista tenga arhivos js comunes y otro no, acá tu cloclas lo que no se comunes, porque los que son comunes, ya estan en el template principal -->
+{% endblock %}

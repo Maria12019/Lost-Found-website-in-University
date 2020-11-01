@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="shortcut icon" href="img/logo_login.png">
+
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+    <!-- Nuestro css-->
+    <link rel="stylesheet" type="text/css" href="css/login_sgop.css" th:href="@{/css/login_sgopcss}">
+    <link rel="stylesheet" type="text/css" href="/ProyectoFinal/static/assets/css/" th:href="@{/css/login_sgopcss}">
+
+</head>
+<body>
+    {% block css %}
+    <link rel="stylesheet" href="assets/css/login_sgop.css">
+    {% endblock %}
+    <br>
+ 
+        <div align="center">
+        <h3><b style="font-weight: bold;">SISTEMA DE GESTIÓN DE OBJETOS PERDIDOS</b></h3>
+        </div>
+        <br>
+        <div align="center">
+        <img src="{{ url_for('static', filename='assets/img/1024.png')}}"alt="Ulima"  height="14%" width="14%" align="center"/></div>
+      
+    <div class="modal-dialog text-center">
+        <div class="col-sm-8 main-section">
+            <div class="modal-content" align="center">
+               <br>
+                <b style="color: white; font-size: 20px;">Bienvenido</b>
+                <br>
+                <form action="/" method="post">
+                    <div class="form-group" id="user-group">
+                        <input type="text" class="form-control" placeholder="Usuario" name="user"/>
+                    </div>
+                    <div class="form-group" id="contrasena-group">
+                        <input type="password" class="form-control" placeholder="Contraseña" name="password"required/>
+                    </div>
+                    <br>{{locals['message']}} <br>
+                    <button type="submit" class="btn btn-primary" value="ingresar"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
+                </form>
+                <div class="col-12 forgot">
+                    <a href="#">He olvidado mi contraseña</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <footer style="text-align: center; font-size: 12px;">
+        Av. Javier Prado Este, Cdra. 46 s/n, Monterrico, Lima 33 - Perú. Telf.: (511) 437 6767 Fax (511) 437 8066 Ulima, todos los derechos reservados ® 2012
+    </footer>
+</body>
+</html>

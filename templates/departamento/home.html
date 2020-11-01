@@ -1,0 +1,20 @@
+{% extends 'layouts/aplicacion2.html' %}
+{% block content %}
+                <li><a href="./shop.html">Solicitud de Donación</a></li>
+                <li><a href="./contact.html">Respuesta de solicitudes</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Aceptadas</a></li>
+                        <li><a href="#">Rechazadas</a></li>
+                       
+                    </ul>
+                </li>   
+{% endblock %}
+
+{% block css %}
+<!-- igual con el css, si hay una hoja de estilos que aplicaa una sola vista, iria acá -->
+<link rel="stylesheet" href="/assets/css/modal.css" type="text/css">
+{% endblock %}
+
+{% block js %}
+<script src="/assets/js/evento.js"></script>
+{% endblock %}
