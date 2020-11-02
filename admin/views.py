@@ -231,3 +231,43 @@ def filtro_objeto():
 
 
 
+@view.route('/objeto/filtroNombre')
+def filtro_nombre():
+    resp = None
+    nombre = request.args.get('nom_objeto')
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = ''
+        if(nombre != 'undefined'):
+            stmt = select([Objeto]).where(Objeto.nom_objeto == nombre)
+        else:
+            stmt = select([Objeto])
+        
+        rs = conn.execute(stmt)
+        list = []
+        for item in conn.execute(stmt):
+            print(item.nom_objeto)
+            row = {
+                'id': item.id,
+                'cod_objeto':item.cod_objeto,
+                'nom_objeto':item.nom_objeto,
+                'categoria':item.categoria,
+                'estado':item.estado,
+                'marca':item.marca,
+                'fecha_hallado':str(item.fecha_hallado),
+                'fecha_dev':str(item.fecha_dev),
+                'lugar':item.lugar,
+                'nro_anaquel':item.nro_anaquel,
+                'caract_esp':item.caract_esp,
+                'cod_usu_entrega':item.cod_usu_entrega
+            }
+            list.append(row)
+        resp=list
+    except Exception as e:
+        resp=[
+            'Se ha producido un error',
+            str(e)
+        ]
+        status = 500
+    return json.dumps(resp),status
