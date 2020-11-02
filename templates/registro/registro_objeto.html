@@ -51,7 +51,7 @@
                     <div class="col-lg-2 text-right col-md-2">
                         <ul class="nav-right">
                             
-                            <button type="button" class="btn btn-secondary" id="registrar_1" data-toggle="modal" data-target="#myModal">
+                            <button type="button" class="btn btn-secondary" id="registrar_1" >
                                 Logout
                             </button>
 
@@ -115,38 +115,22 @@
             </header>
         </div>
     </div>
-    <div class="container text-center">
-             
-        
-        <br>
-        <br>
-        <div class="modal" id="myModal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-                
-                   
-                  
-                  <div class="modal-body">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <br>
-                    <p>¿Está seguro de que deseas</p>
-                    <p> cerrar sesión?</p>
-                    <br>
-                    <a href="/logout"><button type="button" class="btn btn-primary" >OK</button></a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  </div>
-              
-       
-              
-              
-            </div>
-          </div>
-        </div>
-        
-      </div>
+    
+    <script>
+        $("#registrar_1").click(function () {
+            Swal.fire({
+                title: '¿Está seguro de que desea cerrar sesión?',
+                showCancelButton: true,
+                confirmButtonColor: '#e77b3c',
+                cancelButtonColor: 'grey',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/logout";
+                }
+            })
+        });
+    </script>
       
     <section class="product-shop spad">
         <div class="container">
@@ -162,7 +146,7 @@
                                     <div class="pd-desc">
                                     <ul class="pd-tags">
                                         <li><span>CÓDIGO OBJETO:</span></li>
-                                        <li><span><input type="text" name="cod_objeto"></span></li>
+                                        <li><span><input type="text" name="cod_objeto" ></span></li>
                                         <br>
                                         <li><span>NOMBRE:</span></li>
                                         <li><span><input type="text" name="nom_objeto"></span></li>
@@ -403,6 +387,8 @@
 
 
     </script>
+    <script type="text/javascript" src="../../assets/js/modales-jq.js"></script>
+    <script type="text/javascript" src="../../assets/plugins/sweetalert2.all.min.js"></script>
 </body>
 
 </html>
