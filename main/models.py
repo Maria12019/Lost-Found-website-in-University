@@ -27,6 +27,7 @@ class Dpto(Base):
     anexo=Column(Integer)
     edificio=Column(String)
     piso=Column(Integer)
+    
 class Donativo(Base):
     __tablename__ = 'DONATIVO'
     cod_donativo=Column(Integer, primary_key=True)
