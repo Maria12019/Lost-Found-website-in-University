@@ -29,3 +29,14 @@ def register():
         'registro/registro_objeto.html',
         locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
     ), 200
+
+
+@view.route('/sol_usu', methods=['GET'])
+def sol_usu():
+    locals = {
+        'message': '',
+    }
+    return render_template(
+        'registro/solicitud_usuario.html',
+        locals=locals
+    ), 200

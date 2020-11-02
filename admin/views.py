@@ -3,7 +3,7 @@
 
 import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
-from main.models import Country,Objeto
+from main.models import Country,Objeto,Solicitud
 from main.database import engine,session_db
 from sqlalchemy import select,insert, between
 from datetime import datetime
@@ -69,6 +69,41 @@ def objeto_list():
         status = 500
 
     return json.dumps(resp),status
+
+@view.route('/solicitud/list')
+def solicitud_list():
+    resp = None
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = select([Solicitud])
+        rs = conn.execute(stmt)
+        lista = []
+        for r in conn.execute(stmt):
+            row = {
+            'id': r.id,
+            'categoria': r.categoria,
+            'nom_objeto': r.nom_objeto,
+            'cod_objeto': r.cod_objeto,
+            'nro_solicitud': r.nro_solicitud,
+            'fecha_envio': str(r.fecha_envio),
+            'lugar': r.lugar,
+            'descripcion': r.descripcion,
+            'caract_esp': r.caract_esp,
+            'estado': r.estado,
+            'fecha_rpta': str(r.fecha_rpta)
+            }
+            lista.append(row)
+        resp=lista
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar las solicitudes',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status
+
 
 @view.route('/objeto/agregar', methods=['POST'])
 def objeto_agregar():
@@ -261,6 +296,47 @@ def filtro_nombre():
                 'nro_anaquel':item.nro_anaquel,
                 'caract_esp':item.caract_esp,
                 'cod_usu_entrega':item.cod_usu_entrega
+            }
+            list.append(row)
+        resp=list
+    except Exception as e:
+        resp=[
+            'Se ha producido un error',
+            str(e)
+        ]
+        status = 500
+    return json.dumps(resp),status
+
+
+@view.route('/solicitud/filtroNombreSol')
+def filtro_nombre_sol():
+    resp = None
+    nombre = request.args.get('nom_objeto')
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = ''
+        if(nombre != 'undefined'):
+            stmt = select([Solicitud]).where(Solicitud.nom_objeto == nombre)
+        else:
+            stmt = select([Solicitud])
+        
+        rs = conn.execute(stmt)
+        list = []
+        for item in conn.execute(stmt):
+            print(item.nom_objeto)
+            row = {
+                'id': item.id,
+                'categoria': item.categoria,
+                'nom_objeto': item.nom_objeto,
+                'cod_objeto': item.cod_objeto,
+                'nro_solicitud': item.nro_solicitud,
+                'fecha_envio': str(item.fecha_envio),
+                'lugar': item.lugar,
+                'descripcion': item.descripcion,
+                'caract_esp': item.caract_esp,
+                'estado': item.estado,
+                'fecha_rpta': str(item.fecha_rpta)
             }
             list.append(row)
         resp=list

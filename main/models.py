@@ -54,3 +54,16 @@ class Objeto(Base):
     cod_usu_entrega=Column(Integer)
 
 
+class Solicitud(Base):
+    __tablename__='solicitud_prueba'
+    id=Column(Integer, primary_key=True)
+    categoria=Column(String)
+    nom_objeto = Column(String)
+    cod_objeto= Column(Integer)
+    nro_solicitud=Column(Integer)
+    fecha_envio=Column(DateTime)
+    lugar=Column(String)
+    descripcion=Column(String)
+    caract_esp=Column(String)
+    estado=Column(String)
+    fecha_rpta=Column(DateTime)
