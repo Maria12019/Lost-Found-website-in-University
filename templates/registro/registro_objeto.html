@@ -146,29 +146,35 @@
                                     <div class="pd-desc">
                                     <ul class="pd-tags">
                                         <li><span>CÓDIGO OBJETO:</span></li>
-                                        <li><span><input type="text" name="cod_objeto" ></span></li>
+                                        <li><span><input type="text" name="cod_objeto" required minlength="4" maxlength="8"></span></li>
                                         <br>
                                         <li><span>NOMBRE:</span></li>
-                                        <li><span><input type="text" name="nom_objeto"></span></li>
+                                        <li><span><input type="text" name="nom_objeto" required></span></li>
                                         <br>
                                         <li><span>CATEGORÍA:</span></li>
                                         <li><span>
                                             <select name="categoria">
-                                                <option value="ACADÉMICO">Académico</option>
-                                                <option value="DOCUMENTO">Documento</option>
-                                                <option value="PERSONAL">Personal</option>
-                                                <option value="TECNOLÓGICO">Tecnológico</option>
+                                                <option value="ACADEMICO">Académico</option>
+                                                <option value="ACCESORIOS">Accesorios</option>
+                                                <option value="BELLEZA">Belleza</option>
+                                                <option value="DOCUMENTACION">Documentación</option>
+                                                <option value="EQUIPAJE">Equipaje</option>
+                                                <option value="JOYERIA">Joyería</option>
+                                                <option value="PAPELERIA">Papelería</option>
+                                                <option value="PRENDA">Prenda</option>
+                                                <option value="SALUD">Salud</option>
+                                                <option value="TECNOLOGICO">Tecnológico</option>
                                             </select>
                                         </span></li>
                                         <br>
                                         <li><span>MARCA:</span></li>
-                                        <li><span><input type="text" name="marca"></span></li>
+                                        <li><span><input type="text" name="marca" required></span></li>
                                         <br>
                                         <li><span>FECHA HALLADO:</span></li>
-                                        <li><span><input type="date" name="fecha_hallado"></li></span></li>
+                                        <li><span><input type="date" name="fecha_hallado" required></li></span></li>
                                         <br>
                                         <li><span>FECHA DEVOLUCION:</span></li>
-                                        <li><span><input type="date" name="fecha_dev"></li></span></li>
+                                        <li><span><input type="date" name="fecha_dev" required></li></span></li>
                                         <br>
                                         <li><span>LUGAR:</span></li>
                                         <li><span>
@@ -218,16 +224,18 @@
                                         </span></li>
                                         <br>
                                         <li><span>CARACTERISTICAS ESPECIALES:</span></li>
-                                        <li><span><textarea name="caract_esp"></textarea></span></li>
+                                        <li><span><textarea name="caract_esp" required minlength="4" maxlength="250" ></textarea></span></li>
                                         <br>
                                         <li><span>COD USUARIO ENTREGA:</span></li>
                                         <!--<input type="submit" value="Ingresar">-->
-                                        <li><span><input type="text" name="cod_usu_entrega"></span></li>
+                                        <li><span><input type="text" name="cod_usu_entrega" required minlength="4" maxlength="8"></span></li>
                                     </ul>
                                 </div>
                                 <br>
                                 <div class="quantity">
-                                    <a href="#" class="primary-btn pd-cart" id="abrir" onclick="abrir_1()">REGISTRAR</a>
+                                    
+                                    <button type="submit" class="primary-btn pd-cart">REGISTRAR</button>
+
                                 </div>
                             </div>
                         
