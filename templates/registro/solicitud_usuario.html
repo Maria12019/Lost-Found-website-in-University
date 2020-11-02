@@ -48,16 +48,14 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-2 text-right col-md-2">
-                        <ul class="nav-right">
-                            
-                            <button type="button" class="btn btn-secondary" id="registrar_1" data-toggle="modal" data-target="#myModal">
-                                Logout
-                            </button>
+                    <div class="quantity">
+                                    
+                        <button type="button" class="btn btn-secondary" id="registrar_1" >
+                            Logout
+                        </button>
 
-                       </ul>
                     </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -506,6 +504,21 @@
     <script src="/assets/js/jquery.slicknav.js"></script>
     <script src="/assets/js/owl.carousel.min.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script>
+        $("#registrar_1").click(function () {
+            Swal.fire({
+                title: '¿Está seguro de que desea cerrar sesión?',
+                showCancelButton: true,
+                confirmButtonColor: '#e77b3c',
+                cancelButtonColor: 'grey',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/logout";
+                }
+            })
+        });
+    </script>
     <script>
         console.log("se conecto aaaa");
     
