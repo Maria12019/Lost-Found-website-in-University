@@ -213,7 +213,7 @@
                             <label for="start">Fecha Fin:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
                             <input type="date" id="start" name="trip-start" value="fechaFin" min="2020-01-01" max="2020-12-31">
                             <br><br><br>
-                            <button id="buscarFiltro" type="button" class="filter-btn" onclick="filtrarObjeto(event);">Buscar</button>
+                            <button id="buscarFiltro" type="button" class="filter-btn" onclick="filtrarSolicitud(event);">Buscar</button>
                         </div>
                     </form>
                 </div>
@@ -733,7 +733,7 @@
         }
     )
     
-    function filtrarObjeto(e){
+    function filtrarSolicitud(e){
         limpiarBody();
         console.log(categoriaSelec);
         console.log(lugarSelec);
@@ -747,7 +747,7 @@
             } else {
                 const xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange=function(){};
-                xhttp.open('GET','/objeto/filtro?categoria='+categoriaSelec+'&lugar='+lugarSelec,true);
+                xhttp.open('GET','/solicitud/filtro?categoria='+categoriaSelec+'&lugar='+lugarSelec,true);
                 xhttp.onreadystatechange=function(){
                     if(xhttp.readyState == 4){
                         switch(xhttp.status){
@@ -782,7 +782,6 @@
     <script src="assets/js/bootstrap.min.js"></script>
  
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/agregar_prueba.js"></script>
     <script src="assets/js/registro_modal.js"></script>
 
 </body>

@@ -347,3 +347,52 @@ def filtro_nombre_sol():
         ]
         status = 500
     return json.dumps(resp),status
+
+@view.route('/solicitud/filtro')
+def filtro_soli():
+    resp = None
+    categoria = request.args.get('categoria')
+    lugar = request.args.get('lugar')
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = ''
+        if(categoria != 'undefined' and lugar == 'undefined'):
+            stmt = select([Solicitud]).where(Solicitud.categoria == categoria)
+        elif(lugar != 'undefined' and categoria == 'undefined'):
+            stmt = select([Solicitud]).where(Solicitud.lugar == lugar)
+        elif(categoria == 'TODOS' and lugar != 'undefined'):
+            stmt = select([Solicitud]).where(Solicitud.lugar == lugar)
+        elif(lugar == 'TODOS' and categoria != 'undefined'):
+            stmt = select([Solicitud]).where(Solicitud.categoria == categoria)
+        elif(lugar != 'undefined' and categoria != 'undefined'):
+            stmt =  (select([Solicitud])
+                    .select_from(Solicitud)
+                    .where((Solicitud.categoria == categoria) &
+                    (Solicitud.lugar == lugar)))
+        
+        rs = conn.execute(stmt)
+        list = []
+        for item in conn.execute(stmt):
+            row = {
+                'id': item.id,
+                'categoria': item.categoria,
+                'nom_objeto': item.nom_objeto,
+                'cod_objeto': item.cod_objeto,
+                'nro_solicitud': item.nro_solicitud,
+                'fecha_envio': str(item.fecha_envio),
+                'lugar': item.lugar,
+                'descripcion': item.descripcion,
+                'caract_esp': item.caract_esp,
+                'estado': item.estado,
+                'fecha_rpta': str(item.fecha_rpta)
+            }
+            list.append(row)
+        resp=list
+    except Exception as e:
+        resp=[
+            'Se ha producido un error',
+            str(e)
+        ]
+        status = 500
+    return json.dumps(resp),status
