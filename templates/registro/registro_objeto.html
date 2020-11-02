@@ -140,7 +140,7 @@
                         <div class="col-lg-6">
 
                         </div>
-                        <form action="/objeto/agregar" method="post">
+                        <form action="/objeto/agregar" method="post" id="formulario">
                             <div class="col-lg-6">
                                 <div class="product-details">
                                     <div class="pd-desc">
@@ -235,7 +235,7 @@
                                 <br>
                                 <div class="quantity">
                                     
-                                    <button type="submit" class="primary-btn pd-cart">REGISTRAR</button>
+                                    <button type="submit" class="primary-btn pd-cart" >REGISTRAR</button>
 
                                 </div>
                             </div>
@@ -268,7 +268,8 @@
                                             <br>
                                             <h4>Registro exitoso</h4>
                                             <br>
-                                            <img src="./img/affection.png"width="150px" height="150px">
+                                            <img src="{{ url_for('static', filename='assets/img/affection.jpeg')}}" width="150px" height="150px"/></div>
+                                         
                                         </div>
                                     </div>
                                 </div>
@@ -397,6 +398,11 @@
     </script>
     <script type="text/javascript" src="../../assets/js/modales-jq.js"></script>
     <script type="text/javascript" src="../../assets/plugins/sweetalert2.all.min.js"></script>
+    <script>
+        $("#formulario").on('submit', function(){
+        $('#miModal4').show();
+        })
+    </script>
 </body>
 
 </html>
