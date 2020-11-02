@@ -82,13 +82,13 @@
                                 {% else %}
                                 {% if (session['rol'] == 3) %} <!---->
                                 <li id="3"><a href="/inicio">OBJETOS</a></li>
-                                <li><a href="./registro.html">REGISTRO OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
                                 <li><a href="./verificar_objeto.html">SOLICITUDES USUARIO</a></li>
                                 
                                 {% else %}
                                 {% if (session['rol'] == 4) %}
                                 <li id="4"><a href="/inicio">OBJETOS</a></li>
-                                <li><a href="./registro.html">REGISTRO OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
                                 
                                 {% else %}
                                 <li id="5"><a href="/inicio">OBJETOS</a></li>
@@ -211,10 +211,10 @@
                             <h4 class="fw-title">Fecha</h4>
                     
                             <label for="start">Fecha Inicio:&nbsp&nbsp</label>
-                            <input type="date" id="start" name="trip-start" value="fechaInicio" min="2020-01-01" max="2020-12-31">
+                            <input type="date" id="fechaInicio" name="trip-start" value="fechaInicio" min="2020-01-01" max="2020-12-31">
                     
                             <label for="start">Fecha Fin:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-                            <input type="date" id="start" name="trip-start" value="fechaFin" min="2020-01-01" max="2020-12-31">
+                            <input type="date" id="fechaFin" name="trip-start" value="fechaFin" min="2020-01-01" max="2020-12-31">
                             <br><br><br>
                             <button id="buscarFiltro" type="button" class="filter-btn" onclick="Validate();">Buscar</button>
                         </div>
@@ -284,6 +284,7 @@
                                                 <h5>Código de usuario que entrego</h5>
                                               
                                                 <p id="siete"></p>
+                                                <center><button type="button" class="btn btn-success">ACTUALIZAR</button></center>
                                             
                                           </div>
                                     </div>
@@ -563,6 +564,23 @@
 
         }
 
+    var inputInicio = document.getElementById("fechaInicio");
+    var inputFin = document.getElementById("fechaFin");
+    var fechaInicioInput;
+    var fechaFinInput;
+
+    inputInicio.addEventListener("change", function(){
+        fechaInicioInput = inputInicio.value;
+        return fechaInicioInput;
+    }
+    )
+
+    inputFin.addEventListener("change", function(){
+        fechaFinInput = inputFin.value;
+        return fechaFinInput;
+    }
+    )
+
     function limpiarBody(){
         var div = document.getElementById("items");
         var div2 = document.getElementById("items2");
@@ -617,7 +635,13 @@
         }*/
 
     function Validate() {
-        if  (lugarSelec == undefined && categoriaSelec == undefined){
+        console.log(lugarSelec)
+        console.log(categoriaSelec)
+        console.log(fechaInicioInput)
+        console.log(fechaFinInput)
+
+
+        if  (lugarSelec == undefined && categoriaSelec == undefined && fechaInicioInput == undefined && fechaFinInput == undefined ){
             //If the "Please Select" option is selected display error.
             Swal.fire({
                 title: 'Debes seleccionar al menos un filtro.',
@@ -626,8 +650,129 @@
             });
             return false;
         }
+        
+
+
+
+        /*else if (fechaInicioInput != undefined && fechaFinInput != undefined ){
+            ValidateDate();
+
+            return false;
+        }*/
+
+        else if (fechaInicioInput == undefined  && fechaFinInput != undefined ){
+           
+            Swal.fire({
+                title: 'Seleccione una fecha de inicio.',
+                confirmButtonColor: '#e77b3c',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+
+        else if ( lugarSelec != undefined && categoriaSelec != undefined && fechaInicioInput != undefined  && fechaFinInput == undefined ){
+           
+           Swal.fire({
+               title: 'Seleccione una fecha de fin.',
+               confirmButtonColor: '#e77b3c',
+               confirmButtonText: 'OK'
+           });
+           return false;
+       }
+
+       else if ( lugarSelec == undefined && categoriaSelec != undefined && fechaInicioInput != undefined  && fechaFinInput == undefined ){
+           
+           Swal.fire({
+               title: 'Seleccione una fecha de fin.',
+               confirmButtonColor: '#e77b3c',
+               confirmButtonText: 'OK'
+           });
+           return false;
+       }
+
+       else if ( lugarSelec != undefined && categoriaSelec == undefined && fechaInicioInput != undefined  && fechaFinInput == undefined ){
+           
+           Swal.fire({
+               title: 'Seleccione una fecha de fin.',
+               confirmButtonColor: '#e77b3c',
+               confirmButtonText: 'OK'
+           });
+           return false;
+       }
+
+       //esto retorna validar
+       /*else if ( lugarSelec == undefined && categoriaSelec == undefined && fechaInicioInput != undefined  && fechaFinInput != undefined ){
+        
+           var startDate = document.getElementById("fechaInicio").value;
+          var endDate = document.getElementById("fechaFin").value;
+        
+          if ((Date.parse(endDate) <= Date.parse(startDate))) {
+            Swal.fire({
+                title: 'Fecha inicio debe ser mayor a fecha fin.',
+                confirmButtonColor: '#e77b3c',
+                confirmButtonText: 'OK'
+            });
+              document.getElementById("fechaFin").value = "";
+           }
+ 
+           return false;
+
+        
+            filtrarObjeto(event);
+           
+
+           
+       } */
+
+       else if ( lugarSelec != undefined && categoriaSelec == undefined && fechaInicioInput != undefined  && fechaFinInput == undefined ){
+        
+           Swal.fire({
+               title: 'Seleccione una fecha de fin.',
+               confirmButtonColor: '#e77b3c',
+               confirmButtonText: 'OK'
+           });
+           return false;
+       }
+
+
         filtrarObjeto(event);
     }
+
+    
+    /*function ValidateDate() {
+          var startDate = document.getElementById("fechaInicio").value;
+          var endDate = document.getElementById("fechaFin").value;
+        
+          if ((Date.parse(endDate) <= Date.parse(startDate))) {
+            Swal.fire({
+                title: 'Fecha inicio debe ser mayor a fecha fin.',
+                confirmButtonColor: '#e77b3c',
+                confirmButtonText: 'OK'
+            });
+              document.getElementById("fechaFin").value = "";
+           }
+          if ((Date.parse(endDate) >= Date.parse(startDate))) {
+            Swal.fire({
+                title: 'Bien. Fecha inicio es mayor a fecha fin.',
+                confirmButtonColor: '#e77b3c',
+                confirmButtonText: 'OK'
+            });;
+              daydiff(startDate, endDate);
+          }
+      };
+
+      function parseDate(str) {
+          var mdy = str.split('/')
+          console.log(mdy)
+          return new Date(mdy[2], mdy[1] - 1, mdy[0]);
+      }
+
+      function daydiff(first, second) {
+          first = parseDate(first);
+          second = parseDate(second);
+          console.log(first, second);
+          $("#AdvDuration").val(Math.round((second - first) / (1000 * 60 * 60 * 24)));
+      }*/
 
 
     function filtrarObjeto(e){
@@ -635,14 +780,14 @@
         console.log(categoriaSelec);
         console.log(lugarSelec);
 
-        if( (categoriaSelec=='TODOS' && lugarSelec == undefined)    || 
-            (lugarSelec == 'TODOS' && categoriaSelec == undefined)  ||
-            (lugarSelec == 'TODOS' && categoriaSelec == 'TODOS') ) {
+        if( (categoriaSelec=='TODOS' && lugarSelec == undefined && fechaInicio == 'undefined' && fechaFin == 'undefined')    || 
+            (lugarSelec == 'TODOS' && categoriaSelec == undefined && fechaInicio == 'undefined' && fechaFin == 'undefined')  ||
+            (lugarSelec == 'TODOS' && categoriaSelec == 'TODOS' && fechaInicio == 'undefined' && fechaFin == 'undefined') ) {
             listarObjeto();
             } else {
                 const xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange=function(){};
-                xhttp.open('GET','/objeto/filtro?categoria='+categoriaSelec+'&lugar='+lugarSelec,true);
+                xhttp.open('GET','/objeto/filtro?categoria='+categoriaSelec+'&lugar='+lugarSelec + '&fechaInicio=' + fechaInicioInput + '&fechaFin=' + fechaFinInput,true);
                 xhttp.onreadystatechange=function(){
                     if(xhttp.readyState == 4){
                         switch(xhttp.status){
@@ -654,6 +799,10 @@
                 }
                 xhttp.send();
             }
+        
+
+
+        
 
     } 
     </script>

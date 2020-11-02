@@ -5,9 +5,8 @@ import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
 from main.models import Country,Objeto
 from main.database import engine,session_db
-from sqlalchemy import select,insert
+from sqlalchemy import select,insert, between
 from datetime import datetime
-from main.test import get_rol_by_id
 
 #objeto que tiene la subaplicacion
 view = Blueprint('admin_bludprint', __name__)
@@ -35,7 +34,6 @@ def country_list():
 def objeto_list():
     resp = None
     status = 200
-    
     try:
         conn = engine.connect()
         stmt = select([Objeto])
@@ -57,10 +55,12 @@ def objeto_list():
             'caract_esp':r.caract_esp,
             'cod_usu_entrega':r.cod_usu_entrega
             }
-            if(r.estado=="ALMACENADO"):
-                lista.append(row) 
+            lista.append(row) 
         #resp = [dict(r) for r in conn.execute(stmt)]
         resp=lista
+
+     
+        
     except Exception as e:
         resp = [
             'Se ha producido un error en listar los paises',
@@ -123,27 +123,82 @@ INSERT INTO OBJETO(cod_objeto, id_usuario,nom_objeto, categoria, marca, estado, 
 
 
 @view.route('/objeto/filtro')
+
 def filtro_objeto():
+    
     resp = None
     categoria = request.args.get('categoria') #BELLEZA
     lugar = request.args.get('lugar')
+    fechaInicio = request.args.get('fechaInicio')
+    fechaFin = request.args.get('fechaFin')
     status = 200
+    print(fechaInicio)
+    print(fechaFin)
     try:
         conn = engine.connect()
         stmt=''
-        if(categoria != 'undefined' and lugar == 'undefined'):
+        if(categoria != 'undefined' and lugar == 'undefined' and fechaInicio == 'undefined' and fechaFin == 'undefined' ):
+            print(1)
             stmt = select([Objeto]).where(Objeto.categoria == categoria)
-        elif(lugar != 'undefined' and categoria == 'undefined'):
+
+        
+        elif(categoria == 'TODOS' and lugar == 'TODOS' and fechaInicio != 'undefined' and fechaFin != 'undefined'):
+            print(7)
+            stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin))
+        
+        
+        
+        
+        
+        elif (fechaInicio != 'undefined' and fechaFin != 'undefined'and lugar == 'undefined' and categoria == 'undefined' ):
+            print(2)
+            stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin))
+        
+        
+        
+        
+        elif(lugar != 'undefined' and categoria == 'undefined' and fechaInicio == 'undefined' and fechaFin == 'undefined'):
+            print(3)
             stmt = select([Objeto]).where(Objeto.lugar == lugar)
-        elif(categoria == 'TODOS' and lugar != 'undefined'):
+        elif(categoria == 'TODOS' and lugar != 'undefined' and fechaInicio == 'undefined' and fechaFin == 'undefined'):
+            print(4)
             stmt = select([Objeto]).where(Objeto.lugar == lugar)
-        elif(lugar == 'TODOS' and categoria != 'undefined'):
+        elif(categoria == 'TODOS' and lugar == 'undefined' and fechaInicio != 'undefined' and fechaFin != 'undefined'):
+            print(5)
+            stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin))
+
+        elif(lugar == 'TODOS' and categoria == 'undefined' and fechaInicio != 'undefined' and fechaFin != 'undefined'):
+            print(6)
+            stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin))
+
+        
+
+
+        elif(lugar == 'TODOS' and categoria != 'undefined' and fechaInicio == 'undefined' and fechaFin == 'undefined'):
+            print(8)
             stmt = select([Objeto]).where(Objeto.categoria == categoria)
-        elif(lugar != 'undefined' and categoria != 'undefined'):
+        elif(lugar != 'undefined' and categoria != 'undefined' and fechaInicio == 'undefined' and fechaFin == 'undefined'):
+            print(9)
             stmt =  (select([Objeto])
                     .select_from(Objeto)
                     .where((Objeto.categoria == categoria) &
                     (Objeto.lugar == lugar)))
+
+        
+
+        elif (fechaInicio != 'undefined' and fechaFin != 'undefined'and lugar != 'undefined' and categoria != 'undefined' ):
+            print(10)
+            stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin) & (Objeto.categoria == categoria) &
+                    (Objeto.lugar == lugar))
+
+        elif(fechaInicio != 'undefined' and fechaFin != 'undefined' and categoria == 'undefined' and lugar != 'undefined' ):
+            print(11)
+            stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin) &
+                    (Objeto.lugar == lugar))
+
+        elif(categoria != 'undefined' and lugar == 'undefined' and fechaInicio != 'undefined' and fechaFin != 'undefined' ):
+            print(12)
+            stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin) & (Objeto.categoria == categoria) )
         
         rs = conn.execute(stmt)
         lista = []
@@ -163,8 +218,7 @@ def filtro_objeto():
             'caract_esp':r.caract_esp,
             'cod_usu_entrega':r.cod_usu_entrega
             }
-            if(r.estado=="ALMACENADO"):
-                lista.append(row) 
+            lista.append(row) 
         resp=lista
     except Exception as e:
         resp = [
