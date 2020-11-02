@@ -76,14 +76,14 @@
                                 {% if (session['rol'] == 2) %} <!--JEFE-->
                                 <li><a href="/inicio">OBJETOS</a></li>
                                 <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
-                                <li><a href="./verificar_objeto.html">SOLICITUDES USUARIO</a></li>
-                                <li><a href="./verificar_objeto.html">SOLICITUD DE DONACIÓN</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
+                                <li><a href="/sol_usu">SOLICITUD DE DONACIÓN</a></li>
                                 
                                 {% else %}
                                 {% if (session['rol'] == 3) %} <!---->
                                 <li id="3"><a href="/inicio">OBJETOS</a></li>
                                 <li><a href="/register">REGISTRO OBJETOS</a></li>
-                                <li><a href="./verificar_objeto.html">SOLICITUDES USUARIO</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
                                 
                                 {% else %}
                                 {% if (session['rol'] == 4) %}
@@ -92,7 +92,7 @@
                                 
                                 {% else %}
                                 <li id="5"><a href="/inicio">OBJETOS</a></li>
-                                <li><a href="/registro">SOLICITUD DE DONACIÓN</a></li>
+                                <li><a href="/sol_usu">SOLICITUD DE DONACIÓN</a></li>
                                 
                                 {% endif %}
                                 {% endif %}
