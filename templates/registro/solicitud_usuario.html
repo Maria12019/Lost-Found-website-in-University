@@ -521,236 +521,129 @@
     </script>
     <script>
         console.log("se conecto aaaa");
-    
-        var estado=0;
 
-        function myFunction(datos)
-        {
-                var variable= document.getElementById("lista");
-                var ventana=document.getElementById('miModal');
-                var a= variable.childNodes[1].id;
-                console.log(a);
+        var estado = 0;
 
-                if(datos.length >= 0)
-                {
-                    console.log('mayor que ceroooo')
+        function myFunction(datos) {
+            var variable = document.getElementById("lista");
+            var ventana = document.getElementById('miModal');
+            var a = variable.childNodes[1].id;
+            console.log(a);
+
+            if (a == "items2") {
+                estado = 1;
+
+                for (let item of datos) {
+
+                    let miNodo = document.createElement('div');
+
+                    miNodo.className = 'col-lg-4 col-sm-6';
+                    miNodo.classList.add('card');
+
+
+                    let miNodoCardBody = document.createElement('div');
+                    miNodoCardBody.classList.add('card-body');
+
+                    let miNodoTitle = document.createElement('h5');
+                    miNodoTitle.classList.add('card-title');
+                    miNodoTitle.textContent = item.nom_objeto;
+
+
+                    let miNodoCategoria = document.createElement('p');
+                    miNodoCategoria.classList.add('card-text');
+                    miNodoCategoria.textContent = item.categoria;
+
+                    let miNodoNumSolicitud = document.createElement('p');
+                    miNodoNumSolicitud.classList.add('card-text');
+                    miNodoNumSolicitud.textContent = item.nro_solicitud;
+
+                    let miNodoBoton = document.createElement('button');
+                    miNodoBoton.classList.add('btn', 'btn-primary', 'btnVerificar');
+                    miNodoBoton.textContent = 'VERIFICAR';
+
+
+                    miNodoBoton.addEventListener("click", function () {
+                        var soliId=item.id;
+                        console.log(soliId);
+                        myChildWin =  window.location.replace('/sol_usu/verificar?soliId='+soliId);
+                    });
+                    // Insertamos
+
+                    miNodoCardBody.appendChild(miNodoTitle);
+                    miNodoCardBody.appendChild(miNodoCategoria);
+                    miNodoCardBody.appendChild(miNodoNumSolicitud);
+                    miNodoCardBody.appendChild(miNodoBoton);
+                    miNodo.appendChild(miNodoCardBody);
+
+                    document.getElementById("items2").appendChild(miNodo);
                 }
-                else{
-                    console.log('nofin')
+            }
+        }
+
+        function limpiarBody() {
+            var div = document.getElementById("items");
+            var div2 = document.getElementById("items2");
+            if (estado == 0) {
+                while (div.firstChild) {
+                    div.removeChild(div.firstChild);
                 }
+            } else {
+                while (div2.firstChild) {
+                    div2.removeChild(div2.firstChild);
+                }
+            }
+        }
 
-                if(a=="items")
-                {
-                    estado=0;
-                    for (let item of datos)
-                    { 
-                       
-                        let miNodo = document.createElement('div');
-                        
-                        miNodo.className='col-lg-4 col-sm-6';
-                        miNodo.classList.add('card');
-                        
-                    
-                        let miNodoCardBody = document.createElement('div');
-                        miNodoCardBody.classList.add('card-body');
-                        
-                        let miNodoTitle = document.createElement('h5');
-                        miNodoTitle.classList.add('card-title');
-                        miNodoTitle.textContent = item.nom_objeto;
-                        
-                    
-                        let miNodoCategoria= document.createElement('p');
-                        miNodoCategoria.classList.add('card-text');
-                        miNodoCategoria.textContent = item.categoria;
-
-                        let miNodolugar= document.createElement('p');
-                        miNodolugar.classList.add('card-text');
-                        if((String(item.lugar) != 'PARQUE CENTRAL') && (String(item.lugar) != 'ZUM')){
-                            miNodolugar.textContent = "Pabellón "+String(item.lugar);
-                        } else{
-                            miNodolugar.textContent = String(item.lugar);
-                        }
-                        
-                        let miNodofecha= document.createElement('p');
-                        miNodofecha.classList.add('card-text');
-                        miNodofecha.textContent = item.fecha_hallado;
-
-                        let miNodoBoton = document.createElement('button');
-                        miNodoBoton.classList.add('btn', 'btn-success');
-                        miNodoBoton.textContent = 'SOLICITAR';
-
-                        miNodoCardBody.appendChild(miNodoTitle);
-                        miNodoCardBody.appendChild(miNodoCategoria);
-                        miNodoCardBody.appendChild(miNodolugar);
-                        miNodoCardBody.appendChild(miNodofecha);
-                        miNodoCardBody.appendChild(miNodoBoton);
-                        miNodo.appendChild(miNodoCardBody);
-
-                        document.getElementById("items").appendChild(miNodo);
-                
+        function listarSolicitud() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open('GET', '/solicitud/list', true);
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4) {
+                    switch (xhttp.status) {
+                        case 200:
+                            myFunction(JSON.parse(xhttp.responseText));
+                            break;
                     }
                 }
-
-                else
-                {    
-                    if(a=="items2")
-                    {
-                            estado=1;
-                        
-                            for (let item of datos)
-                            {
-                                
-                                let miNodo = document.createElement('div');
-                              
-                                miNodo.className='col-lg-4 col-sm-6';
-                                miNodo.classList.add('card');
-                                
-                            
-                                let miNodoCardBody = document.createElement('div');
-                                miNodoCardBody.classList.add('card-body');
-                                
-                                let miNodoTitle = document.createElement('h5');
-                                miNodoTitle.classList.add('card-title');
-                                miNodoTitle.textContent = item.nom_objeto;
-                                
-                            
-                                let miNodoCategoria= document.createElement('p');
-                                miNodoCategoria.classList.add('card-text');
-                                miNodoCategoria.textContent = item.categoria;
-
-                                let miNodoNumSolicitud= document.createElement('p');
-                                miNodoNumSolicitud.classList.add('card-text');
-                                miNodoNumSolicitud.textContent = item.nro_solicitud;
-
-                                let miNodoBoton = document.createElement('button');
-                                miNodoBoton.classList.add('btn', 'btn-primary');
-                                miNodoBoton.textContent = 'VERIFICAR';
-
-
-                                miNodoBoton.addEventListener("click",function() {
-                                    
-                                });
-                                // Insertamos
-                            
-                                miNodoCardBody.appendChild(miNodoTitle);
-                                miNodoCardBody.appendChild(miNodoCategoria);
-                                miNodoCardBody.appendChild(miNodoNumSolicitud);
-                                miNodoCardBody.appendChild(miNodoBoton);
-                                miNodo.appendChild(miNodoCardBody);
-                                
-                                
-                                document.getElementById("items2").appendChild(miNodo);
-   
-                            }
-                            
- 
-                    }
-
-                    else if(a=='items3'){
-                        estado = 3;
-
-                        for (let item of datos){ 
-                       
-                            let miNodo = document.createElement('div');
-                        
-                            miNodo.className='col-lg-4 col-sm-6';
-                            miNodo.classList.add('card');
-                            
-                            
-                            let miNodoCardBody = document.createElement('div');
-                            miNodoCardBody.classList.add('card-body');
-                            
-                            let miNodoTitle = document.createElement('h5');
-                            miNodoTitle.classList.add('card-title');
-                            miNodoTitle.textContent = item.nom_objeto;
-                            
-                            
-                            let miNodoCategoria= document.createElement('p');
-                            miNodoCategoria.classList.add('card-text');
-                            miNodoCategoria.textContent = item.categoria;
-
-                            let miNodoBoton = document.createElement('button');
-                            miNodoBoton.classList.add('btn', 'btn-success');
-                            miNodoBoton.textContent = 'VERIFICAR';
-
-                            miNodoCardBody.appendChild(miNodoTitle);
-                            miNodoCardBody.appendChild(miNodoCategoria);
-                            miNodoCardBody.appendChild(miNodoBoton);
-                            miNodo.appendChild(miNodoCardBody);
-
-                            document.getElementById("items3").appendChild(miNodo);
-                        
-                        }
-
-                        }
-                }
-
-        }
-
-    function limpiarBody(){
-        var div = document.getElementById("items");
-        var div2 = document.getElementById("items2");
-        if(estado==0){
-            while(div.firstChild){
-            div.removeChild(div.firstChild);
             }
-        } else{
-            while(div2.firstChild){
-            div2.removeChild(div2.firstChild);
-            }
+            xhttp.send();
         }
-    }
 
-    function listarSolicitud(){
-        const xhttp = new XMLHttpRequest();
-        xhttp.open('GET','/solicitud/list',true);    
-        xhttp.onreadystatechange=function(){
-        if(xhttp.readyState == 4){
-            switch(xhttp.status){
-                case 200:
-                    myFunction(JSON.parse(xhttp.responseText));
-                    break;
-            }
+        var selec1 = document.getElementById("categoria");
+        var categoriaSelec;
+
+        selec1.addEventListener("change", function () {
+            categoriaSelec = selec1.value;
+            return categoriaSelec;
         }
-       }
-       xhttp.send();
-    }
+        )
 
-    var selec1 = document.getElementById("categoria");
-    var categoriaSelec;
-
-    selec1.addEventListener("change", function(){
-        categoriaSelec = selec1.value;
-        return categoriaSelec;
+        var selec2 = document.getElementById("lugar");
+        var lugarSelec;
+        selec2.addEventListener("change", function () {
+            lugarSelec = selec2.value;
+            return lugarSelec;
         }
-    )
+        )
 
-    var selec2 = document.getElementById("lugar");
-    var lugarSelec;
-    selec2.addEventListener("change", function(){
-        lugarSelec = selec2.value;
-        return lugarSelec;
-        }
-    )
-    
-    function filtrarSolicitud(e){
-        limpiarBody();
-        console.log(categoriaSelec);
-        console.log(lugarSelec);
+        function filtrarSolicitud(e) {
+            limpiarBody();
+            console.log(categoriaSelec);
+            console.log(lugarSelec);
 
-        if  (lugarSelec == undefined && categoriaSelec == undefined){
-            alert("Debes escoger al menos una opción.")
-        } else if(  (categoriaSelec=='TODOS' && lugarSelec == undefined)    || 
-                    (lugarSelec == 'TODOS' && categoriaSelec == undefined)  ||
-                    (lugarSelec == 'TODOS' && categoriaSelec == 'TODOS') ) {
-                    listarObjeto();
+            if (lugarSelec == undefined && categoriaSelec == undefined) {
+                alert("Debes escoger al menos una opción.")
+            } else if ((categoriaSelec == 'TODOS' && lugarSelec == undefined) ||
+                (lugarSelec == 'TODOS' && categoriaSelec == undefined) ||
+                (lugarSelec == 'TODOS' && categoriaSelec == 'TODOS')) {
+                listarObjeto();
             } else {
                 const xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange=function(){};
-                xhttp.open('GET','/solicitud/filtro?categoria='+categoriaSelec+'&lugar='+lugarSelec,true);
-                xhttp.onreadystatechange=function(){
-                    if(xhttp.readyState == 4){
-                        switch(xhttp.status){
+                xhttp.onreadystatechange = function () { };
+                xhttp.open('GET', '/solicitud/filtro?categoria=' + categoriaSelec + '&lugar=' + lugarSelec, true);
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        switch (xhttp.status) {
                             case 200:
                                 myFunction(JSON.parse(xhttp.responseText));
                                 break;
@@ -759,8 +652,8 @@
                 }
                 xhttp.send();
             }
-    }
-    
+        }
+
     </script>
 
     <script>
@@ -783,7 +676,7 @@
  
     <script src="assets/js/main.js"></script>
     <script src="assets/js/registro_modal.js"></script>
-
+    <script src="{{ url_for('static', filename='assets/js/verificar.js')}}"></script>
 </body>
 
 </html>

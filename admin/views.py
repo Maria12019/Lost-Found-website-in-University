@@ -380,3 +380,39 @@ def filtro_soli():
         ]
         status = 500
     return json.dumps(resp),status
+
+@view.route('/sol_usu/detalle')
+def verificar_sol_usu():
+    resp = None
+    soliId = request.args.get('soliId')
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = select([Solicitud]).where(Solicitud.id == soliId)
+        
+        rs = conn.execute(stmt)
+        list = []
+        for item in conn.execute(stmt):
+            print(item.nom_objeto)
+            row = {
+                'id': item.id,
+                'categoria': item.categoria,
+                'nom_objeto': item.nom_objeto,
+                'cod_objeto': item.cod_objeto,
+                'nro_solicitud': item.nro_solicitud,
+                'fecha_envio': str(item.fecha_envio),
+                'lugar': item.lugar,
+                'descripcion': item.descripcion,
+                'caract_esp': item.caract_esp,
+                'estado': item.estado,
+                'fecha_rpta': str(item.fecha_rpta)
+            }
+            list.append(row)
+        resp=list
+    except Exception as e:
+        resp=[
+            'Se ha producido un error',
+            str(e)
+        ]
+        status = 500
+    return json.dumps(resp),status
