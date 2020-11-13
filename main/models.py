@@ -55,8 +55,8 @@ class Objeto(Base):
 
 
 class Solicitud(Base):
-    __tablename__='solicitud_prueba'
-    id=Column(Integer, primary_key=True)
+    __tablename__='solicitud_p'
+    id=Column(Integer, primary_key=True,autoincrement=True)
     categoria=Column(String)
     nom_objeto = Column(String)
     cod_objeto= Column(Integer)
@@ -67,3 +67,14 @@ class Solicitud(Base):
     caract_esp=Column(String)
     estado=Column(String)
     fecha_rpta=Column(DateTime)
+
+class Soloriginal(Base):
+    __tablename__='solicitud'
+    id=Column(Integer, primary_key=True,autoincrement=True)
+    id_objeto= Column(Integer)
+    id_usuario= Column(Integer)
+    nro_solicitud=Column(Integer)
+    fecha_envio=Column(DateTime)
+    estado=Column(String)
+    fecha_rpta=Column(DateTime)
+    descripcion=Column(String)

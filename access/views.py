@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, session, request, redirect
 from datetime import datetime
 from main.filters import if_session_active_go_home, if_session_not_active_go_login
 
-from main.test import get_password_by_id,get_rol_by_id
+from main.test import get_password_by_id,get_rol_by_id,get_usu_by_id
 
 view = Blueprint('access_bludprint', __name__)
 
@@ -51,13 +51,23 @@ def login_access():
         session['user'] = user
         session['time'] = datetime.now()
         session['rol'] = rol
-        locals = {}
+        codigo=get_usu_by_id(user)
+        locals = {
+       
+        'cod_usu': codigo
+      
+        }
+        
+        
         print(session['rol'])
         '''return render_template(
             'layouts/aplication.html',
             locals=locals
             ), 500'''
-        return redirect('/inicio')
+        return render_template(
+        '/layouts/aplication.html',
+        locals=locals
+        )
     else:
         locals={
             'message': 'El usuario y/o no existen'

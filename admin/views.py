@@ -3,7 +3,7 @@
 
 import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
-from main.models import Country,Objeto,Solicitud
+from main.models import Country,Objeto,Solicitud,Soloriginal
 from main.database import engine,session_db
 from sqlalchemy import select,insert, between
 from datetime import datetime
@@ -396,3 +396,75 @@ def filtro_soli():
         ]
         status = 500
     return json.dumps(resp),status
+
+
+@view.route('/objeto/solicitar', methods=['POST'])
+def objeto_solicitar():
+    nom_objeto=str(request.form['post'])
+    cod_usu=str(request.form['cod_usu'])
+    cod_objeto=str(request.form['post2'])
+    categoria=str(request.form['post3'])
+    lugar=str(request.form['post4'])
+    caract_esp=str(request.form['post5'])
+    print(nom_objeto)
+    status = 200
+    rpta = {
+      'tipo_mensaje' : 'success',
+      'cod_objeto': cod_objeto,
+      'cod_usu':cod_usu,
+      'nom_objeto': nom_objeto,
+      'categoria': categoria,
+      'lugar': lugar,
+      'caract_esp': caract_esp,
+      'mensaje' : [
+        'Se ha registrado los cambios en los items del subtítulo'
+      ]
+    }
+    '''return  json.dumps(rpta),status'''
+    
+    return render_template(
+        '/registro/blank.html',
+        rpta=rpta
+        ), status
+
+
+@view.route('/solicitud/agregar', methods=['POST'])
+def solicitud_agregar():
+   
+    nom_objeto=str(request.form['nom_objeto'])
+    descripcion=str(request.form['descripcion'])
+    cod_objeto=request.form['cod_objeto']
+    categoria=request.form['categoria']
+    lugar=str(request.form['lugar'])
+    caract_esp=str(request.form['caract_esp'])
+    cod_usu=request.form['cod_usu']
+    nro_solicitud=1003
+    print(nom_objeto)
+    print(descripcion)
+    status = 200
+    session = session_db()
+    stmt=Soloriginal(
+        id_objeto=cod_objeto,
+        id_usuario=cod_usu,
+        nro_solicitud=nro_solicitud,
+        fecha_envio='2020-04-21',
+        estado='EN PROCESO',
+        fecha_rpta='2020-04-21',
+        descripcion=descripcion)
+
+    session.add(stmt)
+    session.flush()
+    print('1 ++++++++++++++++++++++++')
+    session.commit()
+    print('2 ++++++++++++++++++++++++')
+    #users.insert().values({"name": "some name"})'''
+    
+    #conn.execute(stmt)
+    rpta = {
+      'tipo_mensaje' : 'success',
+      'mensaje' : [
+        'Se ha registrado los cambios en los items del subtítulo'
+      ]
+    }
+    
+    return  json.dumps(rpta),status

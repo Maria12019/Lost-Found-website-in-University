@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Inicio</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/modal.css" type="text/css">
+
+
+</head>
+
+<body>
+    <!-- Page Preloder -->
+ 
+   
+    
+    
+  
+    <header class="header-section">
+        
+        <div class="container">
+            <div class="inner-header">
+                <div class="row">                 
+                    <div class="col-lg-10 col-md-10">                      
+                        <div class="logo">
+                            <a href="./index.html">                               
+                                <h3>
+                                    <img id="logo-wide" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                                    <b>SISTEMA DE GESTIÓN DE OBJETOS PERDIDOS</b>
+                                </h3>
+                                <img id="logo-narrow" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-right col-md-2">
+                        <ul class="nav-right">
+                            
+                            <button type="button" class="btn btn-secondary" id="registrar_1" >
+                                Logout
+                            </button>
+
+                       </ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    </header>
+
+    <div class="nav-item">
+        <div class="container">
+           
+            <header class="header-section">
+    
+                <div class="nav-item">
+                    <div class="container">
+                        
+                        <nav class="nav-menu mobile-menu">
+                            <ul>
+                                {% if (session['status'] == 'active') %}
+                                {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
+                                <li id="1"><a href="/inicio">OBJETOS</a></li>
+                                {% else %}
+                                {% if (session['rol'] == 2) %} <!--JEFE-->
+                                <li><a href="/inicio">OBJETOS</a></li>
+                                <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
+                                <li><a href="/sol_usu">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 3) %} <!---->
+                                <li id="3"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 4) %}
+                                <li id="4"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                
+                                {% else %}
+                                <li id="5"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/sol_usu">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% else %}
+                                <a href="/logout">Ingresar</a>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                        <div id="mobile-menu-wrap"></div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </div>
+    
+    <script>
+        $("#registrar_1").click(function () {
+            Swal.fire({
+                title: '¿Está seguro de que desea cerrar sesión?',
+                showCancelButton: true,
+                confirmButtonColor: '#e77b3c',
+                cancelButtonColor: 'grey',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/logout";
+                }
+            })
+        });
+    </script>
+      
+    <section class="product-shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                        </div>
+                        <form action="/solicitud/agregar" method="post" id="formulario1">
+                            <div class="col-lg-6">
+                                <div class="product-details">
+                                    <div class="pd-desc">
+                                    <ul class="pd-tags">
+                                  
+                            <p id="1" hidden>{{rpta['cod_objeto']}}</p>
+                           
+                            <p id="5"hidden>{{rpta['caract_esp']}}</p>
+                            <p id="6" hidden>{{rpta['cod_usu']}}</p>
+                        
+                            <textarea id="w3review" name="descripcion" rows="4" cols="50">
+                            </textarea>
+                            <div><button type="submit">ACEPTAR</button>
+                                 <input type="reset" value="CANCELAR">
+                            </div>
+                                        
+                                        <li><span>NOMBRE:</span></li>
+                                        <li><span><p id="2">{{rpta['nom_objeto']}}</p></span></li>
+                                        <br>
+                                        <li><span>CATEGORÍA:</span></li>
+                                        <li><span>
+                                            <p id="3">{{rpta['categoria']}}</p>
+                                        </span></li>
+                                        <br>
+                    
+                                        <li><span>LUGAR:</span></li>
+                                        <li><span>
+                                            <p id="4">{{rpta['lugar']}}</p>
+                                        </span></li>
+                                        <br>
+                                        
+                                        <li><span>DESCRIPCION:</span></li>
+                                        <li><span><textarea name="descripcion" required minlength="4" maxlength="250" ></textarea></span></li>
+                                        <br>
+                                       
+                                    </ul>
+                                </div>
+                                <br>
+                                <div class="quantity">
+                                    
+                                    <button type="submit" class="primary-btn pd-cart" >REGISTRAR</button>
+
+                                </div>
+                            </div>
+                        
+                                        
+                            <div id="miModal" class="modal">
+                                <div class="flex" id="flex">
+                                    <div class="contenido-modal">
+                                        <div class="modal-body" align="center">
+                                            <span class="close" id="close">&times;</span>
+                                            <br>
+                                            <br>
+                                            <h4>¿Está seguro de que</h4>
+                                            <h4>desea registrar</h4>
+                                            <h4>el objeto?</h4>
+                                            <br>
+                                            <br>
+                                            <button type="button" id="rechazar" class="btn btn-secondary" onclick="myfunction()";>Rechazar </button>
+                                            <button type="submit" id="prueba_1"class="btn btn-primary" onclick="myfunction3()">Aceptar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="miModal4" class="modal">
+                                <div class="flex" id="flex">
+                                    <div class="contenido-modal">
+                                        <div class="modal-body" align="center">  
+                                            <span class="close" id="close4" onclick="cerrar_final()";>&times;</span>
+                                            <br>
+                                            <h4>Registro exitoso</h4>
+                                            <br>
+                                            <img src="{{ url_for('static', filename='assets/img/affection.jpeg')}}" width="150px" height="150px"/></div>
+                                         
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        </form>
+                        <form action="/solicitud/agregar" method="post" id="formulario1"> 
+                            <h1>PRUEBA</h1>
+                            <p id="1" hidden>{{rpta['cod_objeto']}}</p>
+                            <p id="2">{{rpta['nom_objeto']}}</p>
+                            <p id="3">{{rpta['categoria']}}</p>
+                            <!--<textarea name="categoria" rows="1" cols="50" readonly>{{rpta['categoria']}}</textarea>-->
+                            <p id="4">{{rpta['lugar']}}</p>
+                            <p id="5">{{rpta['caract_esp']}}</p>
+                            <p id="6" hidden>{{rpta['cod_usu']}}</p>
+                        
+                            <textarea id="w3review" name="descripcion" rows="4" cols="50">
+                            </textarea>
+                            <div><button type="submit">ACEPTAR</button>
+                                 <input type="reset" value="CANCELAR">
+                            </div>
+                            </form>
+                       
+                    </div>
+                </div>
+            </div>
+
+           
+    <!-- Product Shop Section End -->
+
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-widget">
+                            <h5>Oficina de Objetos Perdidos</h5>
+                        </div>
+                        <ul>
+                            <li>Ubicación: Edificio V, Oficina 303</li>
+                            <li>Teléfono: 4376767 anexo 31495</li>
+                            <li>Email: zvillena@ulima.edu.pe</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Información</h5>
+                        <ul>
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#">Servicios</a></li>
+                            <li><a href="#">Horarios</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>Mi cuenta</h5>
+                        <ul>
+                            <li><a href="#">Registrados</a></li>
+                            <li><a href="#">Solicitudes</a></li>
+                            <li><a href="#">Términos de uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Centro de ayuda</h5>
+                        <p>Preguntas frecuentes</p>
+                        <p>Contacto</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                           
+  
+    <!--<script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+ 
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/registro_modal.js"></script>
+    <script>
+       /* var guardar = document.getElementById("prueba_1");
+        guardar.addEventListener("click",agregar);
+        function agregar()
+        {
+            event.preventDefault();
+            restService="/Profesional/" + idUsuario + "/Ocupaciones/agregar";
+            console.log(base_url + restService);
+            //var id = idUsuario;
+            var entidad = document.getElementById("select1").value;
+            var nombreOcupa = document.getElementById("nombre_id").value;
+            var descripOcupa = document.getElementById("descripcion_id").value;
+            var fecIni = document.getElementById("fecha_inicio_input").value;
+            var fecFin = document.getElementById("fecha_fin_input").value;
+            var data = {
+                nombreEntidad: entidad,
+                nombre: nombreOcupa,
+                descripcion: descripOcupa,
+                año_inicio: fecIni,
+                año_fin: fecFin,
+                usuario_id : idUsuario
+            };
+            var jsonString = JSON.stringify(data);
+            console.log(jsonString);
+            xhr.open('POST',base_url + restService,true);
+            xhr.setRequestHeader('Content-Type','application/json');
+            xhr.send(jsonString);
+        }*/
+
+
+
+
+
+    </script>-->
+    <!--<script type="text/javascript" src="../../assets/js/modales-jq.js"></script>
+    <script type="text/javascript" src="../../assets/plugins/sweetalert2.all.min.js"></script>
+    <script>
+        $("#formulario").on('submit', function(){
+        $('#miModal4').show();
+        })
+    </script>
+</body>
+
+</html>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/solicitud/agregar" method="post" id="formulario1"> 
+    <h1>PRUEBA</h1>
+    <p id="1" hidden>{{rpta['cod_objeto']}}</p>
+    <p id="2">{{rpta['nom_objeto']}}</p>
+    <p id="3">{{rpta['categoria']}}</p>
+    <!--<textarea name="categoria" rows="1" cols="50" readonly>{{rpta['categoria']}}</textarea>-->
+    <p id="4">{{rpta['lugar']}}</p>
+    <p id="5">{{rpta['caract_esp']}}</p>
+    <p id="6" hidden>{{rpta['cod_usu']}}</p>
+
+    <textarea id="w3review" name="descripcion" rows="4" cols="50">
+    </textarea>
+    <div><button type="submit">ACEPTAR</button>
+         <input type="reset" value="CANCELAR">
+    </div>
+    </form>
+    <script>
+
+        var formTest=document.getElementById("formulario1");
+        var a=document.getElementById("1");
+        var b=document.getElementById("2");
+        var c=document.getElementById("3");
+        var d=document.getElementById("4");
+        var e=document.getElementById("5");
+        var f=document.getElementById("6");
+        /*console.log(b.textContent);
+        var post5 = document.createElement("input");
+        post5.setAttribute("type", "hidden");
+        post5.setAttribute("name", "nom_objeto");
+        post5.setAttribute("value", b.textContent);
+        formTest.appendChild(post5);*/
+        //var post = document.createElement("input");
+        var nom_objeto= String(b.textContent); 
+        var categoria=String(c.textContent);                      
+        var post = document.createElement("input");
+        post.setAttribute("type", "hidden");               
+        post.setAttribute("name","nom_objeto");
+        post.setAttribute("value", nom_objeto);
+        /*prueba.setAttribute("name","post");
+        prueba.setAttribute("value",ejemplo);*/
+        //formTest.appendChild(post2)
+        var post2 = document.createElement("input");
+        post2.setAttribute("type", "hidden");
+        post2.setAttribute("name", "cod_objeto");
+        post2.setAttribute("value", a.textContent);
+        var post3 = document.createElement("input");
+        post3.setAttribute("type", "hidden");
+        post3.setAttribute("name", "categoria");
+        
+        post3.setAttribute("value", categoria);
+        var post4 = document.createElement("input");
+        post4.setAttribute("type", "hidden");
+        post4.setAttribute("name", "lugar");
+        post4.setAttribute("value", d.textContent);
+        var post5 = document.createElement("input");
+        post5.setAttribute("type", "hidden");
+        post5.setAttribute("name", "caract_esp");
+        post5.setAttribute("value", e.textContent);
+        var post6 = document.createElement("input");
+        post6.setAttribute("type", "hidden");
+        post6.setAttribute("name", "cod_usu");
+        post6.setAttribute("value", f.textContent);
+        formTest.appendChild(post6);
+        formTest.appendChild(post5);
+        formTest.appendChild(post4);
+        formTest.appendChild(post3);
+        formTest.appendChild(post2);
+        formTest.appendChild(post);                                
+        console.log(categoria);
+    </script>
+</body>
+</html>

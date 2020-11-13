@@ -150,6 +150,9 @@
         
       </div>-->
 
+
+    
+
     <section class="product-shop spad">
         <div class="container">
             <div class="row">
@@ -257,9 +260,9 @@
                                 let datos=JSON.parse(this.responseText)
 
                                 for (let item of datos){
-                                    /*objetos.push({
+                                    objetos.push({
                                         name: item.nom_objeto
-                                    })*/
+                                    })
                                     info.push(item.nom_objeto)
                                 }
                             }
@@ -344,7 +347,9 @@
                         {% if (session['status'] == 'active') %}
                         {% if (session['rol'] == 1) %} 
                         <div class="row" id="items" name="1">
-                                        
+                            <div id="formulario">
+                                <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                            </div>        
                                         
                         </div>
                         {% else %}
@@ -563,6 +568,57 @@
                         let miNodoBoton = document.createElement('button');
                         miNodoBoton.classList.add('btn', 'btn-success');
                         miNodoBoton.textContent = 'SOLICITAR';
+                        miNodoBoton.addEventListener("click",function() {
+                            
+                                var cod_usu=document.getElementById('cod_usu');
+
+                                var formTest = document.createElement('form');
+                                var prueba=document.getElementById("uno2");
+                                formTest.setAttribute("method", "post");
+                                formTest.setAttribute("action", "/objeto/solicitar");
+                                formTest.setAttribute("id", "obj1");
+                                /*var post2 = document.createElement("input");
+                                post2.setAttribute("type", "submit");*/
+                                var post = document.createElement("input");
+                                
+                                post.setAttribute("name", "post");
+                                post.setAttribute("value", item.nom_objeto);
+                                /*prueba.setAttribute("name","post");
+                                prueba.setAttribute("value",ejemplo);*/
+                                //formTest.appendChild(post2)
+                                var post2 = document.createElement("input");
+                                post2.setAttribute("type", "hidden");
+                                post2.setAttribute("name", "post2");
+                                post2.setAttribute("value", item.id);
+                                var post3 = document.createElement("input");
+                                post3.setAttribute("type", "hidden");
+                                post3.setAttribute("name", "post3");
+                                post3.setAttribute("value", item.categoria);
+                                var post4 = document.createElement("input");
+                                post4.setAttribute("type", "hidden");
+                                post4.setAttribute("name", "post4");
+                                post4.setAttribute("value", item.lugar);
+                                var post5 = document.createElement("input");
+                                post5.setAttribute("type", "hidden");
+                                post5.setAttribute("name", "post5");
+                                post5.setAttribute("value", item.caract_esp);
+                                var post6 = document.createElement("input");
+                                post6.setAttribute("type", "hidden");
+                                post6.setAttribute("name", "cod_usu");
+                                post6.setAttribute("value", cod_usu.textContent);
+                                formTest.appendChild(post6);
+                                formTest.appendChild(post5);
+                                formTest.appendChild(post4);
+                                formTest.appendChild(post3);
+                                formTest.appendChild(post2);
+                                formTest.appendChild(post);
+                                
+                                //formTest.appendChild(post);
+                                document.getElementById("formulario").appendChild(formTest)
+                                formTest.submit();
+
+                                 
+                                });
 
                         miNodoCardBody.appendChild(miNodoTitle);
                         miNodoCardBody.appendChild(miNodoCategoria);

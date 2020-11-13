@@ -56,6 +56,15 @@ def get_rol_by_id(id): # SELECT rol FROM usuario WHERE cod_usuario = :id
         return (resp[0]['rol'])
     except Exception as e:
         return (str(e)) 
+def get_usu_by_id(id): # SELECT rol FROM usuario WHERE cod_usuario = :id
+    try:
+        conn = engine.connect()
+        stmt = select([Usuario]).where(Usuario.cod_usuario == id)
+        rs = conn.execute(stmt)
+        resp = [dict(r) for r in conn.execute(stmt)]
+        return (resp[0]['id'])
+    except Exception as e:
+        return (str(e)) 
 
 def objeto_list():
     try:
