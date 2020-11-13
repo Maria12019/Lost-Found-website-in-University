@@ -56,7 +56,6 @@ def objeto_list():
             'cod_usu_entrega':r.cod_usu_entrega
             }
             lista.append(row) 
-        #resp = [dict(r) for r in conn.execute(stmt)]
         resp=lista
 
      
@@ -139,9 +138,7 @@ def objeto_agregar():
     print('1 ++++++++++++++++++++++++')
     session.commit()
     print('2 ++++++++++++++++++++++++')
-    #users.insert().values({"name": "some name"})
-    
-    #conn.execute(stmt)
+
     rpta = {
       'tipo_mensaje' : 'success',
       'mensaje' : [
@@ -175,23 +172,15 @@ def filtro_objeto():
         if(categoria != 'undefined' and lugar == 'undefined' and fechaInicio == 'undefined' and fechaFin == 'undefined' ):
             print(1)
             stmt = select([Objeto]).where(Objeto.categoria == categoria)
-
         
         elif(categoria == 'TODOS' and lugar == 'TODOS' and fechaInicio != 'undefined' and fechaFin != 'undefined'):
             print(7)
             stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin))
-        
-        
-        
-        
-        
+
         elif (fechaInicio != 'undefined' and fechaFin != 'undefined'and lugar == 'undefined' and categoria == 'undefined' ):
             print(2)
             stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin))
-        
-        
-        
-        
+           
         elif(lugar != 'undefined' and categoria == 'undefined' and fechaInicio == 'undefined' and fechaFin == 'undefined'):
             print(3)
             stmt = select([Objeto]).where(Objeto.lugar == lugar)
@@ -206,9 +195,6 @@ def filtro_objeto():
             print(6)
             stmt = select([Objeto]).where(between(Objeto.fecha_hallado, fechaInicio, fechaFin))
 
-        
-
-
         elif(lugar == 'TODOS' and categoria != 'undefined' and fechaInicio == 'undefined' and fechaFin == 'undefined'):
             print(8)
             stmt = select([Objeto]).where(Objeto.categoria == categoria)
@@ -218,8 +204,6 @@ def filtro_objeto():
                     .select_from(Objeto)
                     .where((Objeto.categoria == categoria) &
                     (Objeto.lugar == lugar)))
-
-        
 
         elif (fechaInicio != 'undefined' and fechaFin != 'undefined'and lugar != 'undefined' and categoria != 'undefined' ):
             print(10)

@@ -40,3 +40,13 @@ def sol_usu():
         'registro/solicitud_usuario.html',
         locals=locals
     ), 200
+
+@view.route('/sol_usu/verificar', methods=['GET'])
+def verificar_sol_usu():
+    locals = {
+        'message': '',
+    }
+    return render_template(
+        'verificacion/detalle_sol_usu.html',
+        locals=locals
+    ), 200

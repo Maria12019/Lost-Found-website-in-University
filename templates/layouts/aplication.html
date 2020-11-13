@@ -109,6 +109,7 @@
                 </div>
             </header>
         </div>
+<<<<<<< HEAD
     </div><!--
     <div class="container text-center">
              
@@ -153,6 +154,9 @@
 
     
 
+=======
+    </div>
+>>>>>>> bd7cb2667d35ab07d6f690241e215d566c02aaa0
     <section class="product-shop spad">
         <div class="container">
             <div class="row">
@@ -429,10 +433,7 @@
                         {% else %}
                         <a href="/logout">Ingresar</a>
                         {% endif %}
-                                    <!--<div class="row" id="items">
-                                        
-                                        
-                                    </div>-->
+
                         </div>
                     </div>
                 </div>
@@ -788,13 +789,6 @@
         return lugarSelec;
         }
     )
-/*
-        if(state == 0){
-        const button = document.getElementById("buscarFiltro");
-        button.disabled = true;
-        } else{
-            button.disabled = false;
-        }*/
 
     function Validate() {
         console.log(lugarSelec)
@@ -804,7 +798,6 @@
 
 
         if  (lugarSelec == undefined && categoriaSelec == undefined && fechaInicioInput == undefined && fechaFinInput == undefined ){
-            //If the "Please Select" option is selected display error.
             Swal.fire({
                 title: 'Debes seleccionar al menos un filtro.',
                 confirmButtonColor: '#e77b3c',
@@ -812,20 +805,21 @@
             });
             return false;
         }
-        
-
-
-
-        /*else if (fechaInicioInput != undefined && fechaFinInput != undefined ){
-            ValidateDate();
-
-            return false;
-        }*/
 
         else if (fechaInicioInput == undefined  && fechaFinInput != undefined ){
            
             Swal.fire({
                 title: 'Seleccione una fecha de inicio.',
+                confirmButtonColor: '#e77b3c',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+
+        else if (fechaInicioInput != undefined  && fechaFinInput == undefined ){
+           
+            Swal.fire({
+                title: 'Seleccione una fecha de fin.',
                 confirmButtonColor: '#e77b3c',
                 confirmButtonText: 'OK'
             });
@@ -862,29 +856,6 @@
            return false;
        }
 
-       //esto retorna validar
-       /*else if ( lugarSelec == undefined && categoriaSelec == undefined && fechaInicioInput != undefined  && fechaFinInput != undefined ){
-        
-           var startDate = document.getElementById("fechaInicio").value;
-          var endDate = document.getElementById("fechaFin").value;
-        
-          if ((Date.parse(endDate) <= Date.parse(startDate))) {
-            Swal.fire({
-                title: 'Fecha inicio debe ser mayor a fecha fin.',
-                confirmButtonColor: '#e77b3c',
-                confirmButtonText: 'OK'
-            });
-              document.getElementById("fechaFin").value = "";
-           }
- 
-           return false;
-
-        
-            filtrarObjeto(event);
-           
-
-           
-       } */
 
        else if ( lugarSelec != undefined && categoriaSelec == undefined && fechaInicioInput != undefined  && fechaFinInput == undefined ){
         
@@ -899,43 +870,6 @@
 
         filtrarObjeto(event);
     }
-
-    
-    /*function ValidateDate() {
-          var startDate = document.getElementById("fechaInicio").value;
-          var endDate = document.getElementById("fechaFin").value;
-        
-          if ((Date.parse(endDate) <= Date.parse(startDate))) {
-            Swal.fire({
-                title: 'Fecha inicio debe ser mayor a fecha fin.',
-                confirmButtonColor: '#e77b3c',
-                confirmButtonText: 'OK'
-            });
-              document.getElementById("fechaFin").value = "";
-           }
-          if ((Date.parse(endDate) >= Date.parse(startDate))) {
-            Swal.fire({
-                title: 'Bien. Fecha inicio es mayor a fecha fin.',
-                confirmButtonColor: '#e77b3c',
-                confirmButtonText: 'OK'
-            });;
-              daydiff(startDate, endDate);
-          }
-      };
-
-      function parseDate(str) {
-          var mdy = str.split('/')
-          console.log(mdy)
-          return new Date(mdy[2], mdy[1] - 1, mdy[0]);
-      }
-
-      function daydiff(first, second) {
-          first = parseDate(first);
-          second = parseDate(second);
-          console.log(first, second);
-          $("#AdvDuration").val(Math.round((second - first) / (1000 * 60 * 60 * 24)));
-      }*/
-
 
     function filtrarObjeto(e){
         limpiarBody();
@@ -961,11 +895,6 @@
                 }
                 xhttp.send();
             }
-        
-
-
-        
-
     } 
     </script>
         
