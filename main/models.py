@@ -55,7 +55,7 @@ class Objeto(Base):
 
 
 class Solicitud(Base):
-    __tablename__='solicitud_p'
+    __tablename__='solicitud_prueba'
     id=Column(Integer, primary_key=True,autoincrement=True)
     categoria=Column(String)
     nom_objeto = Column(String)
