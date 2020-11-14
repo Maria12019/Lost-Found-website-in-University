@@ -164,9 +164,9 @@
                                 <h4>solicitud?</h4>
                                 <br>
                                 <br>
-                                <form>
+                                <form action="/sol_usu/actualizar" method="post">
                                 <button type="button" id="rechazar" class="btn btn-secondary" onclick="myfunction()";>Cancelar </button>
-                                <button type="button" class="btn btn-primary" onclick="ventana()">OK</button>
+                                <button type="submit" class="btn btn-primary" onclick="actualizarTabla(event)">OK</button>
                                 </form>
                             </div>  
                         </div>
@@ -265,7 +265,6 @@
                     switch (xhttp.status) {
                         case 200:
                             myFunction(JSON.parse(xhttp.responseText));
-                            console.log('hola');
                             break;
                     }
                 }
@@ -346,14 +345,48 @@
         var btnRechazar = document.getElementById("rechazar");
         btnRechazar.addEventListener("click", function(){
             estado = "RECHAZADA";
+            console.log(estado);
         })
 
         var btnAceptar = document.getElementById("abrir");
         btnAceptar.addEventListener("click", function(){
             estado = "ACEPTADA"
+            console.log(estado);
         })
 
         console.log(estado);
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+        console.log(today);
+
+        function actualizarTabla(e) {
+            e.preventDefault();
+            const xhttp = new XMLHttpRequest();
+            xhttp.open('GET', '/sol_usu/actualizar?soliId=' + soliId + "&estado=" + estado + "&fechaRpta=" + today, true);
+            console.log('corrio actualizartabla');
+            xhttp.send();
+            ventana();
+        }
+    </script>
+    <script>
+        $("#registrar_1").click(function () {
+            Swal.fire({
+                title: '¿Está seguro de que desea cerrar sesión?',
+                showCancelButton: true,
+                confirmButtonColor: '#e77b3c',
+                cancelButtonColor: 'grey',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/logout";
+                }
+            })
+        });
     </script>
     {% block js %}
     <script src="{{ url_for('static', filename='assets/js/jquery-3.3.1.min.js') }}"></script>
