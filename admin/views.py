@@ -5,7 +5,7 @@ import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
 from main.models import Country,Objeto,Solicitud,Soloriginal
 from main.database import engine,session_db
-from sqlalchemy import select,insert, between
+from sqlalchemy import select,insert, between, update
 from datetime import datetime
 
 #objeto que tiene la subaplicacion
@@ -55,7 +55,8 @@ def objeto_list():
             'caract_esp':r.caract_esp,
             'cod_usu_entrega':r.cod_usu_entrega
             }
-            lista.append(row) 
+            if(r.estado == 'ALMACENADO'):
+                lista.append(row) 
         resp=lista
 
      
@@ -92,7 +93,8 @@ def solicitud_list():
             'estado': r.estado,
             'fecha_rpta': str(r.fecha_rpta)
             }
-            lista.append(row)
+            if r.estado == 'EN PROCESO':
+                lista.append(row)
         resp=lista
     except Exception as e:
         resp = [
@@ -237,7 +239,8 @@ def filtro_objeto():
             'caract_esp':r.caract_esp,
             'cod_usu_entrega':r.cod_usu_entrega
             }
-            lista.append(row) 
+            if(r.estado == 'ALMACENADO'):
+                lista.append(row) 
         resp=lista
     except Exception as e:
         resp = [
@@ -281,7 +284,8 @@ def filtro_nombre():
                 'caract_esp':item.caract_esp,
                 'cod_usu_entrega':item.cod_usu_entrega
             }
-            list.append(row)
+            if(item.estado == 'ALMACENADO'):
+                list.append(row) 
         resp=list
     except Exception as e:
         resp=[
@@ -322,7 +326,8 @@ def filtro_nombre_sol():
                 'estado': item.estado,
                 'fecha_rpta': str(item.fecha_rpta)
             }
-            list.append(row)
+            if(item.estado == 'EN PROCESO'):
+                list.append(row)
         resp=list
     except Exception as e:
         resp=[
@@ -371,7 +376,8 @@ def filtro_soli():
                 'estado': item.estado,
                 'fecha_rpta': str(item.fecha_rpta)
             }
-            list.append(row)
+            if(item.estado == 'EN PROCESO'):
+                list.append(row)
         resp=list
     except Exception as e:
         resp=[
@@ -452,3 +458,72 @@ def solicitud_agregar():
     }
     
     return  json.dumps(rpta),status
+
+
+@view.route('/sol_usu/detalle')
+def verificar_sol_usu():
+    resp = None
+    soliId = request.args.get('soliId')
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = select([Solicitud]).where(Solicitud.id == soliId)
+        
+        rs = conn.execute(stmt)
+        list = []
+        for item in conn.execute(stmt):
+            print(item.nom_objeto)
+            row = {
+                'id': item.id,
+                'categoria': item.categoria,
+                'nom_objeto': item.nom_objeto,
+                'cod_objeto': item.cod_objeto,
+                'nro_solicitud': item.nro_solicitud,
+                'fecha_envio': str(item.fecha_envio),
+                'lugar': item.lugar,
+                'descripcion': item.descripcion,
+                'caract_esp': item.caract_esp,
+                'estado': item.estado,
+                'fecha_rpta': str(item.fecha_rpta)
+            }
+            list.append(row)
+        resp=list
+    except Exception as e:
+        resp=[
+            'Se ha producido un error',
+            str(e)
+        ]
+        status = 500
+    return json.dumps(resp),status
+
+@view.route('/sol_usu/actualizar', methods = ['GET', 'POST'])
+def actualizar_sol_usu():
+    status = 200
+    soliId = request.args.get('soliId')
+    estado = request.args.get('estado')
+    fechaRpta = request.args.get('fechaRpta')
+    rpta = None
+    session = session_db()
+    print(soliId, estado, fechaRpta)
+    try:
+        session.query(Soloriginal).filter_by(id = soliId).update({
+          'estado': estado,
+          'fecha_rpta': fechaRpta,
+        })
+        session.commit()
+        rpta = {
+        'tipo_mensaje' : 'success',
+        'mensaje' : 'Se han registrado los cambios en la tabla Solicitud'
+        }
+    except Exception as e:
+        status = 500
+        session.rollback()
+        rpta = {
+        'tipo_mensaje' : 'error',
+        'mensaje' : [
+            'Se ha producido un error en guardar los cambios en la tabla Solicitud',
+            str(e)
+        ]
+        }
+    return json.dumps(rpta),status
+
