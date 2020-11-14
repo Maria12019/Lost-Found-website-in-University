@@ -18,17 +18,16 @@
 </head>
 <body>
     {% block css %}
-
-    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/modal.css" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/themify-icons.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/elegant-icons.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/owl.carousel.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/nice-select.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/jquery-ui.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/slicknav.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/modal.css') }}"/>
     {% endblock %}
     <br>
     <header class="header-section">
@@ -38,30 +37,80 @@
                 <div class="row">                 
                     <div class="col-lg-10 col-md-10">                      
                         <div class="logo">
-                                                         
+                            <a href="./index.html">                               
                                 <h3>
                                     <img id="logo-wide" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
                                     <b>SISTEMA DE GESTIÓN DE OBJETOS PERDIDOS</b>
                                 </h3>
                                 <img id="logo-narrow" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
-                           
+                            </a>
                         </div>
                     </div>
-                    <div class="col-lg-2 text-right col-md-2">
-                        <ul class="nav-right">
-                            
-                            <button type="button" class="btn btn-secondary" id="registrar_1" >
-                                Logout
-                            </button>
+                    <div class="quantity">
+                                    
+                        <button type="button" class="btn btn-secondary" id="registrar_1" >
+                            Logout
+                        </button>
 
-                       </ul>
                     </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
    
     </header>
+
+    <div class="nav-item">
+        <div class="container">
+           
+            <header class="header-section">
+    
+                <div class="nav-item">
+                    <div class="container">
+                        
+                        <nav class="nav-menu mobile-menu">
+                            <ul>
+                                {% if (session['status'] == 'active') %}
+                                {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
+                                <li id="1"><a href="/inicio">OBJETOS</a></li>
+                                {% else %}
+                                {% if (session['rol'] == 2) %} <!--JEFE-->
+                                <li><a href="/inicio">OBJETOS</a></li>
+                                <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
+                                <li><a href="/sol_usu">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 3) %} <!---->
+                                <li id="3"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 4) %}
+                                <li id="4"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                
+                                {% else %}
+                                <li id="5"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/registro">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% else %}
+                                <a href="/logout">Ingresar</a>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                        <div id="mobile-menu-wrap"></div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </div>
     <form action="/solicitud/agregar" method="post" id="formulario1"> 
     <h1>PRUEBA</h1>
     <p id="1" hidden>{{rpta['cod_objeto']}}</p>
@@ -79,6 +128,65 @@
     </div>
     <button type="button" class="btn btn-primary">Primary</button>
     </form>
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-widget">
+                            <h5>Oficina de Objetos Perdidos</h5>
+                        </div>
+                        <ul>
+                            <li>Ubicación: Edificio V, Oficina 303</li>
+                            <li>Teléfono: 4376767 anexo 31495</li>
+                            <li>Email: zvillena@ulima.edu.pe</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Información</h5>
+                        <ul>
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#">Servicios</a></li>
+                            <li><a href="#">Horarios</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>Mi cuenta</h5>
+                        <ul>
+                            <li><a href="#">Registrados</a></li>
+                            <li><a href="#">Solicitudes</a></li>
+                            <li><a href="#">Términos de uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Centro de ayuda</h5>
+                        <p>Preguntas frecuentes</p>
+                        <p>Contacto</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                                   
+    </footer>       
     <script>
 
         var formTest=document.getElementById("formulario1");
@@ -134,4 +242,16 @@
         console.log(categoria);
     </script>
 </body>
+{% block js %}
+    <script src="{{ url_for('static', filename='assets/js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.zoom.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.dd.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.slicknav.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+{% endblock %}
 </html>
