@@ -67,6 +67,8 @@ class Solicitud(Base):
     caract_esp=Column(String)
     estado=Column(String)
     fecha_rpta=Column(DateTime)
+    cod_usuario = Column(String)
+    nombre_persona = Column(String)
 
 class Soloriginal(Base):
     __tablename__='solicitud'
