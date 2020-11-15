@@ -434,10 +434,12 @@ def solicitud_agregar():
     lugar=str(request.form['lugar'])
     caract_esp=str(request.form['caract_esp'])
     cod_usu=request.form['cod_usu']
-    nro_solicitud=1003
+    nro_solicitud=1014
+    print(cod_objeto)
     print(nom_objeto)
     print(descripcion)
     status = 200
+   
     session = session_db()
     stmt=Soloriginal(
         id_objeto=cod_objeto,
