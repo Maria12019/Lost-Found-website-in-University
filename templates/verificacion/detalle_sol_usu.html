@@ -284,6 +284,16 @@
                 miNodoTitle.textContent = "NRO. SOLICITUD: "; 
                 let nro_solicitud = item.nro_solicitud;
 
+                let miNodoLiCodUs = document.createElement('li');
+                let miNodoCodUs = document.createElement('span');
+                miNodoCodUs.textContent = "CÓDIGO DEL USUARIO: ";
+                let cod_usuario = item.cod_usuario;
+
+                let miNodoLiNombreUs = document.createElement('li');
+                let miNodoNombreUs = document.createElement('span');
+                miNodoNombreUs.textContent = "NOMBRE DEL USUARIO: ";
+                let nombre_persona = item.nombre_persona;
+
                 let miNodoLiFechaEnv = document.createElement('li');
                 let miNodoFechaEnv = document.createElement('span');
                 miNodoFechaEnv.textContent = "FECHA DE ENVÍO DE LA SOLICITUD: ";
@@ -316,6 +326,8 @@
                 
 
                 miNodoLiTitle.appendChild(miNodoTitle);
+                miNodoLiCodUs.appendChild(miNodoCodUs);
+                miNodoLiNombreUs.appendChild(miNodoNombreUs);
                 miNodoLiFechaEnv.appendChild(miNodoFechaEnv);
                 miNodoLiNomObj.appendChild(miNodoNomObj);
                 miNodoLiLugar.appendChild(miNodoLugar);
@@ -323,6 +335,8 @@
                 miNodoLiCaractEsp.appendChild(miNodoCaractEsp);
 
                 miNodo.appendChild(miNodoLiTitle).append(nro_solicitud);
+                miNodo.appendChild(miNodoLiCodUs).append(cod_usuario);
+                miNodo.appendChild(miNodoLiNombreUs).append(nombre_persona);
                 miNodo.appendChild(miNodoLiFechaEnv).append(fecha_envio);
                 miNodo.appendChild(miNodoLiNomObj).append(nom_objeto);
                 miNodo.appendChild(miNodoLiLugar).append(lugar);

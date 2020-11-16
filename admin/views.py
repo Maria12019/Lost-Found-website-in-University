@@ -92,7 +92,9 @@ def solicitud_list():
             'descripcion': r.descripcion,
             'caract_esp': r.caract_esp,
             'estado': r.estado,
-            'fecha_rpta': str(r.fecha_rpta)
+            'fecha_rpta': str(r.fecha_rpta),
+            'cod_usuario': r.cod_usuario,
+            'nombre_persona': r.nombre_persona
             }
             if r.estado == 'EN PROCESO':
                 lista.append(row)
@@ -325,7 +327,9 @@ def filtro_nombre_sol():
                 'descripcion': item.descripcion,
                 'caract_esp': item.caract_esp,
                 'estado': item.estado,
-                'fecha_rpta': str(item.fecha_rpta)
+                'fecha_rpta': str(item.fecha_rpta),
+                'cod_usuario': item.cod_usuario,
+                'nombre_persona': item.nombre_persona
             }
             if(item.estado == 'EN PROCESO'):
                 list.append(row)
@@ -375,7 +379,9 @@ def filtro_soli():
                 'descripcion': item.descripcion,
                 'caract_esp': item.caract_esp,
                 'estado': item.estado,
-                'fecha_rpta': str(item.fecha_rpta)
+                'fecha_rpta': str(item.fecha_rpta),
+                'cod_usuario': item.cod_usuario,
+                'nombre_persona': item.nombre_persona
             }
             if(item.estado == 'EN PROCESO'):
                 list.append(row)
@@ -489,7 +495,9 @@ def verificar_sol_usu():
                 'descripcion': item.descripcion,
                 'caract_esp': item.caract_esp,
                 'estado': item.estado,
-                'fecha_rpta': str(item.fecha_rpta)
+                'fecha_rpta': str(item.fecha_rpta),
+                'cod_usuario': item.cod_usuario,
+                'nombre_persona': item.nombre_persona
             }
             list.append(row)
         resp=list
