@@ -607,6 +607,11 @@
                                 post6.setAttribute("type", "hidden");
                                 post6.setAttribute("name", "cod_usu");
                                 post6.setAttribute("value", cod_usu.textContent);
+                                var post7 = document.createElement("input");
+                                post7.setAttribute("type", "hidden");
+                                post7.setAttribute("name", "fecha_hallado");
+                                post7.setAttribute("value", item.fecha_hallado);
+                                formTest.appendChild(post7);
                                 formTest.appendChild(post6);
                                 formTest.appendChild(post5);
                                 formTest.appendChild(post4);

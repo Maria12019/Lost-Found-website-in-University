@@ -434,6 +434,7 @@ def objeto_solicitar():
     categoria=str(request.form['post3'])
     lugar=str(request.form['post4'])
     caract_esp=str(request.form['post5'])
+    fecha_hallado=str(request.form['fecha_hallado'])
     print(nom_objeto)
     status = 200
     rpta = {
@@ -444,6 +445,7 @@ def objeto_solicitar():
       'categoria': categoria,
       'lugar': lugar,
       'caract_esp': caract_esp,
+      'fecha_hallado':fecha_hallado,
       'mensaje' : [
         'Se ha registrado los cambios en los items del subtítulo'
       ]
