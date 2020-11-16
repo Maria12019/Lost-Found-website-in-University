@@ -80,3 +80,14 @@ class Soloriginal(Base):
     estado=Column(String)
     fecha_rpta=Column(DateTime)
     descripcion=Column(String)
+    
+class SolicitudDpto(Base):
+    __tablename__='solicitud_dpto'
+    id=Column(Integer, primary_key=True)
+    codigo_dpto=Column(Integer)
+    estado=Column(String)
+    categoria=Column(String)
+    descripcion=Column(String)
+    cantidad_objeto=Column(Integer)
+    fecha_envio=Column(DateTime)
+    fecha_rpta=Column(DateTime)

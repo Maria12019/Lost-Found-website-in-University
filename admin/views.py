@@ -3,7 +3,7 @@
 
 import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
-from main.models import Country,Objeto,Solicitud,Soloriginal
+from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto
 from main.database import engine,session_db
 from sqlalchemy import select,insert, between, update
 from datetime import datetime
@@ -98,6 +98,37 @@ def solicitud_list():
             }
             if r.estado == 'EN PROCESO':
                 lista.append(row)
+        resp=lista
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar las solicitudes',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status
+
+@view.route('/solicitud_dpto/list')
+def dpto_list():
+    resp = None
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = select([SolicitudDpto])
+        rs = conn.execute(stmt)
+        lista = []
+        for r in conn.execute(stmt):
+            row = {
+            'id': r.id,
+            'codigo_dpto': r.codigo_dpto,
+            'estado': r.estado,
+            'categoria': r.categoria,
+            'descripcion': r.descripcion,
+            'cantidad_objeto': r.cantidad_objeto,
+            'fecha_envio': str(r.fecha_envio),
+            'fecha_rpta': str(r.fecha_rpta)
+            }
+            lista.append(row)
         resp=lista
     except Exception as e:
         resp = [

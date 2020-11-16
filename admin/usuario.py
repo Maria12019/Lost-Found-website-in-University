@@ -50,3 +50,24 @@ def verificar_sol_usu():
         'verificacion/detalle_sol_usu.html',
         locals=locals
     ), 200
+
+@view.route('/sol_dpto', methods=['GET'])
+def sol_dpto():
+    locals = {
+        'message':'',
+    }
+    return render_template(
+        'registro/solicitud_dpto.html',
+        locals=locals
+    ), 200
+
+
+@view.route('/dpto_verificar', methods=['GET'])
+def dpto_verificar():
+    locals = {
+        'message':'',
+    }
+    return render_template(
+        'registro/solicitud_dpto_verificar.html',
+        locals=locals
+    ), 200
