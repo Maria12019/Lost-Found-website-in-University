@@ -71,3 +71,14 @@ def dpto_verificar():
         'registro/solicitud_dpto_verificar.html',
         locals=locals
     ), 200
+
+@view.route('/donacion', methods=['GET'])
+def registro_donacion():    
+    locals = {
+        'message': '',
+        
+    }
+    return render_template(
+        'registro/registro_solicitud.html',
+        locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
+    ), 200

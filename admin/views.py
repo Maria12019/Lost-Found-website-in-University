@@ -571,3 +571,64 @@ def actualizar_sol_usu():
         }
     return json.dumps(rpta),status
 
+@view.route('/solicitud/agregarDonacion', methods=['POST'])
+def solicitud_agregarDonacion():
+    
+    
+    #nom_objeto=str(request.form['nom_objeto'])
+    #id = request.form['id']
+    codigo_dpto = request.form['codigo_dpto']
+    #lugar=str(request.form['lugar'])
+    estado=str('EN PROCESO')
+    descripcion=str(request.form['descripcion'])
+    categoria=str(request.form['categoria'])
+    #caract_esp=str(request.form['caract_esp'])
+    
+    cantidad_objeto=str(request.form['cantidad_objeto'])
+    #fecha_envio=request.form['fecha_envio']
+    now = datetime.now()
+    fecha_envio=str(now.year)+"-"+str(now.month)+"-"+str(now.day)
+    
+    
+    print(fecha_envio)
+    #conn = engine.connect()
+    status = 200
+    session = session_db()
+    stmt=SolicitudDpto(
+        ##id=Column(Integer, primary_key=True)
+        ##id_objeto=Column(Integer)
+        ##id_usuario = Column(Integer)
+        #categoria= categoria,
+        #nom_objeto=nom_objeto,
+        codigo_dpto=codigo_dpto,
+        estado=estado,
+        #lugar = lugar,
+        descripcion=descripcion,
+        categoria=categoria,
+        #caract_esp=caract_esp,
+        #id = id,
+        cantidad_objeto=cantidad_objeto,
+        fecha_envio=fecha_envio
+        
+        
+        )
+
+    session.add(stmt)
+    session.flush()
+    print('1 ++++++++++++++++++++++++')
+    session.commit()
+    print('2 ++++++++++++++++++++++++')
+    #users.insert().values({"name": "some name"})
+    
+    #conn.execute(stmt)
+    rpta = {
+      'tipo_mensaje' : 'success',
+      'mensaje' : [
+        'Se ha registrado los cambios en los items del subtítulo'
+      ]
+    }
+    
+    #return  json.dumps(rpta),status
+    return redirect('/donacion')
+
+
