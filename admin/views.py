@@ -8,6 +8,7 @@ from main.database import engine,session_db
 from sqlalchemy import select,insert, between, update
 from datetime import datetime
 
+
 #objeto que tiene la subaplicacion
 view = Blueprint('admin_bludprint', __name__)
 
@@ -413,35 +414,37 @@ def objeto_solicitar():
     '''return  json.dumps(rpta),status'''
     
     return render_template(
-        '/registro/blank.html',
+        '/registro/registro_usuario.html',
         rpta=rpta
         ), status
 
 
 @view.route('/solicitud/agregar', methods=['POST'])
 def solicitud_agregar():
-   
+    now = datetime.now()
     nom_objeto=str(request.form['nom_objeto'])
     descripcion=str(request.form['descripcion'])
     cod_objeto=request.form['cod_objeto']
-    categoria=request.form['categoria']
     lugar=str(request.form['lugar'])
     caract_esp=str(request.form['caract_esp'])
     cod_usu=request.form['cod_usu']
+    print('+++++++++++++++++++++++++++++++++++')
+    
+  
     nro_solicitud=1014
     print(cod_objeto)
     print(nom_objeto)
     print(descripcion)
     status = 200
-   
+    print('++++++++++++++++++++++++++++++++++')
+    fecha=str(now.year)+"-"+str(now.month)+"-"+str(now.day)
     session = session_db()
     stmt=Soloriginal(
         id_objeto=cod_objeto,
         id_usuario=cod_usu,
         nro_solicitud=nro_solicitud,
-        fecha_envio='2020-04-21',
+        fecha_envio=fecha,
         estado='EN PROCESO',
-        fecha_rpta='2020-04-21',
         descripcion=descripcion)
 
     session.add(stmt)

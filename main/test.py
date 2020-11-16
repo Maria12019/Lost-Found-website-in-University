@@ -76,3 +76,12 @@ def objeto_list():
 
     except Exception as e:
         return (str(e)) 
+
+
+
+
+
+
+
+
+     

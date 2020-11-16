@@ -40,7 +40,7 @@ class Donativo(Base):
 
 class Objeto(Base):
     __tablename__='objeto'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True,autoincrement=True)
     cod_objeto= Column(Integer)
     nom_objeto = Column(String)
     categoria = Column(String)
