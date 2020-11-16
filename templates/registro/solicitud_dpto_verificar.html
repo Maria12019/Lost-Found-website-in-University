@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Inicio</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+
+
+</head>
+
+<body onload="listarSolicitudDpto()">
+    <!-- Page Preloder -->
+ 
+    {% block css %}
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/modal.css" type="text/css">
+    {% endblock %}
+  
+    <header class="header-section">
+        
+        <div class="container">
+            <div class="inner-header">
+                <div class="row">                 
+                    <div class="col-lg-10 col-md-10">                      
+                        <div class="logo">
+                            <a href="./index.html">                               
+                                <h3>
+                                    <img id="logo-wide" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                                    <b>SISTEMA DE GESTIÓN DE OBJETOS PERDIDOS</b>
+                                </h3>
+                                <img id="logo-narrow" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="quantity">
+                                    
+                        <button type="button" class="btn btn-secondary" id="registrar_1" >
+                            Logout
+                        </button>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+   
+    </header>
+
+    <div class="nav-item">
+        <div class="container">
+           
+            <header class="header-section">
+    
+                <div class="nav-item">
+                    <div class="container">
+                        
+                        <nav class="nav-menu mobile-menu">
+                            <ul>
+                                {% if (session['status'] == 'active') %}
+                                {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
+                                <li id="1"><a href="/inicio">OBJETOS</a></li>
+                                {% else %}
+                                {% if (session['rol'] == 2) %} <!--JEFE-->
+                                <li><a href="/inicio">OBJETOS</a></li>
+                                <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
+                                <li><a href="/sol_dpto">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                
+                                {% else %}
+                                {% if (session['rol'] == 3) %} <!---->
+                                <li id="3"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 4) %}
+                                <li id="4"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                
+                                {% else %}
+                                <li id="5"><a href="/inicio">OBJETOS</a></li>
+                                <li><a href="/registro">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% else %}
+                                <a href="/logout">Ingresar</a>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                        <div id="mobile-menu-wrap"></div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </div>
+
+    <div class="container text-center">
+             
+        <br>
+        <br>
+        <div class="modal" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                
+                   
+                  
+                  <div class="modal-body">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <br>
+                    <p>¿Está seguro de que deseas</p>
+                    <p> cerrar sesión?</p>
+                    <br>
+                    <a href="/logout"><button type="button" class="btn btn-primary" >OK</button></a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  </div>
+              
+       
+              
+              
+            </div>
+          </div>
+        </div>
+        
+        
+    </div>
+
+                    
+    <div class="product-list" id="lista">
+        {% if (session['status'] == 'active') %}
+        {% if (session['rol'] == 1) %} 
+        <div class="row" id="items" name="1">
+                        
+                        
+        </div>
+        {% else %}
+        {% if (session['rol'] == 2 or session['rol'] == 3 or session['rol'] == 4) %} 
+        <div class="row" id="items2"></div>
+                        
+                        
+        </div>
+        
+        
+        {% else %}
+        {% if (session['rol'] == 5) %} 
+        <div class="row" id="items"></div>
+                        
+                        
+        </div>
+        
+        {% else %}
+        {% if (session['rol'] == 4) %}
+        <div class="row" id="items2"></div>
+                        
+                        
+        </div>
+        {% else %}
+        <div class="row" id="items2"></div>
+                        
+                        
+        </div>
+        
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        {% else %}
+        <a href="/logout">Ingresar</a>
+        {% endif %}
+    
+    
+
+    <div class="container">
+        <div class="row">
+                
+            <div class="col-lg-9">
+
+            <div class="row">
+
+                <div class="col-lg-6"></div>
+    
+                <div class="col-lg-6">
+
+                    <div class="product-details">
+                        <div class="pd-title">
+                            <h3>Solicitud de donación</h3>
+                            <br>  
+                        </div>
+                                
+                        <div class="pd-desc">
+                            <h5>Código Departamento:</h5>
+                            <p id="uno"></p>
+                            
+                            <h5>Categoria:</h5>
+                            <p id="dos"></p>
+                                                        
+                            <h5>Cantidad de Objetos Solicitados:</h5>
+                            <p id="tres"></p>
+                            
+                            <h5>Estado:</h5>
+                            <p id="cuatro"></p>
+                            
+                            <h5>Fecha Envio:</h5>
+                            <p id="cinco"></p>
+                            
+                            <h5>Fecha Respuesta:</h5>
+                            <p id="seis"></p>
+                            
+                            <h5>Descripcion:</h5>
+                            <p id="siete"></p>
+                            
+                            <h5>Comentario:</h5>
+                            <textarea name="textarea" rows="4" cols="44"></textarea>
+                        </div>
+                    </div>
+                            
+                    <div class="quantity">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                        <a href="#" class="primary-btn pd-cart" id="rechazar" style="background-color:rgb(109, 105, 105);" onclick="myfunction2()">&nbsp&nbsp&nbsp&nbspRECHAZAR&nbsp&nbsp&nbsp&nbsp</a>
+                        <a href="#" class="primary-btn pd-cart" id="abrir" onclick="abrir_1()">&nbsp&nbsp&nbsp&nbspACEPTAR&nbsp&nbsp&nbsp&nbsp</a>
+                    </div>
+                </div>   
+            </div>
+            </div>
+        </div>
+    </div>
+           
+    <br><br><br>
+
+
+    </section>
+  
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-widget">
+                            <h5>Oficina de Objetos Perdidos</h5>
+                        </div>
+                        <ul>
+                            <li>Ubicación: Edificio V, Oficina 303</li>
+                            <li>Teléfono: 4376767 anexo 31495</li>
+                            <li>Email: zvillena@ulima.edu.pe</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Información</h5>
+                        <ul>
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#">Servicios</a></li>
+                            <li><a href="#">Horarios</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>Mi cuenta</h5>
+                        <ul>
+                            <li><a href="#">Registrados</a></li>
+                            <li><a href="#">Solicitudes</a></li>
+                            <li><a href="#">Términos de uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Centro de ayuda</h5>
+                        <p>Preguntas frecuentes</p>
+                        <p>Contacto</p>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                            
+    </footer>
+
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery-ui.min.js"></script>
+    <script src="/assets/js/jquery.countdown.min.js"></script>
+    <script src="/assets/js/jquery.nice-select.min.js"></script>
+    <script src="/assets/js/jquery.zoom.min.js"></script>
+    <script src="/assets/js/jquery.dd.min.js"></script>
+    <script src="/assets/js/jquery.slicknav.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+
+
+    <script>
+        $("#registrar_1").click(function () {
+            Swal.fire({
+                title: '¿Está seguro de que desea cerrar sesión?',
+                showCancelButton: true,
+                confirmButtonColor: '#e77b3c',
+                cancelButtonColor: 'grey',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/logout";
+                }
+            })
+        });
+    
+        
+        let params = new URLSearchParams(location.search);
+        var obtener1 = params.get('var1');
+        console.log(obtener1);
+
+        var obtener2 = params.get('var2');
+        console.log(obtener2);
+
+        var obtener3 = params.get('var3');
+        var obtener4 = params.get('var4');
+        var obtener5 = params.get('var5');
+        var obtener6 = params.get('var6');
+        var obtener7 = params.get('var7');
+
+        document.getElementById("uno").innerHTML=`<p>`+obtener1+`</p>`;
+        document.getElementById("dos").innerHTML=`<p>`+obtener2+`</p>`;
+        document.getElementById("tres").innerHTML=`<p>`+obtener3+`</p>`;
+        document.getElementById("cuatro").innerHTML=`<p>`+obtener4+`</p>`;
+        document.getElementById("cinco").innerHTML=`<p>`+obtener5+`</p>`;
+        document.getElementById("seis").innerHTML=`<p>`+obtener6+`</p>`;
+        document.getElementById("siete").innerHTML=`<p>`+obtener7+`</p>`;
+
+
+
+
+        function listarSolicitudDpto(){
+            const xhttp = new XMLHttpRequest();
+            xhttp.open('GET','/solicitud_dpto/list',true);    
+            xhttp.onreadystatechange=function(){
+            if(xhttp.readyState == 4){
+                switch(xhttp.status){
+                    case 200:
+                        myFunction(JSON.parse(xhttp.responseText));
+                        break;
+                }
+            }
+           }
+           xhttp.send();
+        }
+
+    
+    
+    </script>
+
+    <script src="/assets/js/modales-jq.js"></script>
+    <script src="/assets/plugins/sweetalert2.all.min.js"></script>
+    <script src="/assets/plugins/sweetalert2.all.min.js"></script>
+    <!--<script src="../../static/assets/js/agregar_prueba.js" ></script>-->
+    
+    <script src="/static/assets/js/filtNom.js"></script>
+
+</body>
+
+
+
+    <!-- Js Plugins -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+ 
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/registro_modal.js"></script>
+
+</body>
+
+</html>
