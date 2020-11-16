@@ -349,7 +349,7 @@
 
                     <div class="product-list" id="lista">
                         {% if (session['status'] == 'active') %}
-                        {% if (session['rol'] == 1) %} 
+                        {% if (session['rol'] == 1 or session['rol'] == 5) %} 
                         <div class="row" id="items" name="1">
                             <div id="formulario">
                                 <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>

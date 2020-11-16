@@ -437,7 +437,7 @@ def solicitud_agregar():
     print('+++++++++++++++++++++++++++++++++++')
     
   
-    nro_solicitud=1014
+    nro_solicitud=int(request.form['cod_objeto'])+1000
     print(cod_objeto)
     print(nom_objeto)
     print(descripcion)
