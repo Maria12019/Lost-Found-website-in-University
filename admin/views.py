@@ -494,14 +494,19 @@ def solicitud_agregar():
     #users.insert().values({"name": "some name"})'''
     
     #conn.execute(stmt)
-    rpta = {
-      'tipo_mensaje' : 'success',
+    locals = {
+      'cod_usu' : cod_usu,
       'mensaje' : [
         'Se ha registrado los cambios en los items del subtítulo'
       ]
     }
     
-    return  json.dumps(rpta),status
+
+    return render_template(
+        '/registro/enviado.html',
+        locals=locals
+        ), status
+    
 
 
 @view.route('/sol_usu/detalle')

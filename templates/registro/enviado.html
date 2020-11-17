@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en" ></html>
 <head>
@@ -30,6 +28,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/modal.css') }}"/>
     {% endblock %}
     <br>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
     <header class="header-section">
         
         <div class="container">
@@ -111,93 +112,154 @@
             </header>
         </div>
     </div>
-    <!--<form action="/solicitud/agregar" method="post" id="formulario1"> 
-    <h1>PRUEBA</h1>
-    <p id="1" hidden>{{rpta['cod_objeto']}}</p>
-    <p id="2">{{rpta['nom_objeto']}}</p>
-    <p id="3">{{rpta['categoria']}}</p>
-    <!--<textarea name="categoria" rows="1" cols="50" readonly>{{rpta['categoria']}}</textarea>-->
-    <!--<p id="4">{{rpta['lugar']}}</p>
-    <p id="5"hidden>{{rpta['caract_esp']}}</p>
-    <p id="6" hidden>{{rpta['cod_usu']}}</p>
-
-    <textarea id="w3review" name="descripcion" rows="4" cols="50">
-    </textarea>
-    <div><button type="submit">ACEPTAR</button>
-         <input type="reset" value="CANCELAR">
-    </div>
+    
     
     
 
 
 
-    </form>-->
-    <section class="product-shop spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-9">
-                    <div class="row">
-                        <div class="product-details">
-                            <div class="pd-title">
-                                <h3>Solicitud de usuario</h3>
-                                <p><i>Por favor, ingrese las carácteristicas especiales del objeto que desea solicitar</i></p> 
+                          <div id="w">
+                            <div id="content">
+                              
+                              <div class="notify successbox">
+                                <h1 class="tit2">Envio exitoso!</h1>
+                                <span class="alerticon"><img src="https://www.flaticon.com/svg/static/icons/svg/735/735789.svg" alt="checkmark" width="200px" height="200px" /></span>
+                                <p id="mensaje">Muchas gracias por enviar su solicitud. Revisamos las solicitudes con frecuencia y haremos todo lo posible para responder a su solicitud.</p>
+                                <form action="/inicio" method="post" id="formulario1">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <center><button type="submit"  class="btn btn-dark btn-lg btn-block">Ir al Inicio</button></center>
+
+                                </form>
+                                
+                              </div>
+                              
+                              
                             </div>
-                        <div class="col-lg-6">
-
+                          </div>
                        
-                        <form action="/solicitud/agregar" method="post" id="formulario1">
-                            <div class="col-lg-6">
-                                <div class="product-details">
-                                    <div class="pd-desc">
-                                    <ul class="pd-tags">
-                                        <p id="11" hidden>{{rpta['cod_objeto']}}</p>
-                                        <li><span>NOMBRE:</span></li>
-                                        <li><span><p id="12">{{rpta['nom_objeto']}}</p></li>
-                                        <br>
-                                        <li><span>CATEGORÍA:</span></li>
-                                        <li><span>
-                                            <p id="13">{{rpta['categoria']}}</p>
-                                        </span></li>
-                                        <br>
-                                        <li><span>FECHA HALLADO:</span></li>
-                                        <li><span>
-                                            <p id="17">{{rpta['fecha_hallado']}}</p>
-                                        </span></li>
-                                        <br>
-                                        <li><span>LUGAR:</span></li>
-                                        <li><span>
-                                            <p id="14">{{rpta['lugar']}}</p>
-                                        </span></li>
-                                       
-                                        <br>
-                                        <p id="15"hidden>{{rpta['caract_esp']}}</p>
-                                        <p id="16"hidden >{{rpta['cod_usu']}}</p>
-                                        <li><span>CARACTERÍSTICAS ESPECIALES:</span></li>
-                                        <li><span>  <textarea id="w3review" name="descripcion" rows="4" cols="50">
-                                        </textarea></span></li>
-                                        <br>
-                                        </ul>
-                                        
-                                </div>
-                                <br>
-                                <div class="quantity">
-                                    
-                                    <button  type="submit" class="primary-btn pd-cart" >ENVIAR </button>
+                    <style>
+                        
+.tit2 {
+  
+  font-size: 2.5em;
+  line-height: 1.5em;
+  letter-spacing: -0.05em;
+  margin-bottom: 20px;
+  padding: .1em 0;
+  color: rgb(76, 212, 24);
+	position: relative;
+	overflow: hidden;
+	white-space: nowrap;
+	text-align: center;
+}
+.tit2:before,
+.tit2:after {
+  content: "";
+  position: relative;
+  display: inline-block;
+  width: 50%;
+  height: 1px;
+  vertical-align: middle;
+  
+}
+.tit2:before {    
+  left: -.5em;
+  margin: 0 0 0 -50%;
+}
+.tit2:after {    
+  left: .5em;
+  margin: 0 -50% 0 0;
+}
+.tit2 > span {
+  display: inline-block;
+  vertical-align: middle;
+  white-space: normal;
+}
 
-                                </div>
-                            </div>
+#mensaje {
+  display: block;
+  font-size: 1.35em;
+  line-height: 1.5em;
+  margin-bottom: 22px;
+}
 
-                        </form>
-                    </div>
-                                        
-                         
 
-                           
+/** page structure **/
+#w {
+  display: block;
+  width: 750px;
+  margin: 0 auto;
+  padding-top: 30px;
+}
 
-                        </div>
-                    </section>
+
+
+
+.flatbtn {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  color: #f9f8ed;
+  text-decoration: none;
+  background-color: #b6a742;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 12px 22px 12px 22px;
+  line-height: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 0 rgba(15, 15, 15, 0.3);
+  -moz-box-shadow: 0 1px 0 rgba(15, 15, 15, 0.3);
+  box-shadow: 0 1px 0 rgba(15, 15, 15, 0.3);
+}
+.flatbtn:hover {
+  color: #fff;
+  background-color: #c4b237;
+}
+.flatbtn:active {
+  -webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow:inset 0 1px 5px rgba(0, 0, 0, 0.1);
+  box-shadow:inset 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/** notifications **/
+.notify {
+  display: block;
+  
+  padding: 12px 18px;
+  max-width: 400px;
+  margin: 0 auto;
+  cursor: pointer;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
+}
+
+.notify .tit2 { margin-bottom: 6px; }
+
+.successbox .tit2 { color:#17B665}
+
+.notify .alerticon { 
+  display: block;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+                    </style>
     
-
+                    
 
 
     <footer class="footer-section">
@@ -258,66 +320,23 @@
                     <div class="col-lg-12">
                         <div class="copyright-text">
                                    
-    </footer>       
+    </footer>
     <script>
 
         var formTest=document.getElementById("formulario1");
-        var a=document.getElementById("11");
-        var b=document.getElementById("12");
-        var c=document.getElementById("13");
-        var d=document.getElementById("14");
-        var e=document.getElementById("15");
+      
         var f=document.getElementById("16");
-        /*console.log(b.textContent);
-        var post5 = document.createElement("input");
-        post5.setAttribute("type", "hidden");
-        post5.setAttribute("name", "nom_objeto");
-        post5.setAttribute("value", b.textContent);
-        formTest.appendChild(post5);*/
-        //var post = document.createElement("input");
-        var nom_objeto= String(b.textContent); 
-        var categoria=String(c.textContent);                      
-        var post = document.createElement("input");
-        post.setAttribute("type", "hidden");               
-        post.setAttribute("name","nom_objeto");
-        post.setAttribute("value", nom_objeto);
-        /*prueba.setAttribute("name","post");
-        prueba.setAttribute("value",ejemplo);*/
-        //formTest.appendChild(post2)
-        var post2 = document.createElement("input");
-        post2.setAttribute("type", "hidden");
-        post2.setAttribute("name", "cod_objeto");
-        post2.setAttribute("value", a.textContent);
-        console.log(a.textContent);
-        var post3 = document.createElement("input");
-        post3.setAttribute("type", "hidden");
-        post3.setAttribute("name", "categoria");
         
-        post3.setAttribute("value", categoria);
-        var post4 = document.createElement("input");
-        post4.setAttribute("type", "hidden");
-        post4.setAttribute("name", "lugar");
-        post4.setAttribute("value", d.textContent);
-        var post5 = document.createElement("input");
-        post5.setAttribute("type", "hidden");
-        post5.setAttribute("name", "caract_esp");
-        post5.setAttribute("value", e.textContent);
-        var post6 = document.createElement("input");
-        post6.setAttribute("type", "hidden");
-        post6.setAttribute("name", "cod_usu");
         post6.setAttribute("value", f.textContent);
         formTest.appendChild(post6);
-        formTest.appendChild(post5);
-        formTest.appendChild(post4);
-        formTest.appendChild(post3);
-        formTest.appendChild(post2);
-        formTest.appendChild(post);                                
+                                       
         console.log(categoria);
 
         
 
 
-    </script>
+    </script>       
+    
 </body>
 {% block js %}
     <script src="{{ url_for('static', filename='assets/js/jquery-3.3.1.min.js') }}"></script>

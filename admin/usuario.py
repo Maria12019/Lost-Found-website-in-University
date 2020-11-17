@@ -7,12 +7,14 @@ from flask import Blueprint, render_template, session, request, redirect
 #objeto que tiene la subaplicacion
 view = Blueprint('usuario_bludprint', __name__)
 
-@view.route('/inicio', methods=['GET'])
-def registro():    
+@view.route('/inicio', methods=['GET','POST'])
+def registro():
+    cod_usu=request.form['cod_usu'] 
+    print(cod_usu)   
     locals = {
         'message': '',
-        
-    }
+        'cod_usu':cod_usu
+    }   
     return render_template(
         'layouts/aplication.html',
         locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
@@ -80,5 +82,17 @@ def registro_donacion():
     }
     return render_template(
         'registro/registro_solicitud.html',
+        locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
+    ), 200
+
+
+@view.route('/enviado', methods=['GET'])
+def enviado():    
+    locals = {
+        'message': '',
+        
+    }
+    return render_template(
+        'registro/enviado.html',
         locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
     ), 200

@@ -565,13 +565,13 @@
                         let miNodofecha= document.createElement('p');
                         miNodofecha.classList.add('card-text');
                         miNodofecha.textContent = item.fecha_hallado;
-
+                        var cod_usu=document.getElementById('cod_usu');
                         let miNodoBoton = document.createElement('button');
                         miNodoBoton.classList.add('btn', 'btn-success');
                         miNodoBoton.textContent = 'SOLICITAR';
                         miNodoBoton.addEventListener("click",function() {
                             
-                                var cod_usu=document.getElementById('cod_usu');
+                               
 
                                 var formTest = document.createElement('form');
                                 var prueba=document.getElementById("uno2");
