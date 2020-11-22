@@ -17,6 +17,7 @@ class Usuario(Base):
     password = Column(String)
     correo_electronico = Column(String)
     rol = Column(Integer)
+    id_dpto = Column(Integer)
 
 class Dpto(Base):
     __tablename__ = 'dpto'
@@ -91,3 +92,11 @@ class SolicitudDpto(Base):
     cantidad_objeto=Column(Integer)
     fecha_envio=Column(DateTime)
     fecha_rpta=Column(DateTime)
+
+
+
+class NombreDpto(Base):
+    __tablename__ = 'nombre_dpto'
+    id_usuario = Column(Integer, primary_key=True)
+    id_dpto = Column(Integer)
+    dpto_name = Column(String)

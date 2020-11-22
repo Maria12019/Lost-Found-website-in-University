@@ -3,7 +3,7 @@
 
 import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
-from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto
+from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto, NombreDpto
 from main.database import engine,session_db
 from sqlalchemy import select,insert, between, update
 from datetime import datetime
@@ -615,21 +615,16 @@ def actualizar_sol_usu():
         }
     return json.dumps(rpta),status
 
-@view.route('/solicitud/agregarDonacion', methods=['POST'])
+@view.route('/solicitud/agregarDonacion', methods = ['GET', 'POST'])
 def solicitud_agregarDonacion():
     
-    
-    #nom_objeto=str(request.form['nom_objeto'])
-    #id = request.form['id']
+  
     codigo_dpto = request.form['codigo_dpto']
-    #lugar=str(request.form['lugar'])
+    print('cod',codigo_dpto)
     estado=str('EN PROCESO')
     descripcion=str(request.form['descripcion'])
     categoria=str(request.form['categoria'])
-    #caract_esp=str(request.form['caract_esp'])
-    
     cantidad_objeto=str(request.form['cantidad_objeto'])
-    #fecha_envio=request.form['fecha_envio']
     now = datetime.now()
     fecha_envio=str(now.year)+"-"+str(now.month)+"-"+str(now.day)
     
@@ -639,11 +634,6 @@ def solicitud_agregarDonacion():
     status = 200
     session = session_db()
     stmt=SolicitudDpto(
-        ##id=Column(Integer, primary_key=True)
-        ##id_objeto=Column(Integer)
-        ##id_usuario = Column(Integer)
-        #categoria= categoria,
-        #nom_objeto=nom_objeto,
         codigo_dpto=codigo_dpto,
         estado=estado,
         #lugar = lugar,
@@ -653,8 +643,6 @@ def solicitud_agregarDonacion():
         #id = id,
         cantidad_objeto=cantidad_objeto,
         fecha_envio=fecha_envio
-        
-        
         )
 
     session.add(stmt)
@@ -674,5 +662,33 @@ def solicitud_agregarDonacion():
     
     #return  json.dumps(rpta),status
     return redirect('/donacion')
+
+
+@view.route('/solicitud/buscarNombreDpto', methods = ['GET'])
+def solicitud_buscarNombreDpto():
+    cod_usu = request.args.get('cod_usu')
+    print(cod_usu)
+    status = 200
+    resp=[]
+    try:
+        conn = engine.connect()
+        stmt = select([NombreDpto]).where(NombreDpto.id_usuario == cod_usu)
+        rs = conn.execute(stmt)
+        for r in conn.execute(stmt):
+            row = {
+            'id_usuario': r.id_usuario,
+            'id_dpto': r.id_dpto,
+            'dpto_name': r.dpto_name
+            }
+        resp.append(row)
+        print(resp)
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar las solicitudes',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status
 
 
