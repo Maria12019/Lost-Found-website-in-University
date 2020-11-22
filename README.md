@@ -19,11 +19,11 @@ Activar el ambiente virtual:
 
 <b>Linux</b>
 
-    $ source env/bin/activate
+    $source env/bin/activate
 
 <b>Windows</b>
     
-    $env\Scripts\activate.bat 
+    $env\Scripts\activate.bat
 
 Instalar las dependencias:
 

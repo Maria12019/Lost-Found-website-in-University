@@ -215,18 +215,19 @@
                             <label for="start">Fecha Fin:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
                             <input type="date" id="start" name="trip-start" value="fechaFin" min="2020-01-01" max="2020-12-31">
                             <br><br><br>
-                            <button id="buscarFiltro" type="button" class="filter-btn" onclick="filtrarSolicitud(event);">Buscar</button>
+                            <button id="buscarFiltro" type="button" class="filter-btn" onclick="filtrarSolicitudDpto(event);">Buscar</button>
                         </div>
                     </form>
                 </div>
                 <div class="col-lg-9 order-1 order-lg-2">
-                    
+                    <!--
                     <div class="container">
                         <input id="busqueda" class="search-input" type="text" placeholder="¿Qué estás buscando?">
                         <button id="buscarNombre" type="button" onclick="filtrarNombreSol(event)"><i class="ti-search"></i></button>
                         <div class="sugerencias"></div>
                     </div>
                     
+
                     <style>
                         .sugerencias {
                             display: none;
@@ -334,7 +335,7 @@
 	                        	xhttp.send();
 	                        }
                         }
-
+                    -->
                     </script>
 
 
@@ -644,29 +645,20 @@
         }
     )
 
-    var selec2 = document.getElementById("lugar");
-    var lugarSelec;
-    selec2.addEventListener("change", function(){
-        lugarSelec = selec2.value;
-        return lugarSelec;
-        }
-    )
-    
-    function filtrarSolicitud(e){
+
+    function filtrarSolicitudDpto(e){
         limpiarBody();
         console.log(categoriaSelec);
-        console.log(lugarSelec);
 
-        if  (lugarSelec == undefined && categoriaSelec == undefined){
-            alert("Debes escoger al menos una opción.")
-        } else if(  (categoriaSelec=='TODOS' && lugarSelec == undefined)    || 
-                    (lugarSelec == 'TODOS' && categoriaSelec == undefined)  ||
-                    (lugarSelec == 'TODOS' && categoriaSelec == 'TODOS') ) {
-                    listarObjeto();
-            } else {
+        if  (categoriaSelec == undefined){
+            alert("Debes seleccionar una categoría.")
+        } else if(  (categoriaSelec=='TODOS')    || 
+                    (categoriaSelec == undefined) ) {
+                    listarSolicitudDpto();
+        } else {
                 const xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange=function(){};
-                xhttp.open('GET','/solicitud/filtro?categoria='+categoriaSelec+'&lugar='+lugarSelec,true);
+                xhttp.open('GET','/solicitudDpto/filtro?categoria='+categoriaSelec,true);
                 xhttp.onreadystatechange=function(){
                     if(xhttp.readyState == 4){
                         switch(xhttp.status){
@@ -677,7 +669,7 @@
                     }
                 }
                 xhttp.send();
-            }
+        }
     }
     
     </script>

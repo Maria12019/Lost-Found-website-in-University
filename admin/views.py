@@ -426,6 +426,42 @@ def filtro_soli():
     return json.dumps(resp),status
 
 
+@view.route('/solicitudDpto/filtro')
+def filtro_soli_dpto():
+    resp = None
+    categoria = request.args.get('categoria')
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = ''
+        if(categoria != 'undefined'):
+            stmt = select([SolicitudDpto]).where(SolicitudDpto.categoria == categoria)
+        
+        rs = conn.execute(stmt)
+        list = []
+        for item in conn.execute(stmt):
+            row = {
+                'id': item.id,
+                'codigo_dpto': item.codigo_dpto,
+                'estado': item.estado,
+                'categoria': item.categoria,
+                'descripcion': item.descripcion,
+                'cantidad_objeto': item.cantidad_objeto,
+                'fecha_envio': str(item.fecha_envio),
+                'fecha_rpta': str(item.fecha_rpta)
+            }
+            if(item.estado == 'EN PROCESO'):
+                list.append(row)
+        resp=list
+    except Exception as e:
+        resp=[
+            'Se ha producido un error',
+            str(e)
+        ]
+        status = 500
+    return json.dumps(resp),status
+
+
 @view.route('/objeto/solicitar', methods=['POST'])
 def objeto_solicitar():
     nom_objeto=str(request.form['post'])
