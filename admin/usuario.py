@@ -9,7 +9,8 @@ view = Blueprint('usuario_bludprint', __name__)
 
 @view.route('/inicio', methods=['GET','POST'])
 def registro():
-    cod_usu=request.form['cod_usu'] 
+    #cod_usu=request.args.get('cod_usu')
+    cod_usu=request.form['cod_usu']
     print(cod_usu)   
     locals = {
         'message': '',
@@ -19,7 +20,16 @@ def registro():
         'layouts/aplication.html',
         locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
     ), 200
-
+'''@view.route('/principal', methods=['GET','POST'])
+def principal():
+   
+    locals = {
+        'message': ''
+    }   
+    return render_template(
+        'layouts/aplication.html',
+        locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
+    ), 200'''
 
 @view.route('/register', methods=['GET'])
 def register():    

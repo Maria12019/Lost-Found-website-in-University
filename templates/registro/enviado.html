@@ -73,7 +73,14 @@
                             <ul>
                                 {% if (session['status'] == 'active') %}
                                 {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
-                                <li id="1"><a href="/inicio">OBJETOS</a></li>
+                                <!--<li id="1"><a href="/inicio">OBJETOS</a></li>-->
+
+
+                                <form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+
+                                </form>
                                 {% else %}
                                 {% if (session['rol'] == 2) %} <!--JEFE-->
                                 <li><a href="/inicio">OBJETOS</a></li>
@@ -93,7 +100,12 @@
                                 <li><a href="/register">REGISTRO OBJETOS</a></li>
                                 
                                 {% else %}
-                                <li id="5"><a href="/inicio">OBJETOS</a></li>
+                                <!--<li id="5"><a href="/inicio">OBJETOS</a></li>-->
+                                <li><form action="/inicio" method="post" id="formulario5">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+
+                                </form></li>
                                 <li><a href="/registro">SOLICITUD DE DONACIÓN</a></li>
                                 
                                 {% endif %}
@@ -331,11 +343,29 @@
         formTest.appendChild(post6);
                                        
         console.log(categoria);
-
+       
         
 
 
-    </script>       
+    </script>
+
+    <script>
+
+        $("#registrar_1").click(function () {
+                    Swal.fire({
+                        title: '¿Está seguro de que desea cerrar sesión?',
+                        showCancelButton: true,
+                        confirmButtonColor: '#e77b3c',
+                        cancelButtonColor: 'grey',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/logout";
+                        }
+                    })
+                });
+    </script>
+         
     
 </body>
 {% block js %}
@@ -349,5 +379,7 @@
     <script src="{{ url_for('static', filename='assets/js/jquery.slicknav.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    <script type="text/javascript" src="../../assets/js/modales-jq.js"></script>
+    <script type="text/javascript" src="../../assets/plugins/sweetalert2.all.min.js"></script>
 {% endblock %}
 </html>

@@ -437,6 +437,7 @@ def objeto_solicitar():
     fecha_hallado=str(request.form['fecha_hallado'])
     print(nom_objeto)
     status = 200
+    
     rpta = {
       'tipo_mensaje' : 'success',
       'cod_objeto': cod_objeto,

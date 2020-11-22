@@ -71,7 +71,10 @@
                             <ul>
                                 {% if (session['status'] == 'active') %}
                                 {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
-                                <li id="1"><a href="/inicio">OBJETOS</a></li>
+                                <form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+                                </form>
                                 {% else %}
                                 {% if (session['rol'] == 2) %} <!--JEFE-->
                                 <li><a href="/inicio">OBJETOS</a></li>
@@ -91,7 +94,11 @@
                                 <li><a href="/register">REGISTRO OBJETOS</a></li>
                                 
                                 {% else %}
-                                <li id="5"><a href="/inicio">OBJETOS</a></li>
+                                <li><form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+
+                                </form></li>
                                 <li><a href="/donacion">SOLICITUD DE DONACIÓN</a></li>
                                 
                                 {% endif %}
@@ -317,7 +324,7 @@
                             });
                         })
 
-                    
+                        
                         function filtrarNombre(e){
                             
                             var nombreSelec = document.getElementById("busqueda").value;
@@ -352,7 +359,7 @@
                         {% if (session['rol'] == 1 or session['rol'] == 5) %} 
                         <div class="row" id="items" name="1">
                             <div id="formulario">
-                                <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                <textarea  hidden id="cod_usu" name="cod_usu"  rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
                             </div>        
                                         
                         </div>
@@ -516,6 +523,28 @@
     
         var estado=0;
 
+        var nava=document.getElementById("1");
+        var cod_usu=document.getElementById('cod_usu');
+        console.log(cod_usu);
+        /*nava.addEventListener("click",function(){
+            
+            const xhttp = new XMLHttpRequest();
+               
+                xhttp.open('GET','/inicio?cod_usu='+cod_usu,true);
+                
+                xhttp.send();
+                        
+            
+
+        }
+            
+                       
+        );
+
+        localStorage.setItem("cod_usu", cod_usu); 
+        console.log(localStorage.getItem(cod_usu));*/
+    
+
         function myFunction(datos)
         {
                 var variable= document.getElementById("lista");
@@ -571,7 +600,8 @@
                         miNodoBoton.textContent = 'SOLICITAR';
                         miNodoBoton.addEventListener("click",function() {
                             
-                               
+
+                                
 
                                 var formTest = document.createElement('form');
                                 var prueba=document.getElementById("uno2");
