@@ -47,15 +47,17 @@ def login_access():
     if password == get_password_by_id(user):
        
         # crear session
+        codigo=get_usu_by_id(user)
         session['status'] = 'active'
         session['user'] = user
         session['time'] = datetime.now()
         session['rol'] = rol
-        codigo=get_usu_by_id(user)
+        session['cod_usu'] = codigo
+        
         locals = {
        
         'cod_usu': codigo
-      
+        
         }
         
         

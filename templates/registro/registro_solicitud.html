@@ -16,7 +16,7 @@
 
 </head>
 
-<body>
+<body onload=traerNomDpto();>
     <!-- Page Preloder -->
  
     {% block css %}
@@ -43,6 +43,8 @@
                                 <h3>
                                     <img id="logo-wide" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
                                     <b>SISTEMA DE GESTIÓN DE OBJETOS PERDIDOS</b>
+                                    <!--<p> {{ session['cod_usu']}}</p>-->
+                                   
                                 </h3>
                                 <img id="logo-narrow" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
                             </a>
@@ -82,7 +84,7 @@
                                 <li><a href="/inicio">OBJETOS</a></li>
                                 <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
                                 <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
-                                <li><a href="/sol_usu">SOLICITUD DE DONACIÓN</a></li>
+                                <li><a href="/sol_dpto">SOLICITUD DE DONACIÓN</a></li>
                                 
                                 {% else %}
                                 {% if (session['rol'] == 3) %} <!---->
@@ -96,9 +98,13 @@
                                 <li><a href="/register">REGISTRO OBJETOS</a></li>
                                 
                                 {% else %}
-                                <li id="5"><a href="/inicio">OBJETOS</a></li>
+                                <li><form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{ session['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+
+                                </form></li>
                                 <li><a href="/sol_usu">SOLICITUD DE DONACIÓN</a></li>
-                                
+                                 
                                 {% endif %}
                                 {% endif %}
                                 {% endif %}
@@ -140,7 +146,7 @@
                         <div class="col-lg-6">
 
                         </div>
-                        <form action="/solicitud/agregarDonacion" method="post" id="formulario">
+                        
                             <div class="col-lg-6">
                                 <div class="product-details">
                                     <div class="pd-desc">
@@ -169,9 +175,13 @@
                                         <li><span>CÓDIGO OBJETO:</span></li>
                                         <li><span><input type="text" name="cod_objeto" required minlength="4" maxlength="8"></span></li>
                                         <br>-->
-                                        <li><span>CÓDIGO DE DEPARTAMENTO:</span></li>
-                                        <li><span><input type="text" name="codigo_dpto" required  maxlength="8"></span></li>
+                                        <li><span>NOMBRE DEPARTAMENTO:</span></li>
+                                        <p id="nomDpto"></p>
                                         <br>
+                                        <form action="/solicitud/agregarDonacion" method="post" id="formulario">
+                                        <li><span>CÓDIGO DE DEPARTAMENTO:</span></li>
+                                        <li><span><input type="text" name="codigo_dpto" required maxlength="8"></span></li>
+                                        
                                         
                                         
                                         
@@ -186,6 +196,7 @@
                                             </select>
                                         </span></li>-->
                                         <br>
+                                    
                                         <li><span>CATEGORÍA:</span></li>
                                         <li><span>
                                             <select name="categoria">
@@ -227,7 +238,7 @@
                                 <br>
                                 <div class="quantity">
                                     
-                                    <button type="submit" class="primary-btn pd-cart" >REGISTRAR</button>
+                                    <button type="submit" class="primary-btn pd-cart" id="registrar">REGISTRAR</button>
 
                                 </div>
                             </div>
@@ -345,6 +356,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="copyright-text">
+                            <div id="cod_usu" hidden>{{ session['cod_usu']}}</div>
+                            <div id="dptoId" ></div>
                            
     <!-- Footer Section End -->
 
@@ -382,8 +395,47 @@
             xhr.setRequestHeader('Content-Type','application/json');
             xhr.send(jsonString);
         }*/
+        function traerNomDpto(){ 
+            var cod_usu = String(document.getElementById('cod_usu').textContent);
+            const xhttp = new XMLHttpRequest();
+            xhttp.open('GET', '/solicitud/buscarNombreDpto?cod_usu=' + cod_usu, true); 
+            xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        switch (xhttp.status) {
+                            case 200:
+                                myFunction(JSON.parse(xhttp.responseText));
+                                break;
+                        }
+                    }
+                }
+            xhttp.send();
+        }
+        
+       
+        function myFunction(datos) {
+            var miNodo = document.createElement('p');
+            miNodo.setAttribute("name", "nodo");
+            
+            for (let item of datos) {
+                console.log(item.dpto_name);
+                var nombreDpto = item.dpto_name;
+                var id_nom=document.getElementById("nomDpto");
+                id_nom.innerHTML = item.dpto_name;
 
+                /*document.getElementById("registrar").addEventListener("click", function(){
+                console.log('codigo'+item.id_dpto);
+                const xhttp = new XMLHttpRequest();
+                xhttp.open('GET', '/solicitud/agregarDonacion?id_dpto=' + item.id_dpto, true); 
+                xhttp.send();
+            })*/
+            }
+        }
 
+        var hola = document.getElementById("diositoporfavor");
+        console.log(hola);
+        
+       
+        
 
 
 
