@@ -142,13 +142,13 @@ def dpto_list():
 
 @view.route('/objeto/agregar', methods=['POST'])
 def objeto_agregar():
-    codigo = request.form['cod_objeto']
+    
     nom_objeto=str(request.form['nom_objeto'])
     categoria=str(request.form['categoria'])
     marca=str(request.form['marca'])
     estado=str(request.form['estado'])
     fecha_hallado=request.form['fecha_hallado']
-    fecha_dev=request.form['fecha_dev']
+    
     lugar=str(request.form['lugar'])
     nro_anaquel=request.form['nro_anaquel']
     caract_esp=str(request.form['caract_esp'])
@@ -158,13 +158,11 @@ def objeto_agregar():
     status = 200
     session = session_db()
     stmt=Objeto(
-        cod_objeto=codigo,
         nom_objeto=nom_objeto,
         categoria=categoria,
         marca=marca,
         estado=estado,
         fecha_hallado=fecha_hallado,
-        fecha_dev=fecha_dev,
         lugar=lugar,
         nro_anaquel=nro_anaquel,
         caract_esp=caract_esp,
