@@ -77,7 +77,11 @@
                                 <li id="1"><a href="/inicio">OBJETOS</a></li>
                                 {% else %}
                                 {% if (session['rol'] == 2) %} <!--JEFE-->
-                                <li><a href="/inicio">OBJETOS</a></li>
+                                <li><form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{ session['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+
+                                </form></li>
                                 <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
                                 <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
                                 <li><a href="/sol_dpto">SOLICITUD DE DONACIÓN</a></li>
