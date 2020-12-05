@@ -235,6 +235,8 @@
                             
                             <h5>Descripcion:</h5>
                             <p id="siete"></p>
+
+                            <button class="btn btn-info" id="btnBuscar" onclick="abrirTabla();">Buscar</button><br><br>
                             
                             <h5>Comentario:</h5>
                             <textarea name="textarea" rows="4" cols="44"></textarea>
@@ -356,6 +358,7 @@
         var obtener5 = params.get('var5');
         var obtener6 = params.get('var6');
         var obtener7 = params.get('var7');
+        var obtener8 = params.get('var8');
 
         document.getElementById("uno").innerHTML=`<p>`+obtener1+`</p>`;
         document.getElementById("dos").innerHTML=`<p>`+obtener2+`</p>`;
@@ -381,6 +384,12 @@
             }
            }
            xhttp.send();
+        }
+
+
+        function abrirTabla(){
+            window.open("/objetos/dispoDon?idSol=" +obtener8);
+            
         }
 
     

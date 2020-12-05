@@ -3,7 +3,7 @@
 
 import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
-from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto, NombreDpto
+from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto, NombreDpto, ObjetoDispoDon
 from main.database import engine,session_db
 from sqlalchemy import select,insert, between, update
 from datetime import datetime
@@ -690,3 +690,73 @@ def solicitud_buscarNombreDpto():
     return json.dumps(resp),status
 
 
+@view.route('/objetosDispoDon')
+def objeto_dispo_don():
+    resp = None
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = select([ObjetoDispoDon])
+        rs = conn.execute(stmt)
+        lista = []
+        for r in conn.execute(stmt):
+            print(r.fecha_hallado)
+            row = {
+            'id': r.id,
+            'cod_objeto':r.cod_objeto,
+            'nom_objeto':r.nom_objeto,
+            'categoria':r.categoria,
+            'estado':r.estado,
+            'marca':r.marca,
+            'fecha_hallado':str(r.fecha_hallado),
+            'fecha_dev':str(r.fecha_dev),
+            'lugar':r.lugar,
+            'nro_anaquel':r.nro_anaquel,
+            'caract_esp':r.caract_esp,
+            'cod_usu_entrega':r.cod_usu_entrega
+            }
+            lista.append(row) 
+        resp=lista
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar los objetos',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status
+
+@view.route('/actualizarDonado', methods = ['GET', 'POST'])
+def actualizarDonado():
+    status = 200
+    listaVals = request.args.get('listaVals')
+    idSol = request.args.get('idSol')
+    now = datetime.now()
+    fecha_dev=str(now.year)+"-"+str(now.month)+"-"+str(now.day)
+
+    if not listaVals == None:
+        data = eval(str(listaVals))
+        print(data)
+
+        try:
+            print('prueba', data)
+            session = session_db()
+            session.execute('''INSERT INTO DONACION (soli_id, fecha_crea) VALUES (:soli_id, :fecha_crea) ; UPDATE OBJETO SET estado = 'DONADO', fecha_dev= :fecha_dev, cod_donacion = (SELECT max(id) FROM DONACION) WHERE id in :data''',{'soli_id': idSol, 'fecha_crea': fecha_dev, 'fecha_dev': fecha_dev, 'data': data})
+            print('se inserto el registro')
+            session.commit()
+            print('Values updated in PostgreSQL')
+            
+            rpta = {
+                'tipo_mensaje' : 'success',
+                'mensaje' : 'Se han registrado los cambios en la tabla Objeto'
+            }
+        except Exception as e:
+            status = 500
+            rpta = {
+            'tipo_mensaje' : 'error',
+            'mensaje' : [
+                'Se ha producido un error en guardar los cambios en la tabla Objeto',
+                str(e)
+            ]
+            }
+    return redirect('/objetosDispoDon')
