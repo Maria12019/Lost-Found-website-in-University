@@ -129,46 +129,7 @@
             </header>
         </div>
 
-    </div><!--
-    <div class="container text-center">
-             
-        
-        <br>
-        <br>
-        <div class="modal" id="myModal1">
-          <div class="modal-dialog">
-            <div class="modal-content">
-                
-                   
-                  
-                  <div class="modal-body">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"onclick="miCerrar();">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <br>
-                    <p>¿Está seguro de que deseas</p>
-                    <p> cerrar sesión?</p>
-                    <br>
-                    <a href="/logout"><button type="button" class="btn btn-primary" >OK</button></a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  </div>
-              
-       
-              
-              
-            </div>
-          </div>
-        </div>
-        <script>
-            var cierra=document.getElementById("registrar_1");
-            var ventanita=document.getElementById("myModal1");
-            cierra.addEventListener("click", function(){
-                            ventanita.style.display = 'block';
-                            });
-        </script>
-        
-      </div>-->
+    </div>
 
 
     
@@ -465,11 +426,19 @@
                                                         <br>
                                                 </div>  
                                                
-                                                <div class="quantity">
-                                    
-                                                    <button  type="submit" class="primary-btn pd-cart">ACTUALIZAR </button>
-                
-                                                </div>
+                                               
+                                                    <div>
+                                                    <button  type="submit" class="btn btn-success" id="objeto-a">ACTUALIZAR </button>
+                                                    
+                                                    </div>
+                                                    <div>
+                                                        <br>
+                                                    </div>
+                                                    <div class="alert alert-success" id="estado-form">
+                                                       
+                                                        <strong>Correcto!</strong> Se actualizo el estado del objeto
+                                                      </div>
+                                                
                                             </form>
                                             
                                           </div>
@@ -477,6 +446,12 @@
                                 </div>
                             </div>
                         </div>
+                        <style>
+                            #estado-form
+                            {
+                                display: none;
+                            }
+                        </style>
 
                        
                         {% else %}
@@ -1080,11 +1055,18 @@
         $("#formulario1").submit(function(event){
             event.preventDefault(); //detenemos el submit 
         $.post("/objeto/actualizar_final", $(this).serialize(), function(data){
-           
+           console.log(data);
         //callback, donde data son los datos que vuelven del servidor, datos que pueden ser json si los tratas con la funcion php: json_encode():
-    }); 
-     
-});
+        document.getElementById("estado-form").style.display="block";
+        }); 
+    
+        
+
+    
+    
+    
+    });
+  
     </script>
 
     
