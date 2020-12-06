@@ -690,7 +690,7 @@ def solicitud_buscarNombreDpto():
     return json.dumps(resp),status
 
 
-<<<<<<< HEAD
+
 
 @view.route('/objeto/actualizar', methods=['POST'])
 def objeto_actualizar():
@@ -766,7 +766,7 @@ def objeto_actualizar_final():
     
 
    
-=======
+
 @view.route('/objetosDispoDon')
 def objeto_dispo_don():
     resp = None
@@ -837,4 +837,4 @@ def actualizarDonado():
             ]
             }
     return redirect('/objetosDispoDon')
->>>>>>> 71be17a71a0ab45bf43ce4cee7dbcf942562a0c7
+
