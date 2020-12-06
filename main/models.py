@@ -53,6 +53,7 @@ class Objeto(Base):
     nro_anaquel=Column(Integer)
     caract_esp=Column(String)
     cod_usu_entrega=Column(Integer)
+    cod_donacion=Column(Integer)
 
 
 class Solicitud(Base):
@@ -100,3 +101,24 @@ class NombreDpto(Base):
     id_usuario = Column(Integer, primary_key=True)
     id_dpto = Column(Integer)
     dpto_name = Column(String)
+
+class ObjetoDispoDon(Base):
+    __tablename__='obj_disp_don'
+    id = Column(Integer, primary_key=True)
+    cod_objeto = Column(Integer)
+    nom_objeto = Column(String)
+    categoria = Column(String)
+    marca = Column(String)
+    estado = Column(String)
+    fecha_hallado=Column(DateTime)
+    fecha_dev=Column(DateTime)
+    lugar=Column(String)
+    nro_anaquel=Column(Integer)
+    caract_esp=Column(String)
+    cod_usu_entrega=Column(Integer)
+
+class Donacion(Base):
+    __tablename__ = 'donacion'
+    id = Column(Integer, primary_key=True,autoincrement=True)
+    soli_id = Column(Integer)
+    fecha_crea = Column(DateTime)

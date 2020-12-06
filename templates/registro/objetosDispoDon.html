@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Objetos disponibles para donación</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+</head>
+
+<body onload="listarObjetosDispDon()">
+    <div class="container py-3">
+        <h1 class="text-center">Objetos disponibles para ser donados</h1>
+        <div id="tablaGestion">
+
+        </div>
+        <form action="/actualizarDonado" method="post">
+            <button id="prueba">prueba</button>
+        </form>
+    </div>
+</body>
+<script>
+    function generateTable(datos) {
+
+        var dvTable = document.getElementById("tablaGestion");
+        var table = document.createElement("table");
+        table.setAttribute('class', 'table table-striped media-body');
+
+        var thead = document.createElement("thead");
+        var tr = document.createElement("tr");
+        var th1 = document.createElement('th');
+        var th2 = document.createElement('th');
+        var th3 = document.createElement('th');
+        var th4 = document.createElement('th');
+        var th5 = document.createElement('th');
+        var th6 = document.createElement('th');
+        var th7 = document.createElement('th');
+        th1.setAttribute("scope", "col");
+        th1.textContent = "Código";
+        th2.setAttribute("scope", "col");
+        th2.textContent = "Nombre";
+        th3.setAttribute("scope", "col");
+        th3.textContent = "Categoría";
+        th4.setAttribute("scope", "col");
+        th4.textContent = "Marca";
+        th5.setAttribute("scope", "col");
+        th5.textContent = "Nro. Anaquel";
+        th6.setAttribute("scope", "col");
+        th6.textContent = "Fecha Hallado";
+        th7.setAttribute("scope", "col");
+
+        var check = document.createElement("input");
+        check.setAttribute("type", "checkbox");
+        check.setAttribute("id", "chk");
+        th7.appendChild(check);
+
+
+        var tbody = document.createElement('tbody');
+
+        for (let item of datos) {
+            tr.appendChild(th1);
+            tr.appendChild(th2);
+            tr.appendChild(th3);
+            tr.appendChild(th4);
+            tr.appendChild(th5);
+            tr.appendChild(th6);
+            tr.appendChild(th7);
+            thead.appendChild(tr);
+
+            var trT = document.createElement('tr');
+            var code = document.createElement('td');
+            code.textContent = item.id;
+
+            var name = document.createElement('td');
+            name.textContent = item.nom_objeto;
+
+            var categoria = document.createElement('td');
+            categoria.textContent = item.categoria;
+
+            var marca = document.createElement('td');
+            marca.textContent = item.marca;
+
+            var nro_anaquel = document.createElement('td');
+            nro_anaquel.textContent = item.nro_anaquel;
+
+            var fecha_hallado = document.createElement('td');
+            fecha_hallado.textContent = item.fecha_hallado;
+
+            var colCheckbox = document.createElement('td');
+            var checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+            checkbox.setAttribute('id', item.id);
+            checkbox.setAttribute('name', 'chk');
+            colCheckbox.appendChild(checkbox);
+
+            table.appendChild(thead);
+            trT.appendChild(code);
+            trT.appendChild(name);
+            trT.appendChild(categoria);
+            trT.appendChild(marca);
+            trT.appendChild(nro_anaquel);
+            trT.appendChild(fecha_hallado);
+            trT.appendChild(colCheckbox);
+            tbody.appendChild(trT);
+            table.appendChild(tbody);
+            dvTable.appendChild(table);
+        }
+
+        document.getElementById('chk').onclick = function () {
+            checkAll('chk');
+        }
+
+        var btnPrueba = document.getElementById('prueba');
+        btnPrueba.onclick = function () {
+            var num = document.querySelectorAll("input:checked").length;
+            console.log(num)
+            var valores = document.querySelectorAll("input[name=chk]:checked");
+            let lista = [];
+            let listaVal = [];
+
+            console.log(valores.length);
+            for (var i = 0; i < valores.length; i++) {
+                lista.push(valores[i].id);
+            }
+            let listaVals = lista.join();
+            console.log(listaVals);
+
+            let params = new URLSearchParams(location.search);
+            var idSol = params.get('idSol');
+            const xhttp = new XMLHttpRequest();
+            xhttp.open('GET', '/actualizarDonado?listaVals='+listaVals+"&idSol="+idSol, true);
+            xhttp.send();
+
+        }
+
+    }
+
+    function listarObjetosDispDon() {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () { };
+        xhttp.open('GET', '/objetosDispoDon', true);
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4) {
+                switch (xhttp.status) {
+                    case 200:
+                        generateTable(JSON.parse(xhttp.responseText));
+                        break;
+                }
+            }
+        }
+        xhttp.send();
+    }
+
+    function checkAll(checkId) {
+        var inputs = document.getElementsByTagName("input");
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].id != checkId) {
+                if (inputs[i].type == "checkbox") {
+                    if (inputs[i].checked == true) {
+                        inputs[i].checked = false;
+                    } else if (inputs[i].checked == false) {
+                        inputs[i].checked = true;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+</script>
+
+</html>
