@@ -61,7 +61,7 @@
 
     <div class="nav-item">
         <div class="container">
-           
+            
             <header class="header-section">
     
                 <div class="nav-item">
@@ -77,7 +77,7 @@
                                 </form>
                                 {% else %}
                                 {% if (session['rol'] == 2) %} <!--JEFE-->
-                                <li><form action="/inicio" method="post" id="formulario4">
+                                <li><form action="/inicio" method="post" id="formulario5">
                                     <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
                                     <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
 
@@ -88,7 +88,7 @@
                                 
                                 {% else %}
                                 {% if (session['rol'] == 3) %} <!---->
-                                <li><form action="/inicio" method="post" id="formulario4">
+                                <li><form action="/inicio" method="post" id="formulario5">
                                     <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
                                     <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
 
@@ -175,7 +175,7 @@
 
 
     </div>
-
+    
     <section class="product-shop spad">
         <div class="container">
             <div class="row">
@@ -379,7 +379,9 @@
                         {% if (session['rol'] == 2 or session['rol'] == 3 or session['rol'] == 4) %} 
                         <div class="row" id="items2"></div>
                                         
-                                        
+                            <div id="formulario2">
+                                
+                            </div>      
                         </div>
                         <style>
                             #miModal
@@ -401,7 +403,7 @@
                                                 <p id="dos"></p>
                                                 <hr>
                                                 <h5>Estado</h5>
-                                                <p id="tres"></p>
+                                                <p id="tres"> <center><div id="actualizar"></div></center></p>
                                                 <hr>
                                                 <h5>Fecha de Devolución</h5>
                                               
@@ -418,14 +420,65 @@
                                                 <h5>Código de usuario que entregó </h5>
                                               
                                                 <p id="siete"></p>
-                                                <center><button type="button" class="btn btn-success">ACTUALIZAR</button></center>
+                                               
                                             
                                           </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+                        <style>
+                            #miModal2
+                            {
+                                display: none;
+                            }
+                        </style>
+                        <div id="miModal2" class="modal" >
+                            <div class="flex" id="flex">
+                                <div class="contenido-modal">
+                                    <div class="modal-body" >
+                                        <span class="close" id="close-1">&times;</span>
+                                        <br>
+                                             
+                                        <form method="post" id="formulario1">
+                                            <div class="pd-title">
+                                            <h3>Actualizar Estado</h3>
+                                            <p><i>Por favor, seleccione el estado actual del objeto</i></p> 
+                                             </div>
+                                            <!--<h5>ACTUALIZAR ESTADO DE OBJETO</h5>
+                                            <hr>
+                                            <p id="modal-tres"> <center></p>-->
+                                               
+                                                <br>
+                                                <div>
+                                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                                    <div id="identificador"></div>
+                                                    <label>
+                                                    <input type="radio" value="ALMACENADO"name="estado" /> ALMACENADO</label>
+                                                    <br>
+                                                    <label>
+                                                        <input type="radio" value="POR ENTREGAR"  name="estado"/> POR ENTREGAR</label>
+                                                    <br>
+                                                    <label>
+                                                        <input type="radio" value="ENTREGADO" name="estado"/> ENTREGADO</label>
+                                                        <br>
+                                                        <br>
+                                                </div>  
+                                               
+                                                <div class="quantity">
+                                    
+                                                    <button  type="submit" class="primary-btn pd-cart">ACTUALIZAR </button>
+                
+                                                </div>
+                                            </form>
+                                            
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                       
                         {% else %}
                         {% if (session['rol'] == 5) %} 
                         <div class="row" id="items"></div>
@@ -555,12 +608,13 @@
 
         localStorage.setItem("cod_usu", cod_usu); 
         console.log(localStorage.getItem(cod_usu));*/
-    
-
+        var ventana=document.getElementById('miModal');
+        var modal2= document.getElementById("miModal2");
+        
         function myFunction(datos)
         {
                 var variable= document.getElementById("lista");
-                var ventana=document.getElementById('miModal');
+                
                 var a= variable.childNodes[1].id;
                 console.log(a);
 
@@ -682,8 +736,11 @@
 
                 else
                 {    
+
+                    
                     if(a=="items2")
                     {
+                            
                             estado=1;
                         
                             for (let item of datos)
@@ -724,10 +781,10 @@
                                 miNodoBoton.textContent = '+ VER MÁS';
                                 
                                 //miNodoBoton.addEventListener('click',modal);
-
+                                
 
                                 miNodoBoton.addEventListener("click",function() {
-                                    var a=item.cod_objeto;
+                                    var a=item.id;
                                     var b=item.marca;
                                     var c=item.estado;
                                     var d=item.fecha_dev;
@@ -741,11 +798,47 @@
                                     document.getElementById("cinco").innerHTML=`<p>`+e+`</p>`;
                                     document.getElementById("seis").innerHTML=`<p>`+f+`</p>`;
                                     document.getElementById("siete").innerHTML=`<p>`+g+`</p>`;
+                                    
+                                    let miNodoBoton1 = document.createElement('button');
+                                    miNodoBoton1.classList.add('btn', 'btn-success');
+                                    miNodoBoton1.textContent = 'ACTUALIZAR';
+                                    miNodoBoton1.setAttribute("id",item.id);
+
+                                    
+                                    
+                                    miNodoBoton1.addEventListener("click",function() {
+
+                                       
+                                        
+                                        ventana.style.display="none";
+                                        
+
+                                        
+                                        modal2.style.display="block";
+
+                                        var post = document.createElement("input");
+                                        post.setAttribute("type", "hidden");
+                                        post.setAttribute("name", "id");
+                                        post.setAttribute("value", item.id);
+
+                                        
+                                        document.getElementById("identificador").appendChild(post);
+
+                                        
+
+                                    });
+
+                                    
+                                    document.getElementById("tres").appendChild(miNodoBoton1);
                                     ventana.style.display="block";
-                                 
+
+
+                                    
                                 });
                                 // Insertamos
-                            
+                               
+
+
                                 miNodoCardBody.appendChild(miNodoTitle);
                                 miNodoCardBody.appendChild(miNodoCategoria);
                                 miNodoCardBody.appendChild(miNodolugar);
@@ -768,11 +861,17 @@
                             cerrar.addEventListener('click', function(){
                             ventana.style.display = 'none';
                             });
+
+                           
  
                     }
                 }
 
         }
+
+    
+        
+        
 
     var inputInicio = document.getElementById("fechaInicio");
     var inputFin = document.getElementById("fechaFin");
@@ -942,7 +1041,24 @@
                 }
                 xhttp.send();
             }
-    } 
+    }
+    var cerrar1=document.getElementById("close-1");
+
+        cerrar1.addEventListener('click', function(){
+            
+
+        document.getElementById("formulario5").submit();
+
+        modal2.style.display="none";
+        ventana.style.display = 'none';
+
+            
+           
+            
+                
+            
+
+        });  
     </script>
         
     <script>
@@ -960,7 +1076,18 @@
             })
         });
     </script>
+    <script>
+        $("#formulario1").submit(function(event){
+            event.preventDefault(); //detenemos el submit 
+        $.post("/objeto/actualizar_final", $(this).serialize(), function(data){
+           
+        //callback, donde data son los datos que vuelven del servidor, datos que pueden ser json si los tratas con la funcion php: json_encode():
+    }); 
+     
+});
+    </script>
 
+    
     <script type="text/javascript" src="../../assets/js/modales-jq.js"></script>
     <script type="text/javascript" src="../../assets/plugins/sweetalert2.all.min.js"></script>
 

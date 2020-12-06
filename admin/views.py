@@ -690,3 +690,78 @@ def solicitud_buscarNombreDpto():
     return json.dumps(resp),status
 
 
+
+@view.route('/objeto/actualizar', methods=['POST'])
+def objeto_actualizar():
+    nom_objeto=str(request.form['post'])
+    cod_objeto=str(request.form['post2'])
+    categoria=str(request.form['post3'])
+    lugar=str(request.form['post4'])
+    caract_esp=str(request.form['post5'])
+    fecha_hallado=str(request.form['fecha_hallado'])
+    print(nom_objeto)
+    status = 200
+    
+    rpta = {
+      'tipo_mensaje' : 'success',
+      'cod_objeto': cod_objeto,
+      'nom_objeto': nom_objeto,
+      'categoria': categoria,
+      'lugar': lugar,
+      'caract_esp': caract_esp,
+      'fecha_hallado':fecha_hallado,
+      'mensaje' : [
+        'Se ha registrado los cambios en los items del subtítulo'
+      ]
+    }
+    
+    return render_template(
+        '/verificacion/actualizar_objeto.html',
+        rpta=rpta
+        ), status
+
+@view.route('/objeto/actualizar_final', methods=['POST'])
+def objeto_actualizar_final():
+    id_objeto=request.form['id']
+    estado=str(request.form['estado'])
+    cod_usu=request.form['cod_usu']
+    print("+++++++")
+    status=200
+    session = session_db()
+    print(id_objeto)
+    try:
+
+        print("+++++++")
+        session.query(Objeto).filter_by(id = id_objeto).update({
+          'estado': estado
+        })
+        session.commit()
+        rpta = {
+        'tipo_mensaje' : 'success',
+        'mensaje' : 'Se han registrado los cambios en la tabla Solicitud'
+        }
+    except Exception as e:
+        status = 500
+        session.rollback()
+        rpta = {
+        'tipo_mensaje' : 'error',
+        'mensaje' : [
+            'Se ha producido un error en guardar los cambios en la tabla Solicitud',
+            str(e)
+        ]
+        }
+    return json.dumps(rpta),status
+    
+
+
+    '''locals = {
+        'message': '',
+        'cod_usu':cod_usu
+    }   
+    return render_template(
+        'layouts/aplication.html',
+        locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
+    ), 200'''
+    
+
+   
