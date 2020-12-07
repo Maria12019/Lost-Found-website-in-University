@@ -108,6 +108,43 @@ def solicitud_list():
 
     return json.dumps(resp),status
 
+@view.route('/solicitud/listCompleto')
+def solicitud_listCompleto():
+    resp = None
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = select([Solicitud])
+        rs = conn.execute(stmt)
+        lista = []
+        for r in conn.execute(stmt):
+            row = {
+            'id': r.id,
+            'categoria': r.categoria,
+            'nom_objeto': r.nom_objeto,
+            'cod_objeto': r.cod_objeto,
+            'nro_solicitud': r.nro_solicitud,
+            'fecha_envio': str(r.fecha_envio),
+            'lugar': r.lugar,
+            'descripcion': r.descripcion,
+            'caract_esp': r.caract_esp,
+            'estado': r.estado,
+            'fecha_rpta': str(r.fecha_rpta),
+            'cod_usuario': r.cod_usuario,
+            'nombre_persona': r.nombre_persona
+            }
+            lista.append(row)
+        resp=lista
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar las solicitudes',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status
+    
+
 @view.route('/solicitud_dpto/list')
 def dpto_list():
     resp = None

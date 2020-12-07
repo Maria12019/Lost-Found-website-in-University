@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{locals['title']}}</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" >-->
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/demo.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/assets/plugins/sweetalert2.min.css" type="text/css">
+  </head>
+  <body onload="listarSolicitudCompleto()">
+    {% block css %}
+    <link rel="stylesheet" href="assets/css/modal.css" type="text/css">
+    {% endblock %}  
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    
+    <header class="header-section">
+        
+        <div class="container">
+            <div class="inner-header">
+                <div class="row">                 
+                    <div class="col-lg-10 col-md-10">                      
+                        <div class="logo">
+                            <a href="./index.html">                               
+                                <h3>
+                                    <img id="logo-wide" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                                    <b>SISTEMA DE GESTIÓN DE OBJETOS PERDIDOS</b>
+                                </h3>
+                                <img id="logo-narrow" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 text-right col-md-2">
+                        <ul class="nav-right">
+
+                            <button type="button" class="btn btn-secondary" id="registrar_1">
+                                Logout
+                            </button>
+
+                       </ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    </header>
+
+
+    <div class="nav-item">
+        <div class="container">
+           
+            <header class="header-section">
+    
+                <div class="nav-item">
+                    <div class="container">
+                        
+                        <nav class="nav-menu mobile-menu">
+                            <ul>
+                                {% if (session['status'] == 'active') %}
+                                {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
+                                <li><form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+                                </li></form>
+                                <li><button id="soli" type="submit"  class="btn btn-dark btn-lg btn-block"> MIS SOLICITUDES</button></li>
+                                {% else %}
+                                {% if (session['rol'] == 2) %} <!--JEFE-->
+                                <li><form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+
+                                </form></li>
+                                <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
+                                <li><a href="/sol_dpto">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 3) %} <!---->
+                                <li><form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+
+                                </form></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
+                                
+                                {% else %}
+                                {% if (session['rol'] == 4) %}
+                                <li><form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+
+                                </form></li>
+                                <li><a href="/register">REGISTRO OBJETOS</a></li>
+                                
+                                {% else %}
+                                <li><form action="/inicio" method="post" id="formulario4">
+                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+
+                                </form></li>
+                                <li><a href="/donacion">SOLICITUD DE DONACIÓN</a></li>
+                                
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% else %}
+                                <a href="/logout">Ingresar</a>
+                                {% endif %}
+
+                            </ul>
+                        </nav>
+                        <div id="mobile-menu-wrap"></div>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+    </div>
+
+    </div>
+
+    <br><br><br>
+    <div id="mensaje" class="container">
+
+    </div>
+
+    <div id="ContenedorTabla" class="container">
+
+    </div>
+    
+
+    <section class="product-shop spad">
+        <div class="container">
+
+
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+                    
+                </div>
+                <div class="col-lg-9 order-1 order-lg-2">
+                    <div class="container">
+                        
+                    </div>
+                    
+                    
+
+                    <div class="product-list" id="lista">
+                        {% if (session['status'] == 'active') %}
+                        {% if (session['rol'] == 1 or session['rol'] == 5) %} 
+                        <div class="row" id="items" name="1">
+                            <div id="formulario">
+                                <textarea  hidden id="cod_usu" name="cod_usu"  rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
+                            </div>        
+                                        
+                        </div>
+                        {% else %}
+                        {% if (session['rol'] == 2 or session['rol'] == 3 or session['rol'] == 4) %} 
+                        <div class="row" id="items2"></div>
+                                        
+                                        
+                        </div>
+                        
+                        
+                        {% else %}
+                        {% if (session['rol'] == 5) %} 
+                        <div class="row" id="items"></div>
+                                        
+                                        
+                        </div>
+                        
+                        {% else %}
+                        {% if (session['rol'] == 4) %}
+                        <div class="row" id="items2"></div>
+                                        
+                                        
+                        </div>
+                        {% else %}
+                        <div class="row" id="items2"></div>
+                                        
+                                        
+                        </div>
+                        
+                        {% endif %}
+                        {% endif %}
+                        {% endif %}
+                        {% endif %}
+                        {% else %}
+                        <a href="/logout">Ingresar</a>
+                        {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    
+
+    
+    
+    
+
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-widget">
+                            <h5>Oficina de Objetos Perdidos</h5>
+                        </div>
+                        <ul>
+                            <li>Ubicación: Edificio V, Oficina 303</li>
+                            <li>Teléfono: 4376767 anexo 31495</li>
+                            <li>Email: zvillena@ulima.edu.pe</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Información</h5>
+                        <ul>
+                            <li><a href="#">Sobre Nosotros</a></li>
+                            <li><a href="#">Servicios</a></li>
+                            <li><a href="#">Horarios</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>Mi cuenta</h5>
+                        <ul>
+                            <li><a href="#">Registrados</a></li>
+                            <li><a href="#">Solicitudes</a></li>
+                            <li><a href="#">Términos de uso</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Centro de ayuda</h5>
+                        <p>Preguntas frecuentes</p>
+                        <p>Contacto</p>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                            
+    </footer>
+
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/jquery-ui.min.js"></script>
+    <script src="/assets/js/jquery.countdown.min.js"></script>
+    <script src="/assets/js/jquery.nice-select.min.js"></script>
+    <script src="/assets/js/jquery.zoom.min.js"></script>
+    <script src="/assets/js/jquery.dd.min.js"></script>
+    <script src="/assets/js/jquery.slicknav.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+    
+    <script>
+
+        var dvTable = document.getElementById("ContenedorTabla");
+        var table = document.createElement("table");
+        table.setAttribute('class', 'table table-striped media-body');
+
+        var thead = document.createElement("thead");
+        var tr = document.createElement("tr");
+        var th1 = document.createElement('th');
+        var th2 = document.createElement('th');
+        var th3 = document.createElement('th');
+        var th4 = document.createElement('th');
+        var th5 = document.createElement('th');
+
+
+        th1.setAttribute("scope", "col");
+        th1.textContent = "ID Solicitud";
+        th2.setAttribute("scope", "col");
+        th2.textContent = "Fecha de Envío";
+        th3.setAttribute("scope", "col");
+        th3.textContent = "Objeto";
+        th4.setAttribute("scope", "col");
+        th4.textContent = "Características especiales";
+        th5.setAttribute("scope", "col");
+        th5.textContent = "Estado de la Solicitud";
+
+        var tbody = document.createElement('tbody');
+
+        var params = new URLSearchParams(location.search);
+        var obtener1 = params.get('var');
+        //console.log(obtener1);
+        var nuevaVariable = obtener1.substring(1);
+        //console.log(nuevaVariable);
+
+        var a = 0;
+        
+        var info=[];
+        var session=[];
+
+        const xhttp = new XMLHttpRequest();
+        
+        xhttp.open('GET','/solicitud/listCompleto',true)
+        xhttp.send();
+        xhttp.onreadystatechange=function()
+        {
+            
+            if(this.readyState==4 && this.status==200)
+            {
+                var datos=JSON.parse(this.responseText)
+
+                for (var item of datos){
+                    if (item.cod_usuario == nuevaVariable){
+                        /*
+                        info.push({
+                            id_solicitud : item.id,
+                            cod_usuario : item.cod_usuario,
+                            nom_objeto : item.nom_objeto,
+                            estado : item.descripcion
+                        })
+                        */
+                        
+                        tr.appendChild(th1);
+                        tr.appendChild(th2);
+                        tr.appendChild(th3);
+                        tr.appendChild(th4);
+                        tr.appendChild(th5);
+                        thead.appendChild(tr);
+
+                        var trT = document.createElement('tr');
+
+                        var id_solicitud = document.createElement('td');
+                        id_solicitud.textContent = item.id;
+
+                        var fecha_envio = document.createElement('td');
+                        fecha_envio.textContent = item.fecha_envio;
+
+                        var nom_objeto = document.createElement('td');
+                        nom_objeto.textContent = item.nom_objeto;
+
+                        var caract_esp = document.createElement('td');
+                        caract_esp.textContent = item.descripcion;
+
+                        var estado = document.createElement('td');
+                        estado.textContent = item.estado;
+
+                        table.appendChild(thead);
+                        trT.appendChild(id_solicitud);
+                        trT.appendChild(fecha_envio);
+                        trT.appendChild(nom_objeto);
+                        trT.appendChild(caract_esp);
+                        trT.appendChild(estado);
+
+                        tbody.appendChild(trT);
+                        table.appendChild(tbody);
+                        dvTable.appendChild(table);
+
+                        a = a + 1;
+
+                    }
+            
+                }
+
+                if (a != 0){
+                    var salto = document.createElement('br');
+                    document.getElementById("ContenedorTabla").appendChild(salto);
+                    var nota = document.createElement('p');
+                    document.getElementById("ContenedorTabla").appendChild(nota);
+                    nota.textContent = "Nota: Si su solicitud ha sido aceptada diríjase a la oficina de objetos perdidos a reclamar su objeto";
+                }
+                else {
+                    var aviso = document.createElement('p');
+                    aviso.style.fontSize = "24px";
+                    aviso.style.textAlign = "center";
+                    aviso.textContent = "Usted no ha realizado ninguna solicitud";
+                    document.getElementById("mensaje").appendChild(aviso);
+                }    
+            }
+
+        }
+        
+        console.log(info)
+
+
+
+
+        function listarSolicitudCompleto() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open('GET', '/solicitud/listCompleto', true);
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4) {
+                    switch (xhttp.status) {
+                        case 200:
+                            myFunction(JSON.parse(xhttp.responseText));
+                            break;
+                    }
+                }
+            }
+            xhttp.send();
+        }
+
+    
+    
+
+    
+    </script>
+        
+    <script>
+        $("#registrar_1").click(function () {
+            Swal.fire({
+                title: '¿Está seguro de que desea cerrar sesión?',
+                showCancelButton: true,
+                confirmButtonColor: '#e77b3c',
+                cancelButtonColor: 'grey',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/logout";
+                }
+            })
+        });
+    </script>
+
+    <script type="text/javascript" src="../../assets/js/modales-jq.js"></script>
+    <script type="text/javascript" src="../../assets/plugins/sweetalert2.all.min.js"></script>
+
+</body>
+
+</html>
