@@ -75,8 +75,9 @@
                                 {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
                                 <li><form action="/inicio" method="post" id="formulario4">
                                     <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
-                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+                                    <button id="objetos" type="submit" class="btn btn-dark btn-lg btn-block" onclick="changeForm()"> OBJETOS</button>
                                 </li></form>
+                                <!--<li><button id="objetos" type="submit" class="btn btn-dark btn-lg btn-block"> OBJETOS</button></li>-->
                                 <li><button id="soli" type="submit"  class="btn btn-dark btn-lg btn-block"> MIS SOLICITUDES</button></li>
                                 {% else %}
                                 {% if (session['rol'] == 2) %} <!--JEFE-->
@@ -211,9 +212,6 @@
             </div>
         </div>
     </section>
-
-    
-
     
 
     
@@ -290,6 +288,7 @@
     <script src="/assets/js/jquery.slicknav.js"></script>
     <script src="/assets/js/owl.carousel.min.js"></script>
     <script src="/assets/js/main.js"></script>
+    
     
     <script>
 
@@ -435,6 +434,21 @@
     
 
     
+    </script>
+
+    <script>
+
+        
+        var obtener2 = params.get('var2');
+        console.log(obtener2)
+
+        function changeForm(event){
+            document.getElementById("formulario4").setAttribute("action", "/inicio?var= "+obtener2);
+            document.getElementById("formulario4").submit();
+        }
+
+
+
     </script>
         
     <script>

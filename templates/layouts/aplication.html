@@ -73,7 +73,7 @@
                                 {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
                                 <li><form action="/inicio" method="post" id="formulario4">
                                     <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{locals['cod_usu']}}</textarea>
-                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+                                    <button id="objetos" type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
                                 </li></form>
                                 <li><button id="soli" type="submit" class="btn btn-dark btn-lg btn-block"> MIS SOLICITUDES</button></li>
                                 {% else %}
@@ -562,27 +562,55 @@
         console.log(x);
 
         document.getElementById("soli").addEventListener("click", function() {
-            //var x = document.getElementById('cod_usu').value;
-            //console.log(x);
-            /*location.href = "/mis_solicitudes?var= "+x;*/
 
-            const xhttp = new XMLHttpRequest();
+            var params = new URLSearchParams(location.search);
+            var obtener1 = params.get('var');           
 
-            xhttp.open('GET','/usuario/list',true)
-            xhttp.send();
-            xhttp.onreadystatechange=function()
-            {    
-                if(this.readyState==4 && this.status==200)
-                {
-                    let datos=JSON.parse(this.responseText)
+            if (obtener1 != null){
+
+                var nuevaVariable = obtener1.substring(1);
+
+                const xhttp = new XMLHttpRequest();
+
+                xhttp.open('GET','/usuario/list',true)
+                xhttp.send();
+                xhttp.onreadystatechange=function()
+                {    
+                    if(this.readyState==4 && this.status==200)
+                    {
+                        let datos=JSON.parse(this.responseText)
                 
-                    for (var item of datos){
-                        if(item.id == x){
-                            location.href = "/mis_solicitudes?var= "+item.cod_usuario;
-                        }                        
-                    }                   
-                }            
+                        for (var item of datos){
+                            if(item.id == nuevaVariable){
+                                location.href = "/mis_solicitudes?var= "+item.cod_usuario+"&var2= "+obtener1;
+                            }                        
+                        }                   
+                    }            
+                }
+
             }
+            else {
+                const xhttp = new XMLHttpRequest();
+
+                xhttp.open('GET','/usuario/list',true)
+                xhttp.send();
+                xhttp.onreadystatechange=function()
+                {    
+                    if(this.readyState==4 && this.status==200)
+                    {
+                        let datos=JSON.parse(this.responseText)
+                    
+                        for (var item of datos){
+                            if(item.id == x){
+                                location.href = "/mis_solicitudes?var= "+item.cod_usuario+"&var2= "+x;
+                            }                        
+                        }                   
+                    }            
+                }
+
+            }
+
+            
         })
         
         
