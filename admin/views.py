@@ -71,6 +71,35 @@ def objeto_list():
 
     return json.dumps(resp),status
 
+@view.route('/usuario/list')
+def usuario_list():
+    resp = None
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = select([Usuario])
+        rs = conn.execute(stmt)
+        lista = []
+        for r in conn.execute(stmt):
+            row = {
+                'id' : r.id,
+                'cod_usuario' : r.cod_usuario,
+                'correo_electronico' : r.correo_electronico,
+                'password' : r.password,
+                'rol' : r.rol,
+                'id_dpto' : r.id_dpto
+            }
+            lista.append(row)
+        resp=lista
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar las solicitudes',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status
+
 @view.route('/solicitud/list')
 def solicitud_list():
     resp = None
@@ -143,7 +172,7 @@ def solicitud_listCompleto():
         status = 500
 
     return json.dumps(resp),status
-    
+
 
 @view.route('/solicitud_dpto/list')
 def dpto_list():
