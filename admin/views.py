@@ -3,7 +3,7 @@
 
 import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
-from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto, NombreDpto, ObjetoDispoDon
+from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto, NombreDpto, ObjetoDispoDon, RespuestaSolicitud
 from main.database import engine,session_db
 from sqlalchemy import select,insert, between, update
 from datetime import datetime
@@ -838,3 +838,32 @@ def actualizarDonado():
             }
     return redirect('/objetosDispoDon')
 
+@view.route('/solicitud/buscarBuzon', methods = ['GET'])
+def solicitud_buscarBuzon():
+    cod_usu = request.args.get('cod_usu')
+    
+    print(cod_usu)
+    status = 200
+    resp=[]
+    try:
+        conn = engine.connect()
+        stmt = select([RespuestaSolicitud]).where(RespuestaSolicitud.id_usuario == cod_usu)
+        
+        rs = conn.execute(stmt)
+        for r in conn.execute(stmt):
+            row = {
+            'id_usuario': r.id_usuario,
+            'id_solicitud': r.id_solicitud,
+            'respuesta': r.respuesta,
+            'descripcion': r.descripcion
+            }
+        resp.append(row)
+        print(resp)
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar las solicitudes',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status

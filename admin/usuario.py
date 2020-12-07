@@ -117,3 +117,15 @@ def objeto_dispDon():
         'registro/objetosDispoDon.html',
         locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
     ), 200
+
+
+@view.route('/buzon', methods=['GET'])
+def registro_buzon():    
+    locals = {
+        'message': '',
+        
+    }
+    return render_template(
+        'registro/buzon.html',
+        locals=locals # acá seteamos una variable en nuestro template, en el tempalte tiene que coincider con el nombre locals, yy locals es undiccionario que en una de sus lavest tiene 
+    ), 200
