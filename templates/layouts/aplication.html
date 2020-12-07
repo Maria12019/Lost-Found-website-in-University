@@ -147,7 +147,7 @@
                             <h4 class="fw-title">Categorías</h4>
                             <div class="fw-brand-check">
                                 <select id="categoria">
-                                    <option value='NADA' disabled selected>---------------------</option>
+                                    <option value='NADA' disabled selected>-----Seleccione-----</option>
                                     <option value="ACADEMICO">Académico</option>
                                     <option value="ACCESORIOS">Accesorios</option>
                                     <option value="BELLEZA">Belleza</option>
@@ -167,7 +167,7 @@
                             <h4 class="fw-title">Lugar</h4>
                             <div class="fw-brand-check">
                                 <select id="lugar">
-                                    <option value='NADA' disabled selected>---------------------</option>
+                                    <option value='NADA' disabled selected>-----Seleccione-----</option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
                                     <option value="C">C</option>
@@ -969,6 +969,7 @@
             });
             return false;
         }
+       
 
         else if (fechaInicioInput == undefined  && fechaFinInput != undefined ){
            
@@ -1030,7 +1031,27 @@
            });
            return false;
        }
+       else if ( lugarSelec == undefined && categoriaSelec == undefined && fechaInicioInput != undefined  && fechaFinInput != undefined ){
+        
+        var startDate = document.getElementById("fechaInicio").value;
+        var endDate = document.getElementById("fechaFin").value;
+    
+        if ((Date.parse(endDate) <= Date.parse(startDate))) {
+            Swal.fire({
+                title: 'Fecha inicio debe ser menor a fecha fin.',
+                confirmButtonColor: '#e77b3c',
+                confirmButtonText: 'OK'
+            });
+            document.getElementById("fechaFin").value = "";
+            
+        }
+        return false;
+        filtrarObjeto(event);
+    
+       
 
+
+        }
 
         filtrarObjeto(event);
     }
@@ -1040,9 +1061,9 @@
         console.log(categoriaSelec);
         console.log(lugarSelec);
 
-        if( (categoriaSelec=='TODOS' && lugarSelec == undefined && fechaInicio == 'undefined' && fechaFin == 'undefined')    || 
-            (lugarSelec == 'TODOS' && categoriaSelec == undefined && fechaInicio == 'undefined' && fechaFin == 'undefined')  ||
-            (lugarSelec == 'TODOS' && categoriaSelec == 'TODOS' && fechaInicio == 'undefined' && fechaFin == 'undefined') ) {
+        if( (categoriaSelec=='TODOS' && lugarSelec == undefined && fechaInicio == undefined && fechaFin == undefined)    || 
+            (lugarSelec == 'TODOS' && categoriaSelec == undefined && fechaInicio == undefined && fechaFin == undefined)  ||
+            (lugarSelec == 'TODOS' && categoriaSelec == 'TODOS' || fechaInicio == undefined || fechaFin == undefined) ) {
             listarObjeto();
             } else {
                 const xhttp = new XMLHttpRequest();

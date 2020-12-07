@@ -924,8 +924,8 @@ def solicitud_buscarBuzon():
             'respuesta': r.respuesta,
             'descripcion': r.descripcion
             }
-        resp.append(row)
-        print(resp)
+            resp.append(row)
+            print(resp)
     except Exception as e:
         resp = [
             'Se ha producido un error en listar las solicitudes',
