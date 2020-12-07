@@ -93,7 +93,7 @@ class SolicitudDpto(Base):
     cantidad_objeto=Column(Integer)
     fecha_envio=Column(DateTime)
     fecha_rpta=Column(DateTime)
-
+    respuesta=Column(String)
 
 
 class NombreDpto(Base):
