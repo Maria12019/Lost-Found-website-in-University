@@ -615,7 +615,8 @@
         
         
         
-        
+    </script>
+    <script>
         
         
         console.log("se conecto aaaa");
@@ -822,7 +823,8 @@
                                     miNodoBoton1.classList.add('btn', 'btn-success');
                                     miNodoBoton1.textContent = 'ACTUALIZAR';
                                     miNodoBoton1.setAttribute("id",item.id);
-
+                                    
+                                    ventana.style.display="block";
                                     
                                     
                                     miNodoBoton1.addEventListener("click",function() {
@@ -872,10 +874,7 @@
                             //var ventana=document.getElementById('miModal');
                             var cerrar=document.getElementById('close');
                             
-                            function modal()
-                            {     
-                                ventana.style.display="block";
-                            }
+                            
                             
                             cerrar.addEventListener('click', function(){
                             ventana.style.display = 'none';
