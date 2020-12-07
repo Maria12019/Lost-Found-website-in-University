@@ -3,7 +3,7 @@
 
 import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
-from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto, NombreDpto, ObjetoDispoDon, RespuestaSolicitud
+from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto, NombreDpto, ObjetoDispoDon, RespuestaSolicitud, Usuario
 from main.database import engine,session_db
 from sqlalchemy import select,insert, between, update
 from datetime import datetime
