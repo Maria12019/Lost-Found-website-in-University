@@ -3,7 +3,7 @@
 
 import json,datetime
 from flask import Blueprint, render_template, session, request, redirect
-from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto, NombreDpto, ObjetoDispoDon
+from main.models import Country,Objeto,Solicitud,Soloriginal,SolicitudDpto, NombreDpto, ObjetoDispoDon, RespuestaSolicitud, Usuario
 from main.database import engine,session_db
 from sqlalchemy import select,insert, between, update
 from datetime import datetime
@@ -71,6 +71,35 @@ def objeto_list():
 
     return json.dumps(resp),status
 
+@view.route('/usuario/list')
+def usuario_list():
+    resp = None
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = select([Usuario])
+        rs = conn.execute(stmt)
+        lista = []
+        for r in conn.execute(stmt):
+            row = {
+                'id' : r.id,
+                'cod_usuario' : r.cod_usuario,
+                'correo_electronico' : r.correo_electronico,
+                'password' : r.password,
+                'rol' : r.rol,
+                'id_dpto' : r.id_dpto
+            }
+            lista.append(row)
+        resp=lista
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar las solicitudes',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status
+
 @view.route('/solicitud/list')
 def solicitud_list():
     resp = None
@@ -108,6 +137,43 @@ def solicitud_list():
 
     return json.dumps(resp),status
 
+@view.route('/solicitud/listCompleto')
+def solicitud_listCompleto():
+    resp = None
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = select([Solicitud])
+        rs = conn.execute(stmt)
+        lista = []
+        for r in conn.execute(stmt):
+            row = {
+            'id': r.id,
+            'categoria': r.categoria,
+            'nom_objeto': r.nom_objeto,
+            'cod_objeto': r.cod_objeto,
+            'nro_solicitud': r.nro_solicitud,
+            'fecha_envio': str(r.fecha_envio),
+            'lugar': r.lugar,
+            'descripcion': r.descripcion,
+            'caract_esp': r.caract_esp,
+            'estado': r.estado,
+            'fecha_rpta': str(r.fecha_rpta),
+            'cod_usuario': r.cod_usuario,
+            'nombre_persona': r.nombre_persona
+            }
+            lista.append(row)
+        resp=lista
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar las solicitudes',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status
+
+
 @view.route('/solicitud_dpto/list')
 def dpto_list():
     resp = None
@@ -128,7 +194,8 @@ def dpto_list():
             'fecha_envio': str(r.fecha_envio),
             'fecha_rpta': str(r.fecha_rpta)
             }
-            lista.append(row)
+            if r.estado == 'EN PROCESO':
+                lista.append(row)
         resp=lista
     except Exception as e:
         resp = [
@@ -836,5 +903,110 @@ def actualizarDonado():
                 str(e)
             ]
             }
-    return redirect('/objetosDispoDon')
+    return redirect('/objetos/dispoDon')
+
+@view.route('/solicitud/buscarBuzon', methods = ['GET'])
+def solicitud_buscarBuzon():
+    cod_usu = request.args.get('cod_usu')
+    
+    print(cod_usu)
+    status = 200
+    resp=[]
+    try:
+        conn = engine.connect()
+        stmt = select([RespuestaSolicitud]).where(RespuestaSolicitud.id_usuario == cod_usu)
+        
+        rs = conn.execute(stmt)
+        for r in conn.execute(stmt):
+            row = {
+            'id_usuario': r.id_usuario,
+            'id_solicitud': r.id_solicitud,
+            'respuesta': r.respuesta,
+            'descripcion': r.descripcion
+            }
+        resp.append(row)
+        print(resp)
+    except Exception as e:
+        resp = [
+            'Se ha producido un error en listar las solicitudes',
+            str(e)
+        ]
+        status = 500
+
+    return json.dumps(resp),status
+
+@view.route('/sol_dpto/actualizar', methods = ['GET', 'POST'])
+def actualizar_sol_dpto():
+    status = 200
+    soliId = request.args.get('soliId')
+    estado = request.args.get('estado')
+    fechaRpta = request.args.get('fechaRpta')
+    comentario = request.args.get('rpta')
+    rpta = None
+    session = session_db()
+    print(soliId, estado, fechaRpta)
+    try:
+        session.query(SolicitudDpto).filter_by(id = soliId).update({
+          'estado': estado,
+          'fecha_rpta': fechaRpta,
+          'respuesta': comentario, 
+        })
+        session.commit()
+        rpta = {
+        'tipo_mensaje' : 'success',
+        'mensaje' : 'Se han registrado los cambios en la tabla solicitud_dpto'
+        }
+    except Exception as e:
+        status = 500
+        session.rollback()
+        rpta = {
+        'tipo_mensaje' : 'error',
+        'mensaje' : [
+            'Se ha producido un error en guardar los cambios en la tabla solicitud_dpto',
+            str(e)
+        ]
+        }
+    return json.dumps(rpta),status
+
+@view.route('/objeto/filtroNombreDon')
+def filtro_nombreDon():
+    resp = None
+    nombre = request.args.get('nom_objeto')
+    status = 200
+    try:
+        conn = engine.connect()
+        stmt = ''
+        if(nombre != 'undefined'):
+            stmt = select([ObjetoDispoDon]).where(ObjetoDispoDon.nom_objeto == nombre)
+        else:
+            stmt = select([ObjetoDispoDon])
+        
+        rs = conn.execute(stmt)
+        list = []
+        for item in conn.execute(stmt):
+            print(item.nom_objeto)
+            row = {
+                'id': item.id,
+                'cod_objeto':item.cod_objeto,
+                'nom_objeto':item.nom_objeto,
+                'categoria':item.categoria,
+                'estado':item.estado,
+                'marca':item.marca,
+                'fecha_hallado':str(item.fecha_hallado),
+                'fecha_dev':str(item.fecha_dev),
+                'lugar':item.lugar,
+                'nro_anaquel':item.nro_anaquel,
+                'caract_esp':item.caract_esp,
+                'cod_usu_entrega':item.cod_usu_entrega
+            }
+            if(item.estado == 'ALMACENADO'):
+                list.append(row) 
+        resp=list
+    except Exception as e:
+        resp=[
+            'Se ha producido un error',
+            str(e)
+        ]
+        status = 500
+    return json.dumps(resp),status
 

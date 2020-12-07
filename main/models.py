@@ -93,7 +93,7 @@ class SolicitudDpto(Base):
     cantidad_objeto=Column(Integer)
     fecha_envio=Column(DateTime)
     fecha_rpta=Column(DateTime)
-
+    respuesta=Column(String)
 
 
 class NombreDpto(Base):
@@ -122,3 +122,10 @@ class Donacion(Base):
     id = Column(Integer, primary_key=True,autoincrement=True)
     soli_id = Column(Integer)
     fecha_crea = Column(DateTime)
+
+class RespuestaSolicitud(Base):
+    __tablename__ = 'respuesta_solicitud'
+    id_usuario = Column(Integer, primary_key=True)
+    id_solicitud = Column(Integer)
+    respuesta = Column(String)
+    descripcion = Column(String)

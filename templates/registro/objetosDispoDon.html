@@ -9,22 +9,158 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
 </head>
 
 <body onload="listarObjetosDispDon()">
     <div class="container py-3">
-        <h1 class="text-center">Objetos disponibles para ser donados</h1>
+        <h1 class="text-center">Objetos disponibles para ser donados</h1><br>
+
+
+        <div class="row">
+            <div class="col-3">
+                Busque los objetos solicitados: </span>
+            </div>
+            <div class="col-9">
+                <div class="container">
+                    <input id="busqueda" class="search-input" type="text" placeholder="¿Qué estás buscando?">
+                    <button id="buscarNombre" type="button" onclick="filtrarNombre(event)"><i
+                            class="input-group-text"></i></button>
+                    <div class="sugerencias"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--<input id="busqueda"
+                class="search-input red-border" type="text" placeholder="¿Qué estás buscando?" aria-label="Search">
+            <div class="input-group-append">
+                <button id="buscarNombre" type="button" onclick="filtrarNombre(event)"><span class="input-group-text"
+                        id="basic-text1"><i class="fas fa-search text-grey" aria-hidden="true"></i></span></button>
+                <div class="sugerencias"></div>
+                
+            </div>-->
+
+
+
+        <br>
         <div id="tablaGestion">
 
         </div>
+
         <form action="/actualizarDonado" method="post">
-            <button id="prueba">prueba</button>
+            <button id="prueba">Generar donación</button>
         </form>
     </div>
+    <style>
+        .sugerencias {
+            display: none;
+        }
+
+        .sugerencias.show {
+            display: block;
+        }
+    </style>
 </body>
+<script>
+
+    let info = [];
+    let unicos = [];
+    let objetos = [];
+
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('GET', '/objetosDispoDon', true)
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+            let datos = JSON.parse(this.responseText)
+
+            for (let item of datos) {
+                info.push(item.nom_objeto)
+            }
+        }
+
+        unicos = Array.from(new Set(info));
+        console.log(unicos);
+
+        for (let indice of unicos) {
+            objetos.push({
+                name: indice
+            })
+        }
+
+        //console.log(objetos);
+    }
+
+    const searchInput = document.querySelector('.search-input');
+    const panel = document.querySelector('.sugerencias');
+
+    searchInput.addEventListener('keyup', function (e) {
+        panel.classList.add('show');
+
+        //console.log(searchInput.value);
+        const input = searchInput.value;
+        panel.innerHTML = '';
+
+        const sugerencias = objetos.filter(function (objeto) {
+            return objeto.name.toLowerCase().startsWith(input.toLowerCase())
+        });
+        //console.log('sugerencias', sugerencias);
+
+        sugerencias.forEach(function (sugerir) {
+            const div = document.createElement('div');
+            div.innerHTML = sugerir.name;
+            div.setAttribute("class", "sugerencia");
+            panel.appendChild(div);
+        });
+
+        if (input == '') {
+            panel.innerHTML = '';
+        }
+
+        document.addEventListener('click', function (e) {
+            if (e.target.className == 'sugerencia') {
+                searchInput.value = e.target.innerHTML;
+                panel.classList.remove('show');
+            }
+        });
+    })
+
+
+    function filtrarNombre(e) {
+
+        var nombreSelec = document.getElementById("busqueda").value;
+        console.log(nombreSelec)
+
+        limpiarBody();
+        console.log(nombreSelec);
+
+        if (nombreSelec == '') {
+            listarObjetosDispDon();
+        } else {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () { };
+            xhttp.open('GET', '/objeto/filtroNombreDon?nom_objeto=' + nombreSelec, true);
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4) {
+                    switch (xhttp.status) {
+                        case 200:
+                            generateTable(JSON.parse(xhttp.responseText));
+                            break;
+                    }
+                }
+            }
+            xhttp.send();
+        }
+    }
+
+</script>
 <script>
     function generateTable(datos) {
 
+        limpiarBody();
         var dvTable = document.getElementById("tablaGestion");
         var table = document.createElement("table");
         table.setAttribute('class', 'table table-striped media-body');
@@ -130,8 +266,12 @@
 
             let params = new URLSearchParams(location.search);
             var idSol = params.get('idSol');
+
+
+            alert('Se generará una donación de ' + num + " objeto(s). Esta acción no se puede deshacer.")
+
             const xhttp = new XMLHttpRequest();
-            xhttp.open('GET', '/actualizarDonado?listaVals='+listaVals+"&idSol="+idSol, true);
+            xhttp.open('GET', '/actualizarDonado?listaVals=' + listaVals + "&idSol=" + idSol, true);
             xhttp.send();
 
         }
@@ -169,8 +309,12 @@
         }
     }
 
-
+    function limpiarBody() {
+        var div = document.getElementById("tablaGestion");
+        while (div.firstChild) {
+            div.removeChild(div.firstChild);
+        }
+    }
 
 </script>
-
 </html>

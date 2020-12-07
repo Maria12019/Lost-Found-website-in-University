@@ -18,7 +18,7 @@
 
 <body onload="listarSolicitudDpto()">
     <!-- Page Preloder -->
- 
+
     {% block css %}
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css" type="text/css">
@@ -31,77 +31,85 @@
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="assets/css/modal.css" type="text/css">
     {% endblock %}
-  
+
     <header class="header-section">
-        
+
         <div class="container">
             <div class="inner-header">
-                <div class="row">                 
-                    <div class="col-lg-10 col-md-10">                      
+                <div class="row">
+                    <div class="col-lg-10 col-md-10">
                         <div class="logo">
-                            <a href="./index.html">                               
+                            <a href="./index.html">
                                 <h3>
-                                    <img id="logo-wide" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                                    <img id="logo-wide" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima"
+                                        height="62px">
                                     <b>SISTEMA DE GESTIÓN DE OBJETOS PERDIDOS</b>
                                 </h3>
-                                <img id="logo-narrow" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima" height = "62px">
+                                <img id="logo-narrow" src="/assets/img/Universidad_de_Lima_logo_2.png" alt="Ulima"
+                                    height="62px">
                             </a>
                         </div>
                     </div>
                     <div class="quantity">
-                                    
-                        <button type="button" class="btn btn-secondary" id="registrar_1" >
+
+                        <button type="button" class="btn btn-secondary" id="registrar_1">
                             Logout
                         </button>
 
                     </div>
-                    
+
                 </div>
             </div>
         </div>
-   
+
     </header>
 
     <div class="nav-item">
         <div class="container">
-           
+
             <header class="header-section">
-    
+
                 <div class="nav-item">
                     <div class="container">
-                        
+
                         <nav class="nav-menu mobile-menu">
                             <ul>
                                 {% if (session['status'] == 'active') %}
-                                {% if (session['rol'] == 1) %} <!--ALUMNO O PROF-->
+                                {% if (session['rol'] == 1) %}
+                                <!--ALUMNO O PROF-->
                                 <li id="1"><a href="/inicio">OBJETOS</a></li>
                                 {% else %}
-                                {% if (session['rol'] == 2) %} <!--JEFE-->
-                                <li><form action="/inicio" method="post" id="formulario4">
-                                    <textarea  id="cod_usu" name="cod_usu" hidden rows="1" cols="50" >{{ session['cod_usu']}}</textarea>
-                                    <button type="submit"  class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
+                                {% if (session['rol'] == 2) %}
+                                <!--JEFE-->
+                                <li>
+                                    <form action="/inicio" method="post" id="formulario4">
+                                        <textarea id="cod_usu" name="cod_usu" hidden rows="1"
+                                            cols="50">{{ session['cod_usu']}}</textarea>
+                                        <button type="submit" class="btn btn-dark btn-lg btn-block"> OBJETOS</button>
 
-                                </form></li>
+                                    </form>
+                                </li>
                                 <li id="2"><a href="/register">REGISTRO OBJETOS</a></li>
                                 <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
                                 <li><a href="/sol_dpto">SOLICITUD DE DONACIÓN</a></li>
-                                
-                                
+
+
                                 {% else %}
-                                {% if (session['rol'] == 3) %} <!---->
+                                {% if (session['rol'] == 3) %}
+                                <!---->
                                 <li id="3"><a href="/inicio">OBJETOS</a></li>
                                 <li><a href="/register">REGISTRO OBJETOS</a></li>
                                 <li><a href="/sol_usu">SOLICITUDES USUARIO</a></li>
-                                
+
                                 {% else %}
                                 {% if (session['rol'] == 4) %}
                                 <li id="4"><a href="/inicio">OBJETOS</a></li>
                                 <li><a href="/register">REGISTRO OBJETOS</a></li>
-                                
+
                                 {% else %}
                                 <li id="5"><a href="/inicio">OBJETOS</a></li>
                                 <li><a href="/registro">SOLICITUD DE DONACIÓN</a></li>
-                                
+
                                 {% endif %}
                                 {% endif %}
                                 {% endif %}
@@ -120,144 +128,148 @@
     </div>
 
     <div class="container text-center">
-             
+
         <br>
         <br>
         <div class="modal" id="myModal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-                
-                   
-                  
-                  <div class="modal-body">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <br>
-                    <p>¿Está seguro de que deseas</p>
-                    <p> cerrar sesión?</p>
-                    <br>
-                    <a href="/logout"><button type="button" class="btn btn-primary" >OK</button></a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  </div>
-              
-       
-              
-              
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+
+
+                    <div class="modal-body">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <br>
+                        <p>¿Está seguro de que deseas</p>
+                        <p> cerrar sesión?</p>
+                        <br>
+                        <a href="/logout"><button type="button" class="btn btn-primary">OK</button></a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+
+
+
+
+                </div>
             </div>
-          </div>
         </div>
-        
-        
+
+
     </div>
 
-                    
+
     <div class="product-list" id="lista">
         {% if (session['status'] == 'active') %}
-        {% if (session['rol'] == 1) %} 
+        {% if (session['rol'] == 1) %}
         <div class="row" id="items" name="1">
-                        
-                        
+
+
         </div>
         {% else %}
-        {% if (session['rol'] == 2 or session['rol'] == 3 or session['rol'] == 4) %} 
+        {% if (session['rol'] == 2 or session['rol'] == 3 or session['rol'] == 4) %}
         <div class="row" id="items2"></div>
-                        
-                        
-        </div>
-        
-        
-        {% else %}
-        {% if (session['rol'] == 5) %} 
-        <div class="row" id="items"></div>
-                        
-                        
-        </div>
-        
-        {% else %}
-        {% if (session['rol'] == 4) %}
-        <div class="row" id="items2"></div>
-                        
-                        
-        </div>
-        {% else %}
-        <div class="row" id="items2"></div>
-                        
-                        
-        </div>
-        
-        {% endif %}
-        {% endif %}
-        {% endif %}
-        {% endif %}
-        {% else %}
-        <a href="/logout">Ingresar</a>
-        {% endif %}
-    
-    
+
+
+    </div>
+
+
+    {% else %}
+    {% if (session['rol'] == 5) %}
+    <div class="row" id="items"></div>
+
+
+    </div>
+
+    {% else %}
+    {% if (session['rol'] == 4) %}
+    <div class="row" id="items2"></div>
+
+
+    </div>
+    {% else %}
+    <div class="row" id="items2"></div>
+
+
+    </div>
+
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    {% else %}
+    <a href="/logout">Ingresar</a>
+    {% endif %}
+
+
 
     <div class="container">
         <div class="row">
-                
+
             <div class="col-lg-9">
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-lg-6"></div>
-    
-                <div class="col-lg-6">
+                    <div class="col-lg-6"></div>
 
-                    <div class="product-details">
-                        <div class="pd-title">
-                            <h3>Solicitud de donación</h3>
-                            <br>  
-                        </div>
-                                
-                        <div class="pd-desc">
-                            <h5>Código Departamento:</h5>
-                            <p id="uno"></p>
-                            
-                            <h5>Categoria:</h5>
-                            <p id="dos"></p>
-                                                        
-                            <h5>Cantidad de Objetos Solicitados:</h5>
-                            <p id="tres"></p>
-                            
-                            <h5>Estado:</h5>
-                            <p id="cuatro"></p>
-                            
-                            <h5>Fecha Envio:</h5>
-                            <p id="cinco"></p>
-                            
-                            <h5>Fecha Respuesta:</h5>
-                            <p id="seis"></p>
-                            
-                            <h5>Descripcion:</h5>
-                            <p id="siete"></p>
+                    <div class="col-lg-6" id="solicitudDpto">
+                        
+                            <div class="product-details">
+                                <div class="pd-title">
+                                    <h3>Solicitud de donación</h3>
+                                    <br>
+                                </div>
 
-                            <button class="btn btn-info" id="btnBuscar" onclick="abrirTabla();">Buscar</button><br><br>
-                            
-                            <h5>Comentario:</h5>
-                            <textarea name="textarea" rows="4" cols="44"></textarea>
-                        </div>
+                                <div class="pd-desc">
+                                    <h5>Código Departamento:</h5>
+                                    <p id="uno"></p>
+
+                                    <h5>Categoria:</h5>
+                                    <p id="dos"></p>
+
+                                    <h5>Cantidad de Objetos Solicitados:</h5>
+                                    <p id="tres"></p>
+
+                                    <h5>Estado:</h5>
+                                    <p id="cuatro"></p>
+
+                                    <h5>Fecha Envio:</h5>
+                                    <p id="cinco"></p>
+
+                                    <h5>Fecha Respuesta:</h5>
+                                    <p id="seis"></p>
+
+                                    <h5>Descripcion:</h5>
+                                    <p id="siete"></p>
+
+                                    <button class="btn btn-info" id="btnBuscar"
+                                        onclick="abrirTabla();">Buscar stock de objetos</button><br><br>
+
+                                    <h5>Comentario:</h5>
+                                    <textarea id="comentario" rows="4" cols="44" required maxlength="500"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="quantity">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <button type="submit" id="rechazar"
+                                    onclick="rechazada()">&nbsp&nbsp&nbsp&nbspRECHAZAR&nbsp&nbsp&nbsp&nbsp</button>
+                                <button type="submit" id="aceptar"
+                                    onclick="aceptada()">&nbsp&nbsp&nbsp&nbspACEPTAR&nbsp&nbsp&nbsp&nbsp</button>
+                            </div>
+                    
                     </div>
-                            
-                    <div class="quantity">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                        <a href="#" class="primary-btn pd-cart" id="rechazar" style="background-color:rgb(109, 105, 105);" onclick="myfunction2()">&nbsp&nbsp&nbsp&nbspRECHAZAR&nbsp&nbsp&nbsp&nbsp</a>
-                        <a href="#" class="primary-btn pd-cart" id="abrir" onclick="abrir_1()">&nbsp&nbsp&nbsp&nbspACEPTAR&nbsp&nbsp&nbsp&nbsp</a>
-                    </div>
-                </div>   
-            </div>
+                </div>
             </div>
         </div>
     </div>
-           
+
     <br><br><br>
 
 
     </section>
-  
+
     <footer class="footer-section">
         <div class="container">
             <div class="row">
@@ -286,7 +298,7 @@
                             <li><a href="#">Sobre Nosotros</a></li>
                             <li><a href="#">Servicios</a></li>
                             <li><a href="#">Horarios</a></li>
-                            
+
                         </ul>
                     </div>
                 </div>
@@ -305,7 +317,7 @@
                         <h5>Centro de ayuda</h5>
                         <p>Preguntas frecuentes</p>
                         <p>Contacto</p>
-                      
+
                     </div>
                 </div>
             </div>
@@ -315,7 +327,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="copyright-text">
-                            
+
     </footer>
 
     <script src="/assets/js/jquery-3.3.1.min.js"></script>
@@ -344,8 +356,8 @@
                 }
             })
         });
-    
-        
+
+
         let params = new URLSearchParams(location.search);
         var obtener1 = params.get('var1');
         console.log(obtener1);
@@ -360,60 +372,92 @@
         var obtener7 = params.get('var7');
         var obtener8 = params.get('var8');
 
-        document.getElementById("uno").innerHTML=`<p>`+obtener1+`</p>`;
-        document.getElementById("dos").innerHTML=`<p>`+obtener2+`</p>`;
-        document.getElementById("tres").innerHTML=`<p>`+obtener3+`</p>`;
-        document.getElementById("cuatro").innerHTML=`<p>`+obtener4+`</p>`;
-        document.getElementById("cinco").innerHTML=`<p>`+obtener5+`</p>`;
-        document.getElementById("seis").innerHTML=`<p>`+obtener6+`</p>`;
-        document.getElementById("siete").innerHTML=`<p>`+obtener7+`</p>`;
+        document.getElementById("uno").innerHTML = `<p>` + obtener1 + `</p>`;
+        document.getElementById("dos").innerHTML = `<p>` + obtener2 + `</p>`;
+        document.getElementById("tres").innerHTML = `<p>` + obtener3 + `</p>`;
+        document.getElementById("cuatro").innerHTML = `<p>` + obtener4 + `</p>`;
+        document.getElementById("cinco").innerHTML = `<p>` + obtener5 + `</p>`;
+        document.getElementById("seis").innerHTML = `<p>` + obtener6 + `</p>`;
+        document.getElementById("siete").innerHTML = `<p>` + obtener7 + `</p>`;
 
 
+        function abrirTabla() {
+            window.open("/objetos/dispoDon?idSol=" + obtener8);
 
+        }
 
-        function listarSolicitudDpto(){
+        var estado;
+
+        var rpta = document.getElementById('comentario');
+        
+        function rechazada() {
+            estado = "RECHAZADA";
+            console.log(estado);
+            actualizarTabla();
+        }
+
+        function aceptada() {
+            estado = "ACEPTADA"
+            console.log(estado);
+            actualizarTabla();
+        }
+
+        console.log(estado);
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+        console.log(today);
+
+        function actualizarTabla() {
             const xhttp = new XMLHttpRequest();
-            xhttp.open('GET','/solicitud_dpto/list',true);    
-            xhttp.onreadystatechange=function(){
-            if(xhttp.readyState == 4){
-                switch(xhttp.status){
-                    case 200:
-                        myFunction(JSON.parse(xhttp.responseText));
-                        break;
-                }
-            }
-           }
-           xhttp.send();
+            xhttp.open('GET', '/sol_dpto/actualizar?soliId=' + obtener8 + "&estado=" + estado + "&fechaRpta=" + today + "&rpta="+rpta.value, true);
+            console.log('corrio actualizartabla');
+            console.log(rpta)
+            xhttp.send();
+            var bloque = document.getElementById("solicitudDpto");
+            bloque.innerHTML = '<p class="text-center">La solicitud fue respondida. Haga clic <a href="/sol_dpto"><u>aquí</u></a> para ver más solicitudes.<p>';
         }
 
 
-        function abrirTabla(){
-            window.open("/objetos/dispoDon?idSol=" +obtener8);
-            
-        }
 
-    
-    
     </script>
 
     <script src="/assets/js/modales-jq.js"></script>
     <script src="/assets/plugins/sweetalert2.all.min.js"></script>
     <script src="/assets/plugins/sweetalert2.all.min.js"></script>
     <!--<script src="../../static/assets/js/agregar_prueba.js" ></script>-->
-    
+
     <script src="/static/assets/js/filtNom.js"></script>
 
 </body>
 
 
 
-    <!-- Js Plugins -->
-    <script src="assets/js/jquery-3.3.1.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
- 
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/registro_modal.js"></script>
+<!-- Js Plugins -->
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/registro_modal.js"></script>
 
 </body>
+{% block js %}
+<script src="{{ url_for('static', filename='assets/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/jquery-ui.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/jquery.countdown.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/jquery.zoom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/jquery.dd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/jquery.slicknav.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/owl.carousel.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/modal_sol_usu.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/verificar_sol.js') }}"></script>
+{% endblock %}
 
 </html>
